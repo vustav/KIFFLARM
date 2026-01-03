@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/alarmsVHheight"
+    android:layout_marginLeft="@dimen/marginMedium"
+    android:layout_marginRight="@dimen/marginMedium"
+    android:gravity="center_vertical"
+    android:background="@drawable/man"
+    android:paddingStart="@dimen/marginLarge"
+    android:paddingEnd="@dimen/marginLarge"
+
+    android:layout_marginBottom="@dimen/marginMedium">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toStartOf="@id/alarmsVHRemoveLayout">
+
+        <!-- without this FrameLayout the button always covers the TextView -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/alarmsVHBtnheight"
+                android:id="@+id/alarmVHbutton"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <TextView
+                android:id="@+id/alarmVHtextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/alarmsVHtext"
+                android:background="@color/alarmsVHbg"
+                android:textSize="@dimen/defaultTvTextSize"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alarmsVHRemoveLayout"
+
+        android:layout_toStartOf="@id/alarmsVHCheckLayout">
+
+        <!-- without this FrameLayout the button always covers the TextView -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="@dimen/alarmsVHBtnheight"
+                android:layout_height="@dimen/alarmsVHBtnheight"
+                android:id="@+id/alarmVHRemovebutton"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/alarmVHRemovetextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/alarmsVHtext"
+            android:background="@color/alarmsVHbg"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text=" - "/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="@dimen/alarmsVHBtnheight"
+        android:layout_height="@dimen/alarmsVHBtnheight"
+        android:id="@+id/alarmsVHCheckLayout"
+
+        android:layout_alignParentEnd="true">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alarmsVHCheck"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="marginMedium">10dp</dimen>
+    <dimen name="marginLarge">20dp</dimen>
+    <dimen name="defaultTvTextSize">15sp</dimen>
+
+
+    <!-- MAIN LAYOUT -->
+    <dimen name="addBtnSize">50dp</dimen>
+
+    <!-- ALARMS RECYCLER VIEW -->
+    <dimen name="alarmsVHheight">42dp</dimen>
+    <dimen name="alarmsVHBtnheight">40dp</dimen>
+
+    <!-- SET TIME -->
+    <dimen name="watchSize">100dp</dimen>
+    <dimen name="setTimeTxtSize">40sp</dimen>
+    <dimen name="timeBoxSize">60dp</dimen>
+
+
+</resources>

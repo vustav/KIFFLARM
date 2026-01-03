@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:paddingTop="50dp"
+    android:paddingBottom="100dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/alarmsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"/>
+
+    <ImageView
+        android:id="@+id/addAlarmBtn"
+        android:layout_width="@dimen/addBtnSize"
+        android:layout_height="@dimen/addBtnSize"
+        app:srcCompat="@drawable/man"
+
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="@dimen/marginLarge"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>
