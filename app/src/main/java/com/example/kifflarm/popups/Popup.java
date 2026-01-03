@@ -15,9 +15,6 @@ public abstract class Popup {
     protected KIFFLARM kifflarm;
     protected PopupWindow popupWindow;
     protected View popupView;
-
-    protected int DEF_LIST_WIDTH = 300;
-
     public Popup(KIFFLARM kifflarm){
         this.kifflarm = kifflarm;
     }
@@ -28,12 +25,12 @@ public abstract class Popup {
     }
 
     protected void showAtLocation(PopupWindow popupWindow, int gravity, float dimAmount, boolean offset){
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
+        /*
+        popupWindow.setOnDismissListener(() -> {
 
-            }
         });
+
+         */
 
         int modX, modY;
         if(offset) {
@@ -49,22 +46,6 @@ public abstract class Popup {
 
         popupWindow.showAtLocation(kifflarm.getLayout(), gravity, modX, modY);
         dimBehind(popupWindow, dimAmount);
-        //blurBehind(popupWindow);
-    }
-
-    public void showAsDropDown(PopupWindow popupWindow, View anchor){
-        showAsDropDown(popupWindow, anchor, 0, 0);
-    }
-
-    public void showAsDropDown(PopupWindow popupWindow, View anchor, int xoff, int yoff){
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-
-            }
-        });
-
-        popupWindow.showAsDropDown(anchor, xoff, yoff);
     }
 
     /** DIM **/
@@ -76,21 +57,6 @@ public abstract class Popup {
         p.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         p.dimAmount = dimAmount;
         wm.updateViewLayout(container, p);
-    }
-
-    public static void blurBehind(PopupWindow popupWindow){
-
-
-
-        View container = popupWindow.getContentView().getRootView();
-        Context context = popupWindow.getContentView().getContext();
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
-        p.flags |= WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
-        //p.dimAmount = blurAmount;
-        wm.updateViewLayout(container, p);
-
-
     }
 
     public void dismiss(){

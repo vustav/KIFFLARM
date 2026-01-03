@@ -3,6 +3,7 @@
     <dimen name="marginMedium">10dp</dimen>
     <dimen name="marginLarge">20dp</dimen>
     <dimen name="defaultTvTextSize">15sp</dimen>
+    <dimen name="defaultBtnHeight">50sp</dimen>
 
 
     <!-- MAIN LAYOUT -->
@@ -14,7 +15,7 @@
 
     <!-- SET TIME -->
     <dimen name="watchSize">100dp</dimen>
-    <dimen name="setTimeTxtSize">40sp</dimen>
+    <dimen name="timeTxtSize">40sp</dimen>
     <dimen name="timeBoxSize">60dp</dimen>
 
 

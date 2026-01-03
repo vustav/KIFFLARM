@@ -15,12 +15,16 @@ import android.widget.PopupWindow;
 
 import com.example.kifflarm.KIFFLARM;
 import com.example.kifflarm.R;
+import com.example.kifflarm.Utils;
 
 public class SetTimePopup extends Popup {
+    private AlarmPopup alarmPopup;
     private EditText hourET, minuteET, selectedET;
 
     public SetTimePopup(KIFFLARM kifflarm, AlarmPopup alarmPopup, String hour, String minute){
         super(kifflarm);
+
+        this.alarmPopup = alarmPopup;
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_set_time, null);
@@ -39,12 +43,40 @@ public class SetTimePopup extends Popup {
         hourET = popupView.findViewById(R.id.setTimePopupHourET);
         hourET.setText(hour);
 
-        //and a touchListener to activate on click
+        //a touchListener to activate the EditText on click
         hourET.setOnTouchListener((v, event) -> {
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 selectET(hourET);
             }
             return false;
+        });
+
+        //change to 23 if input is more
+        hourET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Code to execute before text is changed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Code to execute when text is changed
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().isEmpty()) {
+                    //if(Integer.parseInt(s.toString()) == 24){
+                    //    hourET.setText("00");
+                    //}
+                    if (Integer.parseInt(s.toString()) > 23) {
+                        hourET.setText("23");
+                    }
+                    alarmPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
+                }
+
+                minuteET.setSelected(true);
+            }
         });
 
         //minue ET
@@ -57,13 +89,33 @@ public class SetTimePopup extends Popup {
             return false;
         });
 
+        minuteET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Code to execute before text is changed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Code to execute when text is changed
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().isEmpty()) {
+                    if (Integer.parseInt(s.toString()) > 59) {
+                        minuteET.setText("59");
+                    }
+                    alarmPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
+                }
+            }
+        });
         //start with hour selected
         selectET(hourET);
 
         //okBtn
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
-            alarmPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
             dismiss();
         });
 

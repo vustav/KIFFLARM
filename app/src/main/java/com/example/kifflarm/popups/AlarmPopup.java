@@ -2,6 +2,8 @@ package com.example.kifflarm.popups;
 
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,13 +18,21 @@ import com.example.kifflarm.R;
 import com.example.kifflarm.Utils;
 
 public class AlarmPopup extends Popup {
+    private AlarmManager alarmManager;
+    private AlarmsAdapter alarmsAdapter;
     private Alarm alarm;
     private TextView timeTV;
+
+    private boolean newAlarm;
 
     public AlarmPopup(KIFFLARM kifflarm, AlarmManager alarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
 
+        this.alarmManager = alarmManager;
+        this.alarmsAdapter = alarmsAdapter;
+
         this.alarm = alarm;
+        this.newAlarm = newAlarm;
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_alarm, null);
@@ -48,17 +58,29 @@ public class AlarmPopup extends Popup {
 
         Button okBtn = popupView.findViewById(R.id.alarmPopupOkBtn);
         okBtn.setOnClickListener(v -> {
-            if(newAlarm) {
-                Utils.insertInArraySorted(alarmManager.getAlarms(), alarm);
-            }
-            else{
-                //inte implementerad
-                Utils.sortTimes(alarmManager.getAlarms());
-            }
-
-            //måste köra denna här för det sorteras så alla kan ha skjutits fram
-            alarmsAdapter.notifyDataSetChanged();
             dismiss();
+            Log.e("AlarmPopup ZZZ", "ok");
+        });
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+
+                /** FÅR JAG DET INTE ATT FUNKA MÅSTE DETTA LIGGA I okBtn **/
+
+                if(newAlarm) {
+                    Utils.insertInArraySorted(alarmManager.getAlarms(), alarm);
+                }
+                else{
+                    //inte implementerad
+                    Utils.sortTimes(alarmManager.getAlarms());
+                }
+
+                //using this since a sort can push everything around
+                alarmsAdapter.notifyDataSetChanged();
+
+                Log.e("AlarmPopup ZZZ", "dismiss");
+            }
         });
 
         showAtLocation(popupWindow);

@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:paddingTop="50dp"
     android:paddingBottom="100dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:paddingTop="50dp"/>
 
     <ImageView
         android:id="@+id/addAlarmBtn"

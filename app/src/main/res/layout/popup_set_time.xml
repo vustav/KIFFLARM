@@ -16,7 +16,8 @@
         android:layout_alignEnd="@id/listContent"/>
 
     <ScrollView
-        android:orientation="vertical" android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/marginLarge"
         android:id="@+id/listContent">
@@ -36,16 +37,17 @@
                     android:id="@+id/setTimePopupHourET"
                     android:digits="0123456789"
                     android:inputType="number"
+                    android:maxLength="2"
                     android:textColor="@color/alarmsVHtext"
                     android:background="@color/alarmsVHbg"
-                    android:textSize="@dimen/setTimeTxtSize"/>
+                    android:textSize="@dimen/timeTxtSize"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/alarmsVHtext"
                     android:background="@color/alarmsVHbg"
-                    android:textSize="@dimen/setTimeTxtSize"
+                    android:textSize="@dimen/timeTxtSize"
                     android:text=":"/>
 
                 <EditText
@@ -54,9 +56,10 @@
                     android:id="@+id/setTimePopupMinuteET"
                     android:digits="0123456789"
                     android:inputType="number"
+                    android:maxLength="2"
                     android:textColor="@color/alarmsVHtext"
                     android:background="@color/alarmsVHbg"
-                    android:textSize="@dimen/setTimeTxtSize"/>
+                    android:textSize="@dimen/timeTxtSize"/>
             </LinearLayout>
 
             <FrameLayout
@@ -70,7 +73,7 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/defaultBtnHeight"
                 android:text="OK"
                 android:id="@+id/setTimeOKBtn"/>
 
