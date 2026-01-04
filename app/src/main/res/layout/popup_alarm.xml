@@ -18,7 +18,9 @@
         android:orientation="vertical" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/marginLarge"
-        android:id="@+id/listContent">
+        android:id="@+id/listContent"
+
+        android:layout_centerHorizontal="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -26,20 +28,30 @@
             android:orientation="vertical"
             android:id="@+id/listLayout">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/timeBoxSize"
-                android:id="@+id/alarmPopupTV"
-                android:textColor="@color/alarmsVHtext"
-                android:background="@color/alarmsVHbg"
-                android:textSize="@dimen/timeTxtSize"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/timeBoxSize"
+                    android:id="@+id/alarmPopupTV"
+                    android:textColor="@color/alarmsVHtext"
+                    android:background="@color/alarmsVHbg"
+                    android:textSize="@dimen/timeTxtSize"
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/defaultBtnHeight"
-                android:text="OK"
-                android:id="@+id/alarmPopupOkBtn"/>
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/defaultBtnHeight"
+                    android:text="OK"
+                    android:id="@+id/alarmPopupOkBtn"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

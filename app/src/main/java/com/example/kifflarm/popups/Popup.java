@@ -25,12 +25,6 @@ public abstract class Popup {
     }
 
     protected void showAtLocation(PopupWindow popupWindow, int gravity, float dimAmount, boolean offset){
-        /*
-        popupWindow.setOnDismissListener(() -> {
-
-        });
-
-         */
 
         int modX, modY;
         if(offset) {

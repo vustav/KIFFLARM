@@ -2,7 +2,6 @@ package com.example.kifflarm.popups;
 
 import androidx.core.content.ContextCompat;
 
-import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.example.kifflarm.Alarm;
-import com.example.kifflarm.AlarmManager;
-import com.example.kifflarm.AlarmsAdapter;
+import com.example.kifflarm.alarm.Alarm;
+import com.example.kifflarm.alarm.AlarmManager;
+import com.example.kifflarm.alarm.AlarmsAdapter;
 import com.example.kifflarm.KIFFLARM;
 import com.example.kifflarm.R;
 import com.example.kifflarm.Utils;
@@ -36,7 +35,8 @@ public class AlarmPopup extends Popup {
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_alarm, null);
-        popupView.findViewById(R.id.listBgIV).setBackground(ContextCompat.getDrawable(kifflarm, R.drawable.man));
+        //popupView.findViewById(R.id.listBgIV).setBackground(ContextCompat.getDrawable(kifflarm, Utils.getRandomImageId()));
+        popupView.setBackground(Utils.getRandomGradientDrawable());
 
         //create the popupWindow
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -59,17 +59,15 @@ public class AlarmPopup extends Popup {
         Button okBtn = popupView.findViewById(R.id.alarmPopupOkBtn);
         okBtn.setOnClickListener(v -> {
             dismiss();
-            Log.e("AlarmPopup ZZZ", "ok");
         });
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
 
-                /** FÅR JAG DET INTE ATT FUNKA MÅSTE DETTA LIGGA I okBtn **/
-
                 if(newAlarm) {
                     Utils.insertInArraySorted(alarmManager.getAlarms(), alarm);
+                    alarm.setActive(true);
                 }
                 else{
                     //inte implementerad
@@ -78,8 +76,6 @@ public class AlarmPopup extends Popup {
 
                 //using this since a sort can push everything around
                 alarmsAdapter.notifyDataSetChanged();
-
-                Log.e("AlarmPopup ZZZ", "dismiss");
             }
         });
 

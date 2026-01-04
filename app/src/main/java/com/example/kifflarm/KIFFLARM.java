@@ -1,14 +1,18 @@
 package com.example.kifflarm;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.kifflarm.alarm.AlarmManager;
 
 public class KIFFLARM extends AppCompatActivity {
     private AlarmManager alarmManager;
@@ -27,7 +31,6 @@ public class KIFFLARM extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
          */
 
         layout = findViewById(R.id.main);

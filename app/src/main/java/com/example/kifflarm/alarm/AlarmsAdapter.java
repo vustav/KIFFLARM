@@ -1,17 +1,18 @@
-package com.example.kifflarm;
+package com.example.kifflarm.alarm;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.kifflarm.R;
+import com.example.kifflarm.Utils;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
     private AlarmManager alarmManager;
@@ -21,6 +22,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
      * (custom ViewHolder)
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private RelativeLayout bg;
         private final TextView textView;
         private final Button button, delBtn;
         private final CheckBox checkBox;
@@ -28,7 +30,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-
+            bg = view.findViewById(R.id.alarmVHBg);
             textView = view.findViewById(R.id.alarmVHtextView);
             button = view.findViewById(R.id.alarmVHbutton);
             delBtn = view.findViewById(R.id.alarmVHRemovebutton);
@@ -64,9 +66,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         Alarm alarm = alarmManager.getAlarms().get(position);
         viewHolder.getTextView().setText(alarm.getTimeAsString());
 
@@ -87,6 +88,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     public void activateVH(ViewHolder viewHolder, boolean on){
+        Log.e("AlarmsAdapter ZZZ", "on: "+on);
         viewHolder.checkBox.setChecked(on);
 
         if(on) {

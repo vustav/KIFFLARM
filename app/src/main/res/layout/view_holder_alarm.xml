@@ -4,7 +4,7 @@
     android:layout_marginLeft="@dimen/marginMedium"
     android:layout_marginRight="@dimen/marginMedium"
     android:gravity="center_vertical"
-    android:background="@drawable/man"
+    android:id="@+id/alarmVHBg"
     android:paddingStart="@dimen/marginLarge"
     android:paddingEnd="@dimen/marginLarge"
 

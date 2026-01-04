@@ -5,29 +5,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kifflarm.alarm.AlarmManager;
+import com.example.kifflarm.alarm.AlarmsAdapter;
+
 public class MainView {
     private KIFFLARM kifflarm;
-    private AlarmManager alarmManager;
     private RelativeLayout layout;
 
     public MainView(KIFFLARM kiffLarm, AlarmManager alarmManager){
         this.kifflarm = kiffLarm;
-        this.alarmManager = alarmManager;
 
         createLayout();
 
-
         RecyclerView recyclerView = layout.findViewById(R.id.alarmsRecyclerView);
-        //recyclerView.layoutManager = new LinearLayoutManager(kiffLarm);
         recyclerView.setLayoutManager(new LinearLayoutManager(kiffLarm));
 
         AlarmsAdapter alarmsAdapter = new AlarmsAdapter(alarmManager);
         recyclerView.setAdapter(alarmsAdapter);
 
         ImageView addBtn = layout.findViewById(R.id.addAlarmBtn);
+        addBtn.setBackground(Utils.getRandomGradientDrawable());
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
