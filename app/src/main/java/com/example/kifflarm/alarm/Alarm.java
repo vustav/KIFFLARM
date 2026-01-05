@@ -1,21 +1,15 @@
 package com.example.kifflarm.alarm;
 
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.kifflarm.KIFFLARM;
-
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 public class Alarm {
     public static String MESSAGE = "alarm_message";
-    private AlarmManager alarmManager;
+    private final AlarmManager alarmManager;
     private int hour, minute;
     private boolean active;
 
-    private int id;
+    private int alarmId;
 
     public Alarm(AlarmManager alarmManager){
         this.alarmManager = alarmManager;
@@ -35,16 +29,22 @@ public class Alarm {
             }
         }
 
-        id = (int) date.getTime();
+        alarmId = (int) date.getTime();
 
         setActive(false);
+
+        //if no params are provided this is a new alarm, save it
+        alarmManager.getSaver().write(getParams());
     }
 
-    public Alarm(AlarmManager alarmManager, int hour, int minute){
-        this(alarmManager);
+    public Alarm(AlarmManager alarmManager, ArrayList<String> params){
+        this.alarmManager = alarmManager;
+        restoreParams(params);
 
-        this.hour = hour;
-        this.minute = minute;
+        //still active????
+        //setActive(active);
+
+        //if params are provided these are already saved, so don't do that
     }
 
     public void setActive(boolean active){
@@ -89,8 +89,8 @@ public class Alarm {
         return minute;
     }
 
-    public int getId(){
-        return id;
+    public int getAlarmId(){
+        return alarmId;
     }
 
     public String getMessage(){
@@ -104,6 +104,11 @@ public class Alarm {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
+        // if alarm time has already passed, increment day by 1
+        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+        }
+
         return calendar.getTimeInMillis();
     }
 
@@ -115,5 +120,49 @@ public class Alarm {
     public void setTime(int hour, int minute){
         this.hour = hour;
         this.minute = minute;
+    }
+
+    /** SAVING **/
+    private final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour", MINUTE_TAG = "minute";
+
+    private ArrayList<String> getParams(){
+        ArrayList<String> params = new ArrayList<>();
+        if(active){
+            params.add(ACTIVE_TAG +"true");
+        }
+        else{
+            params.add(ACTIVE_TAG +"false");
+        }
+        params.add(ALARM_ID_TAG +alarmId);
+        params.add(HOUR_TAG +hour);
+        params.add(MINUTE_TAG +minute);
+
+        return params;
+    }
+
+    private void restoreParams(ArrayList<String> params){
+        for(String s : params){
+
+            if(s.substring(0, ACTIVE_TAG.length()).equals(ACTIVE_TAG)){
+                if(s.substring(ACTIVE_TAG.length()).equals("true")){
+                    active = true;
+                }
+                else{
+                    active = false;
+                }
+            }
+
+            else if(s.substring(0, ALARM_ID_TAG.length()).equals(ALARM_ID_TAG)){
+                alarmId = Integer.parseInt(s.substring(ALARM_ID_TAG.length()));
+            }
+
+            else if(s.substring(0, HOUR_TAG.length()).equals(HOUR_TAG)){
+                hour = Integer.parseInt(s.substring(HOUR_TAG.length()));
+            }
+
+            else if(s.substring(0, MINUTE_TAG.length()).equals(MINUTE_TAG)){
+                minute = Integer.parseInt(s.substring(MINUTE_TAG.length()));
+            }
+        }
     }
 }

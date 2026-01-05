@@ -47,4 +47,26 @@ public class KIFFLARM extends AppCompatActivity {
     public ConstraintLayout getLayout(){
         return layout;
     }
+
+    public static class AlarmReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //String alarmMessage = intent != null ? intent.getStringExtra(Alarm.MESSAGE) : null;
+
+            Toast t = Toast.makeText(context, "ALARMALARMALARMALARMALARMALARMALARM", Toast.LENGTH_SHORT);
+            t.show();
+        }
+    }
+
+    public static class BootCompletedReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("android.intent.action.BOOT_COMPLETED".equals(intent != null ? intent.getAction() : null)) {
+                // Set your alarm here
+
+
+
+            }
+        }
+    }
 }

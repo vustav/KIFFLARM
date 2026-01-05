@@ -5,26 +5,28 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.kifflarm.KIFFLARM;
+import com.example.kifflarm.Saver;
 import com.example.kifflarm.popups.AlarmPopup;
 
 import java.util.ArrayList;
 
 public class AlarmManager {
     private KIFFLARM kifflarm;
+    private Saver saver;
     private android.app.AlarmManager androidAlarmManager;
     private ArrayList<Alarm> alarms;
 
     public AlarmManager(KIFFLARM kifflarm){
         this.kifflarm = kifflarm;
+        saver = new Saver(kifflarm);
+
+
+        /** LÄS IN PARAMS **/
+
+
         alarms = new ArrayList<>();
 
         androidAlarmManager = (android.app.AlarmManager) kifflarm.getSystemService(Context.ALARM_SERVICE);
-
-        //testing
-        alarms.add(new Alarm(this, 10, 45));
-        alarms.add(new Alarm(this, 14, 23));
-        alarms.add(new Alarm(this, 18, 11));
-        alarms.add(new Alarm(this, 21, 56));
     }
 
     //kolla upp flags
@@ -32,10 +34,9 @@ public class AlarmManager {
     //int flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
     int flag = PendingIntent.FLAG_IMMUTABLE;
     public void scheduleAlarm(Alarm alarm){
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 kifflarm,
-                alarm.getId(),
+                alarm.getAlarmId(),
                 new Intent(kifflarm, AlarmReceiver.class).putExtra(Alarm.MESSAGE, alarm.getMessage()),
                 flag
         );
@@ -51,7 +52,7 @@ public class AlarmManager {
         androidAlarmManager.cancel(
                 PendingIntent.getBroadcast(
                         kifflarm,
-                        alarm.getId(), // use same id that is used to schedule the alarm to cancel it
+                        alarm.getAlarmId(), // use same id that is used to schedule the alarm to cancel it
                         new Intent(kifflarm, AlarmReceiver.class),
                         flag
                 )
@@ -87,5 +88,9 @@ public class AlarmManager {
 
     public boolean getAlarmActive(int position){
         return alarms.get(position).isActive();
+    }
+
+    public Saver getSaver() {
+        return saver;
     }
 }
