@@ -88,7 +88,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     public void activateVH(ViewHolder viewHolder, boolean on){
-        Log.e("AlarmsAdapter ZZZ", "on: "+on);
         viewHolder.checkBox.setChecked(on);
 
         if(on) {

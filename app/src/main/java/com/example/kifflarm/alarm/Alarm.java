@@ -1,18 +1,30 @@
 package com.example.kifflarm.alarm;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+import com.example.kifflarm.FileManager;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 public class Alarm {
-    public static String MESSAGE = "alarm_message";
-    private final AlarmManager alarmManager;
+    private Context context;
+    private android.app.AlarmManager androidAlarmManager;
+    private FileManager fileManager;
     private int hour, minute;
     private boolean active;
-
     private int alarmId;
+    public static String MESSAGE = "alarm_message";
 
-    public Alarm(AlarmManager alarmManager){
-        this.alarmManager = alarmManager;
+    public Alarm(Context context){
+        this.context = context;
+
+        androidAlarmManager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        fileManager = new FileManager(context);
 
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
@@ -34,28 +46,70 @@ public class Alarm {
         setActive(false);
 
         //if no params are provided this is a new alarm, save it
-        alarmManager.getSaver().write(getParams());
+        fileManager.write(getParams(), Integer.toString(alarmId));
+
+        File[] files = fileManager.getFiles();
+        if(files != null){
+            for (File f : files) {
+                Log.e("Alarm ZZZ", f.getAbsolutePath());
+            }
+        }
     }
 
-    public Alarm(AlarmManager alarmManager, ArrayList<String> params){
-        this.alarmManager = alarmManager;
+    public Alarm(Context context, ArrayList<String> params){
+        this.context = context;
+
+        androidAlarmManager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        fileManager = new FileManager(context);
         restoreParams(params);
 
-        //still active????
-        //setActive(active);
+        //when starting the app loaded alarms should already be scheduled and I guess the ID prevents
+        // duplicates? We still need to re-schedule after reboots
+        setActive(active);
 
         //if params are provided these are already saved, so don't do that
     }
 
     public void setActive(boolean active){
         this.active = active;
+        fileManager.write(getParams(), getAlarmIdAsString());
 
         if(active) {
-            alarmManager.scheduleAlarm(this);
+            scheduleAlarm();
         }
         else{
-            alarmManager.cancelAlarm(this);
+            cancelAlarm();
         }
+    }
+
+    //kolla upp flags
+    //int flag = PendingIntent.FLAG_UPDATE_CURRENT;
+    //int flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
+    int flag = PendingIntent.FLAG_IMMUTABLE;
+    public void scheduleAlarm(){
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                alarmId,
+                new Intent(context, AlarmReceiver.class).putExtra(Alarm.MESSAGE, getMessage()),
+                flag
+        );
+
+        androidAlarmManager.setExactAndAllowWhileIdle(
+                android.app.AlarmManager.RTC_WAKEUP,
+                getTimeInMilliSec(),
+                pendingIntent
+        );
+    }
+
+    public void cancelAlarm(){
+        androidAlarmManager.cancel(
+                PendingIntent.getBroadcast(
+                        context,
+                        alarmId, // use same id that is used to schedule the alarm to cancel it
+                        new Intent(context, AlarmReceiver.class),
+                        flag
+                )
+        );
     }
 
     /** GET **/
@@ -89,6 +143,10 @@ public class Alarm {
         return minute;
     }
 
+    public String getAlarmIdAsString(){
+        return Integer.toString(alarmId);
+    }
+
     public int getAlarmId(){
         return alarmId;
     }
@@ -120,6 +178,7 @@ public class Alarm {
     public void setTime(int hour, int minute){
         this.hour = hour;
         this.minute = minute;
+        fileManager.write(getParams(), getAlarmIdAsString());
     }
 
     /** SAVING **/
@@ -141,9 +200,14 @@ public class Alarm {
     }
 
     private void restoreParams(ArrayList<String> params){
+
+        for(String s : params){
+            Log.e("Alarm ZZZ", s);
+        }
         for(String s : params){
 
-            if(s.substring(0, ACTIVE_TAG.length()).equals(ACTIVE_TAG)){
+            //check length or it will crash when  trying to get a long substring from a short string
+            if(s.length() > ACTIVE_TAG.length() && s.substring(0, ACTIVE_TAG.length()).equals(ACTIVE_TAG)){
                 if(s.substring(ACTIVE_TAG.length()).equals("true")){
                     active = true;
                 }
@@ -152,15 +216,15 @@ public class Alarm {
                 }
             }
 
-            else if(s.substring(0, ALARM_ID_TAG.length()).equals(ALARM_ID_TAG)){
+            else if(s.length() > ALARM_ID_TAG.length() && s.substring(0, ALARM_ID_TAG.length()).equals(ALARM_ID_TAG)){
                 alarmId = Integer.parseInt(s.substring(ALARM_ID_TAG.length()));
             }
 
-            else if(s.substring(0, HOUR_TAG.length()).equals(HOUR_TAG)){
+            else if(s.length() > HOUR_TAG.length() && s.substring(0, HOUR_TAG.length()).equals(HOUR_TAG)){
                 hour = Integer.parseInt(s.substring(HOUR_TAG.length()));
             }
 
-            else if(s.substring(0, MINUTE_TAG.length()).equals(MINUTE_TAG)){
+            else if(s.length() > MINUTE_TAG.length() && s.substring(0, MINUTE_TAG.length()).equals(MINUTE_TAG)){
                 minute = Integer.parseInt(s.substring(MINUTE_TAG.length()));
             }
         }
