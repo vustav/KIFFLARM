@@ -4,25 +4,91 @@
     android:layout_height="match_parent"
     android:id="@+id/alarmActivityLayout">
 
+    <!-- ALARMS TVs -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/alarmActivityBgTv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/timeTxtSize"/>
+
+        <TextView
+            android:id="@+id/alarmActivityBgTv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/timeTxtSize"/>
+
+        <TextView
+            android:id="@+id/alarmActivityBgTv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/timeTxtSize"/>
+
+        <TextView
+            android:id="@+id/alarmActivityBgTv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/timeTxtSize"/>
+
+        <TextView
+            android:id="@+id/alarmActivityBgTv5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/timeTxtSize"/>
+    </LinearLayout>
+
+    <!-- UI -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:weightSum="3"
 
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/alarmActivityTV"
-            android:background="@color/alarmsVHbg"
-            android:textColor="@color/alarmsVHtext"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/alarmActivityTV"
+                android:background="@color/alarmsVHbg"
+                android:textColor="@color/alarmsVHtext"
+                android:textSize="@dimen/alarmActivityTextSize"
+
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/alarmActivitySnoozeBtn"
+                android:text="SNOOZE"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/alarmActivityBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/alarmActivityOffBtn"
             android:text="TURN OFF"/>
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

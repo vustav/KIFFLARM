@@ -82,7 +82,7 @@ public class Alarm {
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALRM_INTENT_ID, Integer.toString(id));
-        intent.putExtra(ALRM_INTENT_TONE, getRingTone());
+        //intent.putExtra(ALRM_INTENT_TONE, getRingTone());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,

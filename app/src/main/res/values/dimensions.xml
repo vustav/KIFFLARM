@@ -2,9 +2,12 @@
 <resources>
     <dimen name="marginMedium">10dp</dimen>
     <dimen name="marginLarge">20dp</dimen>
-    <dimen name="defaultTvTextSize">15sp</dimen>
-    <dimen name="defaultBtnHeight">50sp</dimen>
+    <dimen name="defaultBtnHeight">50dp</dimen>
 
+    <!-- TEXT -->
+    <dimen name="timeTxtSize">40sp</dimen>
+    <dimen name="defaultTvTextSize">15sp</dimen>
+    <dimen name="alarmActivityTextSize">100sp</dimen>
 
     <!-- MAIN LAYOUT -->
     <dimen name="addBtnSize">50dp</dimen>
@@ -18,8 +21,7 @@
 
     <!-- SET TIME -->
     <dimen name="watchSize">100dp</dimen>
-    <dimen name="timeTxtSize">40sp</dimen>
     <dimen name="timeBoxSize">60dp</dimen>
 
-
+    <!-- ALARM SCTIVITY -->
 </resources>

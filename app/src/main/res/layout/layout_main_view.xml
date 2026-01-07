@@ -28,12 +28,28 @@
             android:id="@+id/addAlarmBtn">
 
             <ImageView
+                android:id="@+id/addAlarmIcon"
                 android:layout_width="@dimen/addBtnIconSize"
                 android:layout_height="@dimen/addBtnIconSize"
                 android:src="@drawable/icon_plus"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
+    </RelativeLayout>
 
-        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="@dimen/marginLarge"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="100dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fireAlarmBtn">
+        </Button>
+    </RelativeLayout>
 </RelativeLayout>

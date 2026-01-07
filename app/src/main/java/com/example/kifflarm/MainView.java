@@ -1,7 +1,9 @@
 package com.example.kifflarm;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -9,6 +11,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kifflarm.alarm.Alarm;
+import com.example.kifflarm.alarm.AlarmActivity;
 import com.example.kifflarm.alarm.AlarmManager;
 import com.example.kifflarm.alarm.AlarmsAdapter;
 
@@ -34,6 +38,18 @@ public class MainView {
             public void onClick(View v) {
                 Utils.performHapticFeedback(addBtn);
                 alarmManager.openNewAlarmDialog(alarmsAdapter);
+            }
+        });
+
+        Button fireBtn = layout.findViewById(R.id.fireAlarmBtn);
+        fireBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent activityIntent = new Intent(kiffLarm, AlarmActivity.class);
+
+                activityIntent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(alarmManager.getAlarms().get(0).getId()));
+
+                kiffLarm.startActivity(activityIntent);
             }
         });
     }
