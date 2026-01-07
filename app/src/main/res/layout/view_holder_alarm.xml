@@ -6,14 +6,16 @@
     android:gravity="center_vertical"
     android:id="@+id/alarmVHBg"
     android:paddingStart="@dimen/marginLarge"
-    android:paddingEnd="@dimen/marginLarge"
+    android:paddingEnd="@dimen/alarmsVHPaddingEnd"
 
     android:layout_marginBottom="@dimen/marginMedium">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_toStartOf="@id/alarmsVHRemoveLayout">
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/alarmsVHRemoveLayout"
+
+        android:layout_centerVertical="true">
 
         <!-- without this FrameLayout the button always covers the TextView -->
         <FrameLayout
@@ -45,7 +47,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/alarmsVHRemoveLayout"
 
-        android:layout_toStartOf="@id/alarmsVHCheckLayout">
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/alarmsVHToggle">
 
         <!-- without this FrameLayout the button always covers the TextView -->
         <FrameLayout
@@ -69,16 +72,26 @@
             android:text=" - "/>
     </RelativeLayout>
 
-
+    <!--
     <RelativeLayout
         android:layout_width="@dimen/alarmsVHBtnheight"
         android:layout_height="@dimen/alarmsVHBtnheight"
         android:id="@+id/alarmsVHCheckLayout"
 
         android:layout_alignParentEnd="true">
+
         <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/alarmsVHCheck"/>
     </RelativeLayout>
+    -->
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/alarmsVHToggle"
+        android:layout_width="@dimen/alarmsVHToggleWidth"
+        android:layout_height="@dimen/alarmsVHBtnheight"
+
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"/>
 </RelativeLayout>

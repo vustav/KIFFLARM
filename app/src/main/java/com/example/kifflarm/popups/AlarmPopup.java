@@ -17,25 +17,16 @@ import com.example.kifflarm.R;
 import com.example.kifflarm.Utils;
 
 public class AlarmPopup extends Popup {
-    private AlarmManager alarmManager;
-    private AlarmsAdapter alarmsAdapter;
     private Alarm alarm;
     private TextView timeTV;
-
-    private boolean newAlarm;
 
     public AlarmPopup(KIFFLARM kifflarm, AlarmManager alarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
 
-        this.alarmManager = alarmManager;
-        this.alarmsAdapter = alarmsAdapter;
-
         this.alarm = alarm;
-        this.newAlarm = newAlarm;
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_alarm, null);
-        //popupView.findViewById(R.id.listBgIV).setBackground(ContextCompat.getDrawable(kifflarm, Utils.getRandomImageId()));
         popupView.setBackground(Utils.getRandomGradientDrawable());
 
         //create the popupWindow
@@ -54,6 +45,12 @@ public class AlarmPopup extends Popup {
             public void onClick(View v) {
                 new SetTimePopup(kifflarm, AlarmPopup.this, alarm.getHourAsString(), alarm.getMinuteAsString());
             }
+        });
+
+        Button soundBtn = popupView.findViewById(R.id.alarmPopupToneBtn);
+        soundBtn.setText("SOUND: "+alarm.getRingTone());
+        soundBtn.setOnClickListener(v -> {
+            new SoundPopup(kifflarm, alarm, soundBtn);
         });
 
         Button okBtn = popupView.findViewById(R.id.alarmPopupOkBtn);

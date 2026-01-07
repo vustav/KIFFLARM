@@ -8,10 +8,13 @@
 
     <!-- MAIN LAYOUT -->
     <dimen name="addBtnSize">50dp</dimen>
+    <dimen name="addBtnIconSize">40dp</dimen>
 
     <!-- ALARMS RECYCLER VIEW -->
-    <dimen name="alarmsVHheight">42dp</dimen>
-    <dimen name="alarmsVHBtnheight">40dp</dimen>
+    <dimen name="alarmsVHheight">57dp</dimen>
+    <dimen name="alarmsVHBtnheight">50dp</dimen>
+    <dimen name="alarmsVHToggleWidth">50dp</dimen>
+    <dimen name="alarmsVHPaddingEnd">10dp</dimen>
 
     <!-- SET TIME -->
     <dimen name="watchSize">100dp</dimen>

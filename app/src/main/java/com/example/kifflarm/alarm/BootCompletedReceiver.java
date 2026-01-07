@@ -3,6 +3,7 @@ package com.example.kifflarm.alarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.kifflarm.FileManager;
 import com.example.kifflarm.KIFFLARM;
@@ -20,11 +21,14 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
             if(!paramsArray.isEmpty()){
                 for(ArrayList<String> params : paramsArray){
-                    //alarms.add(new Alarm(kifflarm, params));
-                    new Alarm(context, params);
+                    try {
+                        new Alarm(context, params);
+                    }
+                    catch (Exception e){
+                        Log.e("BootCompletedReceiver ZZZ", e.toString());
+                    }
                 }
             }
-
         }
     }
 }

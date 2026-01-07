@@ -28,7 +28,6 @@ public class SetTimePopup extends Popup {
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_set_time, null);
-        //popupView.findViewById(R.id.listBgIV).setBackground(ContextCompat.getDrawable(kifflarm, Utils.getRandomImageId()));
         popupView.setBackground(Utils.getRandomGradientDrawable());
 
         //create the popupWindow

@@ -27,11 +27,12 @@ public class MainView {
         AlarmsAdapter alarmsAdapter = new AlarmsAdapter(alarmManager);
         recyclerView.setAdapter(alarmsAdapter);
 
-        ImageView addBtn = layout.findViewById(R.id.addAlarmBtn);
+        RelativeLayout addBtn = layout.findViewById(R.id.addAlarmBtn);
         addBtn.setBackground(Utils.getRandomGradientDrawable());
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utils.performHapticFeedback(addBtn);
                 alarmManager.openNewAlarmDialog(alarmsAdapter);
             }
         });

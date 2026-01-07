@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    android:paddingBottom="100dp">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmsRecyclerView"
@@ -14,14 +12,28 @@
         android:clipToPadding="false"
         android:paddingTop="50dp"/>
 
-    <ImageView
-        android:id="@+id/addAlarmBtn"
-        android:layout_width="@dimen/addBtnSize"
-        android:layout_height="@dimen/addBtnSize"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="@dimen/marginLarge"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:paddingBottom="100dp">
+
+        <RelativeLayout
+            android:layout_width="@dimen/addBtnSize"
+            android:layout_height="@dimen/addBtnSize"
+            android:id="@+id/addAlarmBtn">
+
+            <ImageView
+                android:layout_width="@dimen/addBtnIconSize"
+                android:layout_height="@dimen/addBtnIconSize"
+                android:src="@drawable/icon_plus"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        </RelativeLayout>
 
 </RelativeLayout>

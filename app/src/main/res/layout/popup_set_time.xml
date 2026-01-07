@@ -5,87 +5,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/marginLarge">
 
-    <!-- A LITTLE TRICK TO MAKE A BG IMAGE WRAP THE CONTENT -->
-    <ImageView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listBgIV"
-        android:layout_alignTop="@id/listContent"
-        android:layout_alignBottom="@id/listContent"
-        android:layout_alignStart="@id/listContent"
-        android:layout_alignEnd="@id/listContent"/>
-
-    <ScrollView
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/marginLarge"
-        android:id="@+id/listContent"
-
-        android:layout_centerHorizontal="true">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/alarmsVHbg"
 
-            <LinearLayout
+            android:layout_marginBottom="@dimen/marginLarge">
+
+            <EditText
+                android:layout_width="@dimen/timeBoxSize"
+                android:layout_height="@dimen/timeBoxSize"
+                android:id="@+id/setTimePopupHourET"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@color/alarmsVHtext"
+                android:background="@color/alarmsVHbg"
+                android:textSize="@dimen/timeTxtSize"/>
+
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColor="@color/alarmsVHtext"
+                android:background="@color/alarmsVHbg"
+                android:textSize="@dimen/timeTxtSize"
+                android:text=":"/>
 
-                <EditText
-                    android:layout_width="@dimen/timeBoxSize"
-                    android:layout_height="@dimen/timeBoxSize"
-                    android:id="@+id/setTimePopupHourET"
-                    android:digits="0123456789"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:textColor="@color/alarmsVHtext"
-                    android:background="@color/alarmsVHbg"
-                    android:textSize="@dimen/timeTxtSize"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/alarmsVHtext"
-                    android:background="@color/alarmsVHbg"
-                    android:textSize="@dimen/timeTxtSize"
-                    android:text=":"/>
-
-                <EditText
-                    android:layout_width="@dimen/timeBoxSize"
-                    android:layout_height="@dimen/timeBoxSize"
-                    android:id="@+id/setTimePopupMinuteET"
-                    android:digits="0123456789"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:textColor="@color/alarmsVHtext"
-                    android:background="@color/alarmsVHbg"
-                    android:textSize="@dimen/timeTxtSize"/>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="@dimen/watchSize"
-                    android:layout_height="@dimen/watchSize"
-                    app:srcCompat="@drawable/watch"
-
-                    android:layout_centerHorizontal="true"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/defaultBtnHeight"
-                    android:text="OK"
-                    android:id="@+id/setTimeOKBtn"
-
-                    android:layout_centerHorizontal="true"/>
-            </RelativeLayout>
+            <EditText
+                android:layout_width="@dimen/timeBoxSize"
+                android:layout_height="@dimen/timeBoxSize"
+                android:id="@+id/setTimePopupMinuteET"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@color/alarmsVHtext"
+                android:background="@color/alarmsVHbg"
+                android:textSize="@dimen/timeTxtSize"/>
         </LinearLayout>
-    </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="@dimen/marginLarge">
+            <ImageView
+                android:layout_width="@dimen/watchSize"
+                android:layout_height="@dimen/watchSize"
+                app:srcCompat="@drawable/watch"
+
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/defaultBtnHeight"
+                android:text="OK"
+                android:id="@+id/setTimeOKBtn"
+
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

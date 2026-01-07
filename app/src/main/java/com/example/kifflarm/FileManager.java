@@ -1,7 +1,6 @@
 package com.example.kifflarm;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
 import com.example.kifflarm.alarm.Alarm;
@@ -27,6 +26,7 @@ public class FileManager {
             internalPathFile.mkdirs();
         }
         internalPath = internalPathFile.getAbsolutePath();
+        //Log.e("FileManager ZZZ", "internal storage: "+internalPath);
         //internalPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
@@ -97,8 +97,7 @@ public class FileManager {
     }
 
     public ArrayList<ArrayList<String>> getParamsArray(){
-        File directory = new File(internalPath);
-        File[] filesInDirectory = directory.listFiles();
+        File[] filesInDirectory = getFiles(internalPath);
 
         ArrayList<ArrayList<String>> paramsArray = new ArrayList<>();
 
@@ -118,9 +117,14 @@ public class FileManager {
         return paramsArray;
     }
 
-    public File[] getFiles(){
-        Log.e("FileManager ZZZ", "patch: "+internalPath);
-        File directory = new File(internalPath);
+    public File[] getFiles(String path){
+        File directory = new File(path);
         return directory.listFiles();
+    }
+
+    public void delete(Alarm alarm){
+        File file = new File(internalPath + "/" + alarm.getId());
+        file.delete();
+        Log.e("FileManager ZZZ", "deleted: "+file.getAbsolutePath());
     }
 }

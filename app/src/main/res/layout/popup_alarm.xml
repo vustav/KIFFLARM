@@ -4,29 +4,17 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/marginLarge">
 
-    <!-- A LITTLE TRICK TO MAKE A BG IMAGE WRAP THE CONTENT -->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listBgIV"
-        android:layout_alignTop="@id/listContent"
-        android:layout_alignBottom="@id/listContent"
-        android:layout_alignStart="@id/listContent"
-        android:layout_alignEnd="@id/listContent"/>
-
     <ScrollView
         android:orientation="vertical" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/marginLarge"
-        android:id="@+id/listContent"
 
         android:layout_centerHorizontal="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/listLayout">
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -39,6 +27,18 @@
                     android:background="@color/alarmsVHbg"
                     android:textSize="@dimen/timeTxtSize"
 
+                    android:layout_marginBottom="@dimen/marginLarge"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/defaultBtnHeight"
+                    android:id="@+id/alarmPopupToneBtn"
+                    android:singleLine="true"
                     android:layout_centerHorizontal="true"/>
             </RelativeLayout>
 

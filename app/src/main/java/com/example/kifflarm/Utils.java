@@ -2,6 +2,8 @@ package com.example.kifflarm;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.view.HapticFeedbackConstants;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.kifflarm.alarm.Alarm;
@@ -10,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Utils {
+
+    public static void performHapticFeedback(View view){
+        view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+    }
 
     public static void sortTimes(ArrayList<Alarm> alarms){
 
@@ -119,24 +125,5 @@ public class Utils {
         int color = getRandomColor();
         tv.setBackgroundColor(color);
         tv.setTextColor(getContrastColor(color));
-    }
-
-    /** IMG **/
-    public static int getRandomImageId(){
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(R.drawable.bg_beach_small);
-        list.add(R.drawable.bg_cat_small);
-        list.add(R.drawable.bg_gtr_small);
-        list.add(R.drawable.bg_ko_small);
-        list.add(R.drawable.bg_rat_small);
-        list.add(R.drawable.bg_dog_small);
-        list.add(R.drawable.bg_tango_small);
-        list.add(R.drawable.bg_back_small_cut);
-        list.add(R.drawable.bg_wood);
-        list.add(R.drawable.bg_matta);
-        list.add(R.drawable.bg_boy);
-
-        Random r = new Random();
-        return list.get(r.nextInt(list.size()));
     }
 }

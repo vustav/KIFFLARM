@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <!-- <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/> -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KIFFLARM">
+
+        <!-- Alarm -->
+        <activity
+            android:name=".alarm.AlarmActivity"
+            android:exported="false"/>
+
+        <!-- MAIN -->
         <activity
             android:name=".KIFFLARM"
             android:exported="true">
@@ -26,13 +32,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".KIFFLARM$AlarmReceiver"/>
-        <receiver android:name=".KIFFLARM$BootCompletedReceiver"/>
-
-        <!--
-        <receiver android:name=".alarm.AlarmReceiver"/>
-        <receiver android:name=".alarm.BootCompletedReceiver"/>
-        -->
-
+        <receiver android:name=".alarm.AlarmReceiver" />
+        <receiver android:name=".alarm.BootCompletedReceiver" />
     </application>
+
 </manifest>

@@ -25,14 +25,18 @@ public class AlarmManager {
 
         if(!paramsArray.isEmpty()){
             for(ArrayList<String> params : paramsArray){
-                alarms.add(new Alarm(kifflarm, params));
+                try {
+                    alarms.add(new Alarm(kifflarm, params));
+                }
+                catch (Exception e){
+                    Log.e("AlarmManager ZZZ", "cottupted params? "+e);
+                }
             }
         }
     }
 
     public void removeAlarm(int index){
-        Alarm alarm = alarms.remove(index);
-        alarm.cancelAlarm();
+        alarms.remove(index).removeAlarm();
     }
 
     public void openAlarmDialog(AlarmsAdapter alarmsAdapter, int index, boolean newAlarm){

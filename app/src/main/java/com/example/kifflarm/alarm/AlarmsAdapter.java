@@ -1,11 +1,9 @@
 package com.example.kifflarm.alarm;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kifflarm.R;
 import com.example.kifflarm.Utils;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
     private AlarmManager alarmManager;
@@ -25,7 +24,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         private RelativeLayout bg;
         private final TextView textView;
         private final Button button, delBtn;
-        private final CheckBox checkBox;
+        private final SwitchMaterial toggle;
 
         public ViewHolder(View view) {
             super(view);
@@ -34,7 +33,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             textView = view.findViewById(R.id.alarmVHtextView);
             button = view.findViewById(R.id.alarmVHbutton);
             delBtn = view.findViewById(R.id.alarmVHRemovebutton);
-            checkBox = view.findViewById(R.id.alarmsVHCheck);
+            toggle = view.findViewById(R.id.alarmsVHToggle);
         }
 
         public TextView getTextView() {
@@ -72,7 +71,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         viewHolder.getTextView().setText(alarm.getTimeAsString());
 
         activateVH(viewHolder, alarmManager.getAlarmActive(position));
-        viewHolder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        viewHolder.toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             alarmManager.setAlarmActive(viewHolder.getAdapterPosition(), isChecked);
             activateVH(viewHolder, isChecked);
         });
@@ -88,7 +87,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     public void activateVH(ViewHolder viewHolder, boolean on){
-        viewHolder.checkBox.setChecked(on);
+        viewHolder.toggle.setChecked(on);
 
         if(on) {
             viewHolder.delBtn.setAlpha(1);
