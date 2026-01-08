@@ -1,7 +1,11 @@
 package com.example.kifflarm.alarm;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -29,6 +33,9 @@ public class AlarmActivity extends AppCompatActivity {
     private Alarm alarm;
     private Vibrator vibrator;
 
+    private Ringtone ringtone;
+    private ValueAnimator tvBgAnimation, tvTxtAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +55,38 @@ public class AlarmActivity extends AppCompatActivity {
         TextView tv = layout.findViewById(R.id.alarmActivityTV);
         tv.setText(alarm.getTimeAsString());
 
-        Button btn = layout.findViewById(R.id.alarmActivityOffBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        //TV ANIMATION
+        int tvAnimationTime = 550;
+        int colorFrom = Utils.getRandomColor();
+        int colorTo = Utils.getContrastColor(colorFrom);
+
+        //bg animation
+        tvBgAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        tvBgAnimation.setDuration(tvAnimationTime);
+        tvBgAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        tvBgAnimation.setRepeatMode(ValueAnimator.REVERSE);
+        tvBgAnimation.addUpdateListener(animator -> tv.setBackgroundColor((int) animator.getAnimatedValue()));
+        tvBgAnimation.start();
+
+        //txt animation
+        tvTxtAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorTo, colorFrom);
+        tvTxtAnimation.setDuration(tvAnimationTime); // milliseconds
+        tvTxtAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        tvTxtAnimation.setRepeatMode(ValueAnimator.REVERSE);
+        tvTxtAnimation.addUpdateListener(animator -> tv.setTextColor((int) animator.getAnimatedValue()));
+        tvTxtAnimation.start();
+
+        // setting ringtone
+        ringtone = RingtoneManager.getRingtone(this, alarm.getSound().getUri());
+        ringtone.play();
+        Log.e("AlarmActivity ZZZ", alarm.getSound().getName());
+        Log.e("AlarmActivity ZZZ", alarm.getSound().getUri().toString());
+
+        Button offBtn = layout.findViewById(R.id.alarmActivityOffBtn);
+        offBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopVibrating();
-                deactivateAlarm();
+                alarmOff();
                 finish();
             }
         });
@@ -115,12 +148,10 @@ public class AlarmActivity extends AppCompatActivity {
         }
     }
 
-    private void stopVibrating() {
-        vibrator.cancel();
-    }
-
-    private void deactivateAlarm(){
+    private void alarmOff(){
         alarm.setActive(false);
+        vibrator.cancel();
+        ringtone.stop();
     }
 
     private Alarm getAlarm(String id){
@@ -136,5 +167,15 @@ public class AlarmActivity extends AppCompatActivity {
             }
         }
         return alarm;
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        tvTxtAnimation.end();
+        tvTxtAnimation = null;
+        tvBgAnimation.end();
+        tvBgAnimation = null;
     }
 }

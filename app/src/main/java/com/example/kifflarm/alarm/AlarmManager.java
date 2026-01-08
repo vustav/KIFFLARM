@@ -25,12 +25,12 @@ public class AlarmManager {
 
         if(!paramsArray.isEmpty()){
             for(ArrayList<String> params : paramsArray){
-                try {
+                //try {
                     alarms.add(new Alarm(kifflarm, params));
-                }
-                catch (Exception e){
-                    Log.e("AlarmManager ZZZ", "cottupted params? "+e);
-                }
+                //}
+                //catch (Exception e){
+                    //Log.e("AlarmManager ZZZ", "cottupted params? "+e);
+                //}
             }
         }
     }
@@ -48,7 +48,7 @@ public class AlarmManager {
     }
 
     public void openNewAlarmDialog(AlarmsAdapter alarmsAdapter){
-        openAlarmDialog(alarmsAdapter, new Alarm(kifflarm), true);
+        openAlarmDialog(alarmsAdapter, new Alarm(kifflarm, kifflarm.getSoundManager().getRandomSound()), true);
     }
 
     /** SET **/

@@ -13,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.kifflarm.alarm.AlarmManager;
+import com.example.kifflarm.sound.SoundManager;
 
 public class KIFFLARM extends AppCompatActivity {
     private AlarmManager alarmManager;
+    private SoundManager soundManager;
     private MainView mainView;
 
     private ConstraintLayout layout;
@@ -36,6 +38,7 @@ public class KIFFLARM extends AppCompatActivity {
         layout = findViewById(R.id.main);
 
         //create classes
+        soundManager = new SoundManager(this);
         alarmManager = new AlarmManager(this);
         mainView = new MainView(this, alarmManager);
 
@@ -63,10 +66,12 @@ public class KIFFLARM extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if ("android.intent.action.BOOT_COMPLETED".equals(intent != null ? intent.getAction() : null)) {
                 // Set your alarm here
-
-
-
             }
         }
+    }
+
+    /** GET **/
+    public SoundManager getSoundManager() {
+        return soundManager;
     }
 }

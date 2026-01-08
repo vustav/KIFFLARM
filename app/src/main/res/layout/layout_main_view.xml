@@ -31,7 +31,6 @@
                 android:id="@+id/addAlarmIcon"
                 android:layout_width="@dimen/addBtnIconSize"
                 android:layout_height="@dimen/addBtnIconSize"
-                android:src="@drawable/icon_plus"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
     </RelativeLayout>

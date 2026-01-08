@@ -26,6 +26,7 @@
                     android:textColor="@color/alarmsVHtext"
                     android:background="@color/alarmsVHbg"
                     android:textSize="@dimen/timeTxtSize"
+                    android:textStyle="italic"
 
                     android:layout_marginBottom="@dimen/marginLarge"
                     android:layout_centerHorizontal="true"/>
@@ -39,7 +40,8 @@
                     android:layout_height="@dimen/defaultBtnHeight"
                     android:id="@+id/alarmPopupToneBtn"
                     android:singleLine="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="italic"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -50,7 +52,8 @@
                     android:layout_height="@dimen/defaultBtnHeight"
                     android:text="OK"
                     android:id="@+id/alarmPopupOkBtn"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="italic"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

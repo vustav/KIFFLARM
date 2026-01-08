@@ -3,9 +3,11 @@ package com.example.kifflarm.alarm;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.kifflarm.FileManager;
+import com.example.kifflarm.sound.Sound;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,14 +19,16 @@ public class Alarm {
     private int hour, minute;
     private boolean active;
     private int id;
-    private String ringtone = "ringtoneTTTOOOOOOOOOO";
+    private Sound sound;
     public static String ALRM_INTENT_ID = "alrm_intent_id", ALRM_INTENT_MESSAGE = "alrm_intent__msg", ALRM_INTENT_TONE = "alrm_intent_ringtone";
 
-    public Alarm(Context context){
+    public Alarm(Context context, Sound sound){
         this.context = context;
 
         androidAlarmManager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         fileManager = new FileManager(context);
+
+        this.sound = sound;
 
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
@@ -45,9 +49,6 @@ public class Alarm {
 
         setActive(false);
         //setTime(hour, minute);
-
-        //if no params are provided this is a new alarm, save it (setActive calls write)
-        //fileManager.write(getParams(), Integer.toString(alarmId));
     }
 
     //ArrayList<Alarm> alarms is because if tiles are corrupted the alarms has to be able to remove itself, just pass null if not needed
@@ -63,7 +64,7 @@ public class Alarm {
 
     public void setActive(boolean active){
         this.active = active;
-        fileManager.write(getParams(), getAlarmIdAsString());
+        save();
         updateSchedule();
     }
 
@@ -158,8 +159,8 @@ public class Alarm {
         return "mememesssssaaaagggeeee";
     }
 
-    public String getRingTone(){
-        return ringtone;
+    public Sound getSound(){
+        return sound;
     }
 
     public long getTimeInMS(){
@@ -188,17 +189,22 @@ public class Alarm {
         this.hour = hour;
         this.minute = minute;
 
-        fileManager.write(getParams(), getAlarmIdAsString());
+        save();
         updateSchedule();
     }
 
-    public void setRingTone(String ringtone){
-        this.ringtone = ringtone;
+    public void setSound(Sound sound){
+        this.sound = sound;
+        save();
+        //Log.e("Alarm ZZZ", "setSound: "+sound.getName());
     }
 
-
     /** SAVING **/
-    public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour", MINUTE_TAG = "minute", RINGTONE_TAG = "ringtone";
+    public void save(){
+        fileManager.write(getParams(), getAlarmIdAsString());
+    }
+    public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",
+            MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri";
 
     private ArrayList<String> getParams(){
         ArrayList<String> params = new ArrayList<>();
@@ -209,14 +215,18 @@ public class Alarm {
             params.add(ACTIVE_TAG +"false");
         }
         params.add(ALARM_ID_TAG + id);
-        params.add(HOUR_TAG +hour);
-        params.add(MINUTE_TAG +minute);
-        params.add(RINGTONE_TAG +getRingTone());
+        params.add(HOUR_TAG + hour);
+        params.add(MINUTE_TAG + minute);
+        params.add(RINGTONE_NAME_TAG + getSound().getName());
+        params.add(RINGTONE_URI_TAG + getSound().getUri());
 
         return params;
     }
 
     private void restoreParams(ArrayList<String> params){
+
+        String soundName = "", soundUri = "";
+
         for(String s : params){
             //check length or it will crash when  trying to get a long substring from a short string
             if (s.length() > ACTIVE_TAG.length() && s.substring(0, ACTIVE_TAG.length()).equals(ACTIVE_TAG)) {
@@ -231,10 +241,14 @@ public class Alarm {
                 hour = Integer.parseInt(s.substring(HOUR_TAG.length()));
             } else if (s.length() > MINUTE_TAG.length() && s.substring(0, MINUTE_TAG.length()).equals(MINUTE_TAG)) {
                 minute = Integer.parseInt(s.substring(MINUTE_TAG.length()));
-            } else if (s.length() > RINGTONE_TAG.length() && s.substring(0, RINGTONE_TAG.length()).equals(RINGTONE_TAG)) {
-                setRingTone(s.substring(RINGTONE_TAG.length()));
+            } else if (s.length() > RINGTONE_NAME_TAG.length() && s.substring(0, RINGTONE_NAME_TAG.length()).equals(RINGTONE_NAME_TAG)) {
+                soundName = s.substring(RINGTONE_NAME_TAG.length());
+            } else if (s.length() > RINGTONE_URI_TAG.length() && s.substring(0, RINGTONE_URI_TAG.length()).equals(RINGTONE_URI_TAG)) {
+                soundUri = s.substring(RINGTONE_URI_TAG.length());
             }
         }
+
+        setSound(new Sound(soundName, Uri.parse(soundUri)));
     }
 }
 

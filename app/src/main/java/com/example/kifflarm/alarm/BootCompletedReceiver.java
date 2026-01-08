@@ -21,12 +21,12 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
             if(!paramsArray.isEmpty()){
                 for(ArrayList<String> params : paramsArray){
-                    try {
+                    //try {
                         new Alarm(context, params);
-                    }
-                    catch (Exception e){
-                        Log.e("BootCompletedReceiver ZZZ", e.toString());
-                    }
+                    //}
+                    //catch (Exception e){
+                        //Log.e("BootCompletedReceiver ZZZ", e.toString());
+                    //}
                 }
             }
         }

@@ -8,6 +8,7 @@
     <dimen name="timeTxtSize">40sp</dimen>
     <dimen name="defaultTvTextSize">15sp</dimen>
     <dimen name="alarmActivityTextSize">100sp</dimen>
+    <dimen name="soundVHTxtSize">20sp</dimen>
 
     <!-- MAIN LAYOUT -->
     <dimen name="addBtnSize">50dp</dimen>

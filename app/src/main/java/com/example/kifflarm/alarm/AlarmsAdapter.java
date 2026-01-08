@@ -35,14 +35,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             delBtn = view.findViewById(R.id.alarmVHRemovebutton);
             toggle = view.findViewById(R.id.alarmsVHToggle);
         }
-
-        public TextView getTextView() {
-            return textView;
-        }
-
-        public Button getButton(){
-            return button;
-        }
     }
 
     /**
@@ -68,7 +60,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
         Alarm alarm = alarmManager.getAlarms().get(position);
-        viewHolder.getTextView().setText(alarm.getTimeAsString());
+        viewHolder.textView.setText(alarm.getTimeAsString());
 
         activateVH(viewHolder, alarmManager.getAlarmActive(position));
         viewHolder.toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {

@@ -18,7 +18,7 @@
             android:layout_marginBottom="@dimen/marginLarge">
 
             <EditText
-                android:layout_width="@dimen/timeBoxSize"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/timeBoxSize"
                 android:id="@+id/setTimePopupHourET"
                 android:digits="0123456789"
@@ -26,7 +26,8 @@
                 android:maxLength="2"
                 android:textColor="@color/alarmsVHtext"
                 android:background="@color/alarmsVHbg"
-                android:textSize="@dimen/timeTxtSize"/>
+                android:textSize="@dimen/timeTxtSize"
+                android:textStyle="italic"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,10 +35,11 @@
                 android:textColor="@color/alarmsVHtext"
                 android:background="@color/alarmsVHbg"
                 android:textSize="@dimen/timeTxtSize"
-                android:text=":"/>
+                android:text=":"
+                android:textStyle="italic"/>
 
             <EditText
-                android:layout_width="@dimen/timeBoxSize"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/timeBoxSize"
                 android:id="@+id/setTimePopupMinuteET"
                 android:digits="0123456789"
@@ -45,7 +47,8 @@
                 android:maxLength="2"
                 android:textColor="@color/alarmsVHtext"
                 android:background="@color/alarmsVHbg"
-                android:textSize="@dimen/timeTxtSize"/>
+                android:textSize="@dimen/timeTxtSize"
+                android:textStyle="italic"/>
         </LinearLayout>
 
         <RelativeLayout
@@ -69,6 +72,7 @@
                 android:layout_height="@dimen/defaultBtnHeight"
                 android:text="OK"
                 android:id="@+id/setTimeOKBtn"
+                android:textStyle="italic"
 
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>

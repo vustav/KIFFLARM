@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/alarmsVHtext"
                 android:background="@color/alarmsVHbg"
-                android:textSize="@dimen/defaultTvTextSize"/>
+                android:textSize="@dimen/defaultTvTextSize"
+                android:textStyle="italic"/>
         </LinearLayout>
     </RelativeLayout>
 

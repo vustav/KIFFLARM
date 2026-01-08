@@ -1,8 +1,5 @@
 package com.example.kifflarm.popups;
 
-import androidx.core.content.ContextCompat;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,6 +16,8 @@ import com.example.kifflarm.Utils;
 public class AlarmPopup extends Popup {
     private Alarm alarm;
     private TextView timeTV;
+
+    private Button soundBtn;
 
     public AlarmPopup(KIFFLARM kifflarm, AlarmManager alarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
@@ -47,10 +46,10 @@ public class AlarmPopup extends Popup {
             }
         });
 
-        Button soundBtn = popupView.findViewById(R.id.alarmPopupToneBtn);
-        soundBtn.setText("SOUND: "+alarm.getRingTone());
+        soundBtn = popupView.findViewById(R.id.alarmPopupToneBtn);
+        setSoundBtnTxt(alarm.getSound().getName());
         soundBtn.setOnClickListener(v -> {
-            new SoundPopup(kifflarm, alarm, soundBtn);
+            new SoundPopup(kifflarm, this, alarm);
         });
 
         Button okBtn = popupView.findViewById(R.id.alarmPopupOkBtn);
@@ -77,6 +76,11 @@ public class AlarmPopup extends Popup {
         });
 
         showAtLocation(popupWindow);
+    }
+
+    /** SET **/
+    public void setSoundBtnTxt(String txt){
+        soundBtn.setText("SOUND: "+txt);
     }
 
     public void setTime(int hour, int minute){

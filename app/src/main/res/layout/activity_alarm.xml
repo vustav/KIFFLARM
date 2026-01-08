@@ -14,31 +14,36 @@
             android:id="@+id/alarmActivityBgTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/timeTxtSize"/>
+            android:textSize="@dimen/timeTxtSize"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/alarmActivityBgTv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/timeTxtSize"/>
+            android:textSize="@dimen/timeTxtSize"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/alarmActivityBgTv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/timeTxtSize"/>
+            android:textSize="@dimen/timeTxtSize"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/alarmActivityBgTv4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/timeTxtSize"/>
+            android:textSize="@dimen/timeTxtSize"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/alarmActivityBgTv5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/timeTxtSize"/>
+            android:textSize="@dimen/timeTxtSize"
+            android:textStyle="italic"/>
     </LinearLayout>
 
     <!-- UI -->
@@ -63,6 +68,7 @@
                 android:background="@color/alarmsVHbg"
                 android:textColor="@color/alarmsVHtext"
                 android:textSize="@dimen/alarmActivityTextSize"
+                android:textStyle="italic"
 
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
@@ -76,7 +82,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/alarmActivitySnoozeBtn"
-                android:text="SNOOZE"/>
+                android:text="SNOOZE"
+                android:textStyle="italic"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -88,7 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/alarmActivityOffBtn"
-            android:text="TURN OFF"/>
+            android:text="TURN OFF"
+            android:textStyle="italic"/>
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

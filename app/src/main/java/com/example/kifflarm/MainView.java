@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,18 +16,19 @@ import com.example.kifflarm.alarm.Alarm;
 import com.example.kifflarm.alarm.AlarmActivity;
 import com.example.kifflarm.alarm.AlarmManager;
 import com.example.kifflarm.alarm.AlarmsAdapter;
+import com.example.kifflarm.drawables.DrawablePlus;
 
 public class MainView {
     private KIFFLARM kifflarm;
     private RelativeLayout layout;
 
-    public MainView(KIFFLARM kiffLarm, AlarmManager alarmManager){
-        this.kifflarm = kiffLarm;
+    public MainView(KIFFLARM kifflarm, AlarmManager alarmManager){
+        this.kifflarm = kifflarm;
 
         createLayout();
 
         RecyclerView recyclerView = layout.findViewById(R.id.alarmsRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(kiffLarm));
+        recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
         AlarmsAdapter alarmsAdapter = new AlarmsAdapter(alarmManager);
         recyclerView.setAdapter(alarmsAdapter);
@@ -41,15 +43,18 @@ public class MainView {
             }
         });
 
+        ImageView addIcon = layout.findViewById(R.id.addAlarmIcon);
+        addIcon.setImageDrawable(new DrawablePlus());
+
         Button fireBtn = layout.findViewById(R.id.fireAlarmBtn);
         fireBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent activityIntent = new Intent(kiffLarm, AlarmActivity.class);
+                Intent activityIntent = new Intent(kifflarm, AlarmActivity.class);
 
                 activityIntent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(alarmManager.getAlarms().get(0).getId()));
 
-                kiffLarm.startActivity(activityIntent);
+                kifflarm.startActivity(activityIntent);
             }
         });
     }
