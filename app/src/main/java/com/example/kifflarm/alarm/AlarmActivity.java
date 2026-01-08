@@ -7,13 +7,10 @@ import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -38,7 +35,10 @@ public class AlarmActivity extends AppCompatActivity {
     private Vibrator vibrator;
     private ValueAnimator tvBgAnimation, tvTxtAnimation;
 
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer speakersMediaPlayer;
+
+    //speakersMediaPlayer already plays on both speakers and earphones...
+    //private MediaPlayer earphonesMediaPlayer;
 
 
     @Override
@@ -82,19 +82,72 @@ public class AlarmActivity extends AppCompatActivity {
 
     private void setupMediaPlayer(){
         try {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+            speakersMediaPlayer = new MediaPlayer();
+            speakersMediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
                     .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
                     .setLegacyStreamType(AudioManager.STREAM_ALARM)
                     .setUsage(AudioAttributes.USAGE_ALARM)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build());
-            //mediaPlayer.setDataSource(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
-            mediaPlayer.setDataSource(getApplicationContext(), alarm.getSound().getUri());
-            mediaPlayer.setLooping(true);
+            speakersMediaPlayer.setDataSource(getApplicationContext(), alarm.getSound().getUri());
+            speakersMediaPlayer.setLooping(true);
         } catch (Exception e) {
             Log.e("AlarmActivity ZZZ", "setupMediaPlayer"+e);
         }
+
+/*
+        if(alarm.playInPhones()) {
+            try {
+                earphonesMediaPlayer = new MediaPlayer();
+                earphonesMediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                        .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build());
+                earphonesMediaPlayer.setDataSource(getApplicationContext(), alarm.getSound().getUri());
+                earphonesMediaPlayer.setLooping(true);
+            } catch (Exception e) {
+                //
+            }
+        }
+
+ */
+    }
+
+    private void playRingtone(){
+        try {
+            speakersMediaPlayer.prepare();
+            speakersMediaPlayer.start();
+        } catch (Exception e) {
+            Log.e("AlarmActivity ZZZ", "playRingTone, " + e);
+        }
+
+        /*
+        if(alarm.playInPhones()) {
+            try {
+                earphonesMediaPlayer.prepare();
+                earphonesMediaPlayer.start();
+            } catch (Exception e) {
+                Log.e("AlarmActivity ZZZ", "playRingTone, " + e);
+            }
+        }
+
+         */
+    }
+
+    private void stopRingtone(){
+        speakersMediaPlayer.stop();
+
+        /*
+        if(alarm.playInPhones()) {
+            try {
+                earphonesMediaPlayer.stop();
+            }catch (Exception e){
+                Log.e("AlarmActivity ZZZ", "stopRingtone, "+e);
+            }
+        }
+
+         */
     }
 
     private void setupBg(){
@@ -171,19 +224,6 @@ public class AlarmActivity extends AppCompatActivity {
         vibrator.cancel();
     }
 
-    private void playRingtone(){
-        try {
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        } catch (Exception e) {
-            Log.e("AlarmActivity ZZZ", "playRingTone"+e.toString());
-        }
-    }
-
-    private void stopRingtone(){
-        mediaPlayer.stop();
-    }
-
     private void alarmOff(){
         alarm.setActive(false);
         stopVibrating();
@@ -216,13 +256,24 @@ public class AlarmActivity extends AppCompatActivity {
         tvBgAnimation = null;
 
         try {
-            mediaPlayer.stop(); //throws IllegalStateException since it's probably already stopped
-            mediaPlayer.release();
+            speakersMediaPlayer.stop(); //throws IllegalStateException since it's probably already stopped
+            speakersMediaPlayer.release();
         }catch (IllegalStateException ese){
             ese.printStackTrace();
         } catch (Exception e) {
             Log.e("AlarmActivity ZZZ", "onDestroy, "+e);
         }
 
+        /*
+        if(alarm.playInPhones()) {
+            try {
+                earphonesMediaPlayer.stop();
+                earphonesMediaPlayer.release();
+            } catch (Exception e) {
+                Log.e("AlarmActivity ZZZ", "onDestroy, "+e);
+            }
+        }
+
+         */
     }
 }

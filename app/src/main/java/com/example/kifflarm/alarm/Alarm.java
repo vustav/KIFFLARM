@@ -184,6 +184,11 @@ public class Alarm {
         return active;
     }
 
+
+    public boolean playInPhones(){ //speakersMediaPlayer already plays on both speakers and earphones...
+        return false;
+    }
+
     /** SET **/
     public void setTime(int hour, int minute){
         this.hour = hour;
