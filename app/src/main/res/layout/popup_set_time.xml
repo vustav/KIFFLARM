@@ -27,7 +27,8 @@
                 android:textColor="@color/alarmsVHtext"
                 android:background="@color/alarmsVHbg"
                 android:textSize="@dimen/timeTxtSize"
-                android:textStyle="italic"/>
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -36,7 +37,8 @@
                 android:background="@color/alarmsVHbg"
                 android:textSize="@dimen/timeTxtSize"
                 android:text=":"
-                android:textStyle="italic"/>
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"/>
 
             <EditText
                 android:layout_width="wrap_content"
@@ -48,7 +50,8 @@
                 android:textColor="@color/alarmsVHtext"
                 android:background="@color/alarmsVHbg"
                 android:textSize="@dimen/timeTxtSize"
-                android:textStyle="italic"/>
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"/>
         </LinearLayout>
 
         <RelativeLayout
@@ -73,6 +76,7 @@
                 android:text="OK"
                 android:id="@+id/setTimeOKBtn"
                 android:textStyle="italic"
+                android:fontFamily="@font/default_font"
 
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>

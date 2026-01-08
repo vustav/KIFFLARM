@@ -39,7 +39,8 @@
                 android:textColor="@color/alarmsVHtext"
                 android:background="@color/alarmsVHbg"
                 android:textSize="@dimen/defaultTvTextSize"
-                android:textStyle="italic"/>
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -70,6 +71,8 @@
             android:background="@color/alarmsVHbg"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:fontFamily="@font/default_font"
+            android:textStyle="italic"
             android:text=" - "/>
     </RelativeLayout>
 

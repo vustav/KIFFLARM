@@ -10,6 +10,6 @@
         android:id="@+id/soundVHTV"
         android:textSize="@dimen/soundVHTxtSize"
         android:textStyle="italic"
-        android:singleLine="true"/>
-
+        android:singleLine="true"
+        android:fontFamily="@font/default_font"/>
 </RelativeLayout>

@@ -25,7 +25,6 @@ public class SoundManager {
         sounds = new Sounds();
         while (cursor.moveToNext()) {
             String name = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
-            //String uri = cursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/" + cursor.getString(RingtoneManager.ID_COLUMN_INDEX);
             Uri uri = Uri.parse(cursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/" + cursor.getString(RingtoneManager.ID_COLUMN_INDEX));
 
             sounds.addSound(name, uri);

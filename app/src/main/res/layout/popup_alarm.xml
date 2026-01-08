@@ -27,6 +27,7 @@
                     android:background="@color/alarmsVHbg"
                     android:textSize="@dimen/timeTxtSize"
                     android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
 
                     android:layout_marginBottom="@dimen/marginLarge"
                     android:layout_centerHorizontal="true"/>
@@ -41,7 +42,8 @@
                     android:id="@+id/alarmPopupToneBtn"
                     android:singleLine="true"
                     android:layout_centerHorizontal="true"
-                    android:textStyle="italic"/>
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -53,7 +55,8 @@
                     android:text="OK"
                     android:id="@+id/alarmPopupOkBtn"
                     android:layout_centerHorizontal="true"
-                    android:textStyle="italic"/>
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
