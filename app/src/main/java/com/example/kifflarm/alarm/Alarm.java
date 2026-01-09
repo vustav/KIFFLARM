@@ -136,6 +136,7 @@ public class Alarm {
          */
         if(pendingIntent != null) {
             androidAlarmManager.cancel(pendingIntent);
+            pendingIntent = null;
         }
     }
 
