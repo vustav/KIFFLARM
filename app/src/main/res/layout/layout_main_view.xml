@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/timeTxtSize"
         android:textStyle="italic"
-        android:fontFamily="@font/default_font"/>
+        android:fontFamily="@font/default_font"
+
+        android:layout_marginTop="-20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmsRecyclerView"

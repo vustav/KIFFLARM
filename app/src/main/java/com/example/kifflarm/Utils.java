@@ -158,10 +158,14 @@ public class Utils {
         }
         tv.setText(coloredLabel);
 
+        //AlarmActivity har Linear och main Relative...
+        /*
         Random r = new Random();
         int topMargin = r.nextInt(40)+30;
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         rlp.setMargins(0, -topMargin, 0, 0);
         tv.setLayoutParams(rlp);
+
+         */
     }
 }
