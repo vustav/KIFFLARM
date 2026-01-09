@@ -10,52 +10,56 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/alarmsVHbg"
-
-            android:layout_marginBottom="@dimen/marginLarge">
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/timeBoxSize"
-                android:id="@+id/setTimePopupHourET"
-                android:digits="0123456789"
-                android:inputType="number"
-                android:maxLength="2"
-                android:textColor="@color/alarmsVHtext"
-                android:background="@color/alarmsVHbg"
-                android:textSize="@dimen/timeTxtSize"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/alarmsVHtext"
-                android:background="@color/alarmsVHbg"
-                android:textSize="@dimen/timeTxtSize"
-                android:text=":"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/timeBoxSize"
-                android:id="@+id/setTimePopupMinuteET"
-                android:digits="0123456789"
-                android:inputType="number"
-                android:maxLength="2"
-                android:textColor="@color/alarmsVHtext"
-                android:background="@color/alarmsVHbg"
-                android:textSize="@dimen/timeTxtSize"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"/>
-        </LinearLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginLarge">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/setTimePopupTvsLayout"
+                android:orientation="horizontal"
+
+                android:layout_centerHorizontal="true">
+
+                <EditText
+                    android:layout_width="@dimen/timeBoxWidthItalic"
+                    android:layout_height="@dimen/timeBoxHeight"
+                    android:id="@+id/setTimePopupHourET"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textColor="@color/defaultTxtColor"
+                    android:textSize="@dimen/timeTxtSize"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/defaultTxtColor"
+                    android:textSize="@dimen/timeTxtSize"
+                    android:text=":"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"/>
+
+                <EditText
+                    android:layout_width="@dimen/timeBoxWidthItalic"
+                    android:layout_height="@dimen/timeBoxHeight"
+                    android:id="@+id/setTimePopupMinuteET"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textColor="@color/defaultTxtColor"
+                    android:textSize="@dimen/timeTxtSize"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:layout_marginBottom="@dimen/marginLarge">

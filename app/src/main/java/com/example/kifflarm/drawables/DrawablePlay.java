@@ -4,13 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 
-public class DrawablePlus extends Drawable {
+public class DrawablePlay extends Drawable {
     private final Paint paint;
 
-    public DrawablePlus() {
+    public DrawablePlay() {
         paint = new Paint();
         paint.setColor(Color.BLACK);
     }
@@ -20,12 +21,12 @@ public class DrawablePlus extends Drawable {
         int width = getBounds().width();
         int height = getBounds().height();
 
-        //spara för klocka
-        //float radius = Math.min(width, height) / 2;
-
-        float off = width/12f;
-        canvas.drawRect(width/2f-off, 0, width/2f+off, height, paint);
-        canvas.drawRect(0, height/2f-off, width, height/2f+off, paint);
+        Path path = new Path();
+        path.moveTo(0, 0);
+        path.lineTo(0, height);
+        path.lineTo(width, height/2f);
+        path.close();
+        canvas.drawPath(path, paint);
     }
 
     @Override
@@ -40,6 +41,7 @@ public class DrawablePlus extends Drawable {
 
     @Override
     public int getOpacity() {
+        // Must be PixelFormat.UNKNOWN, TRANSLUCENT, TRANSPARENT, or OPAQUE
         return PixelFormat.OPAQUE;
     }
 }

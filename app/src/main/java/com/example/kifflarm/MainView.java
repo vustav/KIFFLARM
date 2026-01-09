@@ -6,23 +6,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kifflarm.alarm.Alarm;
 import com.example.kifflarm.alarm.AlarmActivity;
-import com.example.kifflarm.alarm.AlarmManager;
+import com.example.kifflarm.alarm.KIFFAlarmManager;
 import com.example.kifflarm.alarm.AlarmsAdapter;
+import com.example.kifflarm.alarm.AlarmsTouchHelper;
 import com.example.kifflarm.drawables.DrawablePlus;
 
 public class MainView {
     private KIFFLARM kifflarm;
     private RelativeLayout layout;
 
-    public MainView(KIFFLARM kifflarm, AlarmManager alarmManager){
+    public MainView(KIFFLARM kifflarm, KIFFAlarmManager KIFFAlarmManager){
         this.kifflarm = kifflarm;
 
         createLayout();
@@ -30,8 +31,12 @@ public class MainView {
         RecyclerView recyclerView = layout.findViewById(R.id.alarmsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
-        AlarmsAdapter alarmsAdapter = new AlarmsAdapter(alarmManager);
+        AlarmsAdapter alarmsAdapter = new AlarmsAdapter(KIFFAlarmManager);
         recyclerView.setAdapter(alarmsAdapter);
+
+        AlarmsTouchHelper touchHelper = new AlarmsTouchHelper(alarmsAdapter);
+        ItemTouchHelper helper = new ItemTouchHelper(touchHelper);
+        helper.attachToRecyclerView(recyclerView);
 
         RelativeLayout addBtn = layout.findViewById(R.id.addAlarmBtn);
         addBtn.setBackground(Utils.getRandomGradientDrawable());
@@ -39,7 +44,7 @@ public class MainView {
             @Override
             public void onClick(View v) {
                 Utils.performHapticFeedback(addBtn);
-                alarmManager.openNewAlarmDialog(alarmsAdapter);
+                KIFFAlarmManager.openNewAlarmDialog(alarmsAdapter);
             }
         });
 
@@ -52,7 +57,7 @@ public class MainView {
             public void onClick(View v) {
                 Intent activityIntent = new Intent(kifflarm, AlarmActivity.class);
 
-                activityIntent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(alarmManager.getAlarms().get(0).getId()));
+                activityIntent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(KIFFAlarmManager.getAlarms().get(0).getId()));
 
                 kifflarm.startActivity(activityIntent);
             }
@@ -61,6 +66,9 @@ public class MainView {
 
     private void createLayout(){
         layout = (RelativeLayout) kifflarm.getLayoutInflater().inflate(R.layout.layout_main_view, null);
+
+        TextView bgTVtv = layout.findViewById(R.id.mainBgTV);
+        Utils.setupBg(layout, bgTVtv);
     }
 
     public ViewGroup getLayout(){

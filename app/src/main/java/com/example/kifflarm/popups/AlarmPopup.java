@@ -4,10 +4,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.kifflarm.alarm.Alarm;
-import com.example.kifflarm.alarm.AlarmManager;
+import com.example.kifflarm.alarm.KIFFAlarmManager;
 import com.example.kifflarm.alarm.AlarmsAdapter;
 import com.example.kifflarm.KIFFLARM;
 import com.example.kifflarm.R;
@@ -19,7 +20,7 @@ public class AlarmPopup extends Popup {
 
     private Button soundBtn;
 
-    public AlarmPopup(KIFFLARM kifflarm, AlarmManager alarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
+    public AlarmPopup(KIFFLARM kifflarm, KIFFAlarmManager KIFFAlarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
 
         this.alarm = alarm;
@@ -37,7 +38,7 @@ public class AlarmPopup extends Popup {
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);
 
-        timeTV= popupView.findViewById(R.id.alarmPopupTV);
+        timeTV = popupView.findViewById(R.id.alarmPopupTV);
         timeTV.setText(alarm.getTimeAsString());
         timeTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +46,9 @@ public class AlarmPopup extends Popup {
                 new SetTimePopup(kifflarm, AlarmPopup.this, alarm.getHourAsString(), alarm.getMinuteAsString());
             }
         });
+
+        RelativeLayout tvLayout = popupView.findViewById(R.id.alarmPopupTVLayout);
+        tvLayout.setBackground(Utils.getRandomGradientDrawable());
 
         soundBtn = popupView.findViewById(R.id.alarmPopupToneBtn);
         setSoundBtnTxt(alarm.getSound().getName());
@@ -62,12 +66,12 @@ public class AlarmPopup extends Popup {
             public void onDismiss() {
 
                 if(newAlarm) {
-                    Utils.insertInArraySorted(alarmManager.getAlarms(), alarm);
+                    Utils.insertInArraySorted(KIFFAlarmManager.getAlarms(), alarm);
                     alarm.setActive(true);
                 }
                 else{
                     //inte implementerad
-                    Utils.sortTimes(alarmManager.getAlarms());
+                    Utils.sortTimes(KIFFAlarmManager.getAlarms());
                 }
 
                 //using this since a sort can push everything around

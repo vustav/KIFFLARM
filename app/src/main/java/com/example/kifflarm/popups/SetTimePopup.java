@@ -1,15 +1,11 @@
 package com.example.kifflarm.popups;
 
-import androidx.core.content.ContextCompat;
-
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
@@ -18,13 +14,13 @@ import com.example.kifflarm.R;
 import com.example.kifflarm.Utils;
 
 public class SetTimePopup extends Popup {
-    private AlarmPopup alarmPopup;
     private EditText hourET, minuteET, selectedET;
+    private int selectedTxt;
 
     public SetTimePopup(KIFFLARM kifflarm, AlarmPopup alarmPopup, String hour, String minute){
         super(kifflarm);
 
-        this.alarmPopup = alarmPopup;
+        selectedTxt = Utils.getRandomColor();
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_set_time, null);
@@ -111,6 +107,9 @@ public class SetTimePopup extends Popup {
         //start with hour selected
         selectET(hourET);
 
+        LinearLayout tvLayout = popupView.findViewById(R.id.setTimePopupTvsLayout);
+        tvLayout.setBackground(Utils.getRandomGradientDrawable());
+
         //okBtn
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
@@ -124,18 +123,22 @@ public class SetTimePopup extends Popup {
         selectedET = et;
 
         if(selectedET == hourET){
-            hourET.setTextColor(kifflarm.getResources().getColor(R.color.alarmsVHbg, null));
-            hourET.setBackgroundColor(kifflarm.getResources().getColor(R.color.alarmsVHtext, null));
+            //hourET.setTextColor(kifflarm.getResources().getColor(R.color.alarmsVHbg, null));
+            //hourET.setBackgroundColor(kifflarm.getResources().getColor(R.color.selected_bg, null));
+            hourET.setTextColor(selectedTxt);
+            hourET.setBackgroundColor(Utils.getContrastColor(selectedTxt));
 
-            minuteET.setTextColor(kifflarm.getResources().getColor(R.color.alarmsVHtext, null));
-            minuteET.setBackgroundColor(kifflarm.getResources().getColor(R.color.alarmsVHbg, null));
+            minuteET.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            minuteET.setBackgroundColor(Color.TRANSPARENT);
         }
         else{
-            minuteET.setTextColor(kifflarm.getResources().getColor(R.color.alarmsVHbg, null));
-            minuteET.setBackgroundColor(kifflarm.getResources().getColor(R.color.alarmsVHtext, null));
+            //minuteET.setTextColor(kifflarm.getResources().getColor(R.color.alarmsVHbg, null));
+            //minuteET.setBackgroundColor(kifflarm.getResources().getColor(R.color.selected_bg, null));
+            minuteET.setTextColor(selectedTxt);
+            minuteET.setBackgroundColor(Utils.getContrastColor(selectedTxt));
 
-            hourET.setTextColor(kifflarm.getResources().getColor(R.color.alarmsVHtext, null));
-            hourET.setBackgroundColor(kifflarm.getResources().getColor(R.color.alarmsVHbg, null));
+            hourET.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            hourET.setBackgroundColor(Color.TRANSPARENT);
         }
 
         //klocka

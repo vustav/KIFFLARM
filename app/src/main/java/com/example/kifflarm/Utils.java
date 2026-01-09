@@ -2,8 +2,12 @@ package com.example.kifflarm;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.kifflarm.alarm.Alarm;
@@ -125,5 +129,39 @@ public class Utils {
         int color = getRandomColor();
         tv.setBackgroundColor(color);
         tv.setTextColor(getContrastColor(color));
+    }
+
+    /** BG **/
+    public static void setupBg(RelativeLayout layout, TextView tv){
+        layout.setBackground(Utils.getRandomGradientDrawable());
+
+        String label = "ALARM";
+        String concatLabel = "";
+
+        int nOfCopys = 55;
+        for(int copy = 0; copy <= nOfCopys; copy++){
+
+            int start = 0;
+
+            if(copy == 0){
+                Random r = new Random();
+                start = r.nextInt(label.length());
+            }
+            for(int i = start; i < label.length(); i++){
+                concatLabel += String.valueOf(label.charAt(i));
+            }
+        }
+
+        SpannableString coloredLabel = new SpannableString(concatLabel);
+        for(int i = 0; i < coloredLabel.length() - 1; i++){
+            coloredLabel.setSpan(new ForegroundColorSpan(Utils.getRandomColor()), i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        tv.setText(coloredLabel);
+
+        Random r = new Random();
+        int topMargin = r.nextInt(40)+30;
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        rlp.setMargins(0, -topMargin, 0, 0);
+        tv.setLayoutParams(rlp);
     }
 }

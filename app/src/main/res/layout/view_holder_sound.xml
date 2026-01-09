@@ -4,12 +4,46 @@
     android:layout_height="wrap_content"
     android:id="@+id/soundVHBG">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/defaultBtnHeight"
-        android:id="@+id/soundVHTV"
-        android:textSize="@dimen/soundVHTxtSize"
-        android:textStyle="italic"
-        android:singleLine="true"
-        android:fontFamily="@font/default_font"/>
+        android:id="@+id/soundVHTVLayout"
+
+        android:layout_toStartOf="@id/soundVHPlayBtn">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/soundVHTV"
+            android:textSize="@dimen/soundVHTxtSize"
+            android:textStyle="italic"
+            android:singleLine="true"
+            android:textColor="@color/defaultTxtColor"
+            android:fontFamily="@font/default_font"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/defaultBtnHeight"
+        android:layout_height="@dimen/defaultBtnHeight"
+        android:layout_alignParentEnd="true">
+
+
+        <!-- without this FrameLayout the button always covers the ImageView -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/soundVHPlayBtn"/>
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="@dimen/addBtnIconSize"
+            android:layout_height="@dimen/addBtnIconSize"
+            android:layout_centerInParent="true"
+            android:id="@+id/soundVHPlatBtnIcon"/>
+    </RelativeLayout>
 </RelativeLayout>

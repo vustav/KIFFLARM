@@ -36,11 +36,12 @@
                 android:id="@+id/alarmVHtextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/alarmsVHtext"
-                android:background="@color/alarmsVHbg"
+                android:textColor="@color/defaultTxtColor"
                 android:textSize="@dimen/defaultTvTextSize"
                 android:textStyle="italic"
-                android:fontFamily="@font/default_font"/>
+                android:fontFamily="@font/default_font"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -67,8 +68,7 @@
             android:id="@+id/alarmVHRemovetextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/alarmsVHtext"
-            android:background="@color/alarmsVHbg"
+            android:textColor="@color/defaultTxtColor"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:fontFamily="@font/default_font"

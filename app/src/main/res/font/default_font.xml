@@ -3,9 +3,5 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/ds_digi" />
-    <font
-        android:fontStyle="italic"
-        android:fontWeight="400"
-        android:font="@font/lin_libertine_rl" />
+        android:font="@font/the_italic_font"/>
 </font-family>

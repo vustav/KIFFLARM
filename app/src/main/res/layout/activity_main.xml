@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KIFFLARM"
-    android:background="@drawable/bg_wood">
+    tools:context=".KIFFLARM">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

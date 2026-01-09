@@ -1,5 +1,6 @@
 package com.example.kifflarm.alarm;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.kifflarm.FileManager;
+import com.example.kifflarm.Utils;
 import com.example.kifflarm.sound.Sound;
 
 import java.util.ArrayList;
@@ -20,15 +22,35 @@ public class Alarm {
     private boolean active;
     private int id;
     private Sound sound;
-    public static String ALRM_INTENT_ID = "alrm_intent_id", ALRM_INTENT_MESSAGE = "alrm_intent__msg", ALRM_INTENT_TONE = "alrm_intent_ringtone";
 
+    private int color;
+    public static String ALRM_INTENT_ID = "alrm_intent_id";
+
+    /** ÄNDRA TILLBAKS OM DET INTE FUKKAR **/
+    // alarmManager.setAlarmClock -> alarmManager.setExactAndAllowWhileIdle
+    //ändra tillbaks i cancel
+
+    //this is for new alarms. passing sound since alarms has to be created in AlarmActivity and can't have access to other classes (SoundManager in this case)
     public Alarm(Context context, Sound sound){
+        this(context);
+        this.sound = sound;
+        setActive(false);
+    }
+
+    //this is for restored alarms
+    //ArrayList<Alarm> alarms is because if tiles are corrupted the alarms has to be able to remove itself, just pass null if not needed
+    public Alarm(Context context, ArrayList<String> params){
+        this(context);
+        restoreParams(params);
+        setActive(active);
+    }
+
+    //this are shared for both and new alarms. Setting params here if restoration fails. makes the alarm useless of course =((
+    private Alarm(Context context){
         this.context = context;
 
         androidAlarmManager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         fileManager = new FileManager(context);
-
-        this.sound = sound;
 
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
@@ -45,21 +67,8 @@ public class Alarm {
         }
 
         id = (int) date.getTime();
-        //Log.e("Alarm ZZZ", "id: "+ id);
 
-        setActive(false);
-        //setTime(hour, minute);
-    }
-
-    //ArrayList<Alarm> alarms is because if tiles are corrupted the alarms has to be able to remove itself, just pass null if not needed
-    public Alarm(Context context, ArrayList<String> params){
-        this.context = context;
-
-        androidAlarmManager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        fileManager = new FileManager(context);
-        restoreParams(params);
-
-        setActive(active);
+        color = Utils.getRandomColor();
     }
 
     public void setActive(boolean active){
@@ -78,6 +87,8 @@ public class Alarm {
         }
     }
 
+    /** körde new Intent i cancel förut men testar det här nu.. ändra tillbaks om det krånglar **/
+    private PendingIntent pendingIntent;
     public void scheduleAlarm(){
         Log.e("Alarm ZZZ", "schedule "+hour+":"+minute);
 
@@ -85,22 +96,34 @@ public class Alarm {
         intent.putExtra(ALRM_INTENT_ID, Integer.toString(id));
         //intent.putExtra(ALRM_INTENT_TONE, getRingTone());
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+        //PendingIntent pendingIntent = PendingIntent.getBroadcast(
+        pendingIntent = PendingIntent.getBroadcast(
                 context,
                 id,
                 intent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
         );
 
+        AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(getTimeInMS(), pendingIntent);
+        androidAlarmManager.setAlarmClock(
+                info,
+                pendingIntent
+        );
+
+/*
         androidAlarmManager.setExactAndAllowWhileIdle(
                 android.app.AlarmManager.RTC_WAKEUP,
                 getTimeInMS(),
                 pendingIntent
         );
+
+ */
     }
 
+    //står samma intent i docs. om det krånglar, testa att anvöönda global var och köra SAMMA intent
     public void cancelAlarm(){
         Log.e("Alarm ZZZ", "cancel "+hour+":"+minute);
+        /*
         androidAlarmManager.cancel(
                 PendingIntent.getBroadcast(
                         context,
@@ -109,6 +132,11 @@ public class Alarm {
                         PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
                 )
         );
+
+         */
+        if(pendingIntent != null) {
+            androidAlarmManager.cancel(pendingIntent);
+        }
     }
 
     public void removeAlarm(){
@@ -187,6 +215,10 @@ public class Alarm {
 
     public boolean playInPhones(){ //speakersMediaPlayer already plays on both speakers and earphones...
         return false;
+    }
+
+    public int getColor(){
+        return color;
     }
 
     /** SET **/

@@ -12,7 +12,10 @@
 
     <!-- MAIN LAYOUT -->
     <dimen name="addBtnSize">50dp</dimen>
-    <dimen name="addBtnIconSize">40dp</dimen>
+    <dimen name="addBtnIconSize">20dp</dimen>
+
+    <!-- ALARM POPUP -->
+    <dimen name="alarmPopupSoundBtnWidth">260dp</dimen>
 
     <!-- ALARMS RECYCLER VIEW -->
     <dimen name="alarmsVHheight">57dp</dimen>
@@ -21,8 +24,11 @@
     <dimen name="alarmsVHPaddingEnd">10dp</dimen>
 
     <!-- SET TIME -->
-    <dimen name="watchSize">100dp</dimen>
-    <dimen name="timeBoxSize">60dp</dimen>
+    <dimen name="watchSize">200dp</dimen>
+    <dimen name="timeBoxHeight">60dp</dimen>
+    <dimen name="timeBoxWidth">40dp</dimen>
+    <dimen name="timeBoxWidthRL">40dp</dimen>
+    <dimen name="timeBoxWidthItalic">55dp</dimen>
 
-    <!-- ALARM SCTIVITY -->
+    <!-- ALARM ACTIVITY -->
 </resources>

@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/alarmActivityBgTv1"
+            android:id="@+id/alarmActivityBgTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/timeTxtSize"
@@ -37,9 +37,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/alarmActivityTV"
+                android:id="@+id/alarmActivityTimeTV"
                 android:background="@color/alarmsVHbg"
-                android:textColor="@color/alarmsVHtext"
+                android:textColor="@color/defaultTxtColor"
                 android:textSize="@dimen/alarmActivityTextSize"
                 android:textStyle="italic"
                 android:fontFamily="@font/default_font"

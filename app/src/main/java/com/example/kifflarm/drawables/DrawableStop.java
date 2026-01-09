@@ -7,10 +7,10 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 
-public class DrawablePlus extends Drawable {
+public class DrawableStop extends Drawable {
     private final Paint paint;
 
-    public DrawablePlus() {
+    public DrawableStop() {
         paint = new Paint();
         paint.setColor(Color.BLACK);
     }
@@ -20,12 +20,7 @@ public class DrawablePlus extends Drawable {
         int width = getBounds().width();
         int height = getBounds().height();
 
-        //spara för klocka
-        //float radius = Math.min(width, height) / 2;
-
-        float off = width/12f;
-        canvas.drawRect(width/2f-off, 0, width/2f+off, height, paint);
-        canvas.drawRect(0, height/2f-off, width, height/2f+off, paint);
+        canvas.drawRect(0, 0, width, height, paint);
     }
 
     @Override

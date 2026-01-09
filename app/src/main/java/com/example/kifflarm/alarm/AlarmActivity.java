@@ -34,12 +34,7 @@ public class AlarmActivity extends AppCompatActivity {
     private Alarm alarm;
     private Vibrator vibrator;
     private ValueAnimator tvBgAnimation, tvTxtAnimation;
-
-    private MediaPlayer speakersMediaPlayer;
-
-    //speakersMediaPlayer already plays on both speakers and earphones...
-    //private MediaPlayer earphonesMediaPlayer;
-
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +47,18 @@ public class AlarmActivity extends AppCompatActivity {
         alarm = getAlarm(intent.getStringExtra(Alarm.ALRM_INTENT_ID));
 
         setupMediaPlayer();
-        setupBg();
+
+        RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
+        TextView bgTVtv = layout.findViewById(R.id.alarmActivityBgTv);
+        Utils.setupBg(layout, bgTVtv);
+        //setupBg();
 
         vibrator = ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE));
         startVibrating();
 
-        RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
-
-        TextView tv = layout.findViewById(R.id.alarmActivityTV);
-        tv.setText(alarm.getTimeAsString());
-        animateTV(tv);
+        TextView timeTv = layout.findViewById(R.id.alarmActivityTimeTV);
+        timeTv.setText(alarm.getTimeAsString());
+        animateTV(timeTv);
 
         Button offBtn = layout.findViewById(R.id.alarmActivityOffBtn);
         offBtn.setOnClickListener(new View.OnClickListener() {
@@ -76,108 +73,37 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        Log.e("AlarmActivity ZZZ", "onResume");
+        //Log.e("AlarmActivity ZZZ", "onResume");
         playRingtone();
     }
 
     private void setupMediaPlayer(){
         try {
-            speakersMediaPlayer = new MediaPlayer();
-            speakersMediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
                     .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
                     .setLegacyStreamType(AudioManager.STREAM_ALARM)
                     .setUsage(AudioAttributes.USAGE_ALARM)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build());
-            speakersMediaPlayer.setDataSource(getApplicationContext(), alarm.getSound().getUri());
-            speakersMediaPlayer.setLooping(true);
+            mediaPlayer.setDataSource(getApplicationContext(), alarm.getSound().getUri());
+            mediaPlayer.setLooping(true);
         } catch (Exception e) {
             Log.e("AlarmActivity ZZZ", "setupMediaPlayer"+e);
         }
-
-/*
-        if(alarm.playInPhones()) {
-            try {
-                earphonesMediaPlayer = new MediaPlayer();
-                earphonesMediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                        .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
-                        .setUsage(AudioAttributes.USAGE_ALARM)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .build());
-                earphonesMediaPlayer.setDataSource(getApplicationContext(), alarm.getSound().getUri());
-                earphonesMediaPlayer.setLooping(true);
-            } catch (Exception e) {
-                //
-            }
-        }
-
- */
     }
 
     private void playRingtone(){
         try {
-            speakersMediaPlayer.prepare();
-            speakersMediaPlayer.start();
+            mediaPlayer.prepare();
+            mediaPlayer.start();
         } catch (Exception e) {
             Log.e("AlarmActivity ZZZ", "playRingTone, " + e);
         }
-
-        /*
-        if(alarm.playInPhones()) {
-            try {
-                earphonesMediaPlayer.prepare();
-                earphonesMediaPlayer.start();
-            } catch (Exception e) {
-                Log.e("AlarmActivity ZZZ", "playRingTone, " + e);
-            }
-        }
-
-         */
     }
 
     private void stopRingtone(){
-        speakersMediaPlayer.stop();
-
-        /*
-        if(alarm.playInPhones()) {
-            try {
-                earphonesMediaPlayer.stop();
-            }catch (Exception e){
-                Log.e("AlarmActivity ZZZ", "stopRingtone, "+e);
-            }
-        }
-
-         */
-    }
-
-    private void setupBg(){
-        RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
-        layout.setBackground(Utils.getRandomGradientDrawable());
-
-        TextView tv = layout.findViewById(R.id.alarmActivityBgTv1);
-
-        String label = "ALARM";
-        String concatLabel = "";
-
-        int nOfCopys = 37;
-        for(int copy = 0; copy <= nOfCopys; copy++){
-
-            int start = 0;
-
-            if(copy == 0){
-                Random r = new Random();
-                start = r.nextInt(label.length());
-            }
-            for(int i = start; i < label.length(); i++){
-                concatLabel += String.valueOf(label.charAt(i));
-            }
-        }
-
-        SpannableString coloredLabel = new SpannableString(concatLabel);
-        for(int i = 0; i < coloredLabel.length() - 1; i++){
-            coloredLabel.setSpan(new ForegroundColorSpan(Utils.getRandomColor()), i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        tv.setText(coloredLabel);
+        mediaPlayer.stop();
     }
 
     private void animateTV(TextView tv){
@@ -256,24 +182,12 @@ public class AlarmActivity extends AppCompatActivity {
         tvBgAnimation = null;
 
         try {
-            speakersMediaPlayer.stop(); //throws IllegalStateException since it's probably already stopped
-            speakersMediaPlayer.release();
+            mediaPlayer.stop(); //throws IllegalStateException since it's probably already stopped
+            mediaPlayer.release();
         }catch (IllegalStateException ese){
             ese.printStackTrace();
         } catch (Exception e) {
             Log.e("AlarmActivity ZZZ", "onDestroy, "+e);
         }
-
-        /*
-        if(alarm.playInPhones()) {
-            try {
-                earphonesMediaPlayer.stop();
-                earphonesMediaPlayer.release();
-            } catch (Exception e) {
-                Log.e("AlarmActivity ZZZ", "onDestroy, "+e);
-            }
-        }
-
-         */
     }
 }

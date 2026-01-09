@@ -1,20 +1,18 @@
 package com.example.kifflarm.alarm;
 
-import android.util.Log;
-
 import com.example.kifflarm.FileManager;
 import com.example.kifflarm.KIFFLARM;
 import com.example.kifflarm.popups.AlarmPopup;
 
 import java.util.ArrayList;
 
-public class AlarmManager {
+public class KIFFAlarmManager {
     private KIFFLARM kifflarm;
 
     private FileManager fileManager;
     private ArrayList<Alarm> alarms;
 
-    public AlarmManager(KIFFLARM kifflarm){
+    public KIFFAlarmManager(KIFFLARM kifflarm){
         this.kifflarm = kifflarm;
         fileManager = new FileManager(kifflarm);
 

@@ -14,7 +14,7 @@ import com.example.kifflarm.Utils;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
-    private AlarmManager alarmManager;
+    private KIFFAlarmManager KIFFAlarmManager;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -22,26 +22,27 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout bg;
-        private final TextView textView;
-        private final Button button, delBtn;
+        private final TextView mainTV, removeTV;
+        private final Button mainBtn, delBtn;
         private final SwitchMaterial toggle;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
             bg = view.findViewById(R.id.alarmVHBg);
-            textView = view.findViewById(R.id.alarmVHtextView);
-            button = view.findViewById(R.id.alarmVHbutton);
+            mainTV = view.findViewById(R.id.alarmVHtextView);
+            mainBtn = view.findViewById(R.id.alarmVHbutton);
             delBtn = view.findViewById(R.id.alarmVHRemovebutton);
             toggle = view.findViewById(R.id.alarmsVHToggle);
+            removeTV = view.findViewById(R.id.alarmVHRemovetextView);
         }
     }
 
     /**
      * Initialize the dataset of the Adapter
      */
-    public AlarmsAdapter(AlarmManager alarmManager) {
-        this.alarmManager = alarmManager;
+    public AlarmsAdapter(KIFFAlarmManager KIFFAlarmManager) {
+        this.KIFFAlarmManager = KIFFAlarmManager;
     }
 
     // Create new views (invoked by the layout manager)
@@ -59,23 +60,31 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
-        Alarm alarm = alarmManager.getAlarms().get(position);
-        viewHolder.textView.setText(alarm.getTimeAsString());
+        Alarm alarm = KIFFAlarmManager.getAlarms().get(position);
+        viewHolder.mainTV.setText(alarm.getTimeAsString());
 
-        activateVH(viewHolder, alarmManager.getAlarmActive(position));
+        viewHolder.mainTV.setBackground(Utils.getRandomGradientDrawable());
+
+        activateVH(viewHolder, KIFFAlarmManager.getAlarmActive(position));
         viewHolder.toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            alarmManager.setAlarmActive(viewHolder.getAdapterPosition(), isChecked);
+            KIFFAlarmManager.setAlarmActive(viewHolder.getAdapterPosition(), isChecked);
             activateVH(viewHolder, isChecked);
+            Utils.performHapticFeedback(viewHolder.toggle);
         });
 
-        viewHolder.button.setOnClickListener(v -> alarmManager.openAlarmDialog(this, viewHolder.getAdapterPosition(), false));
+        viewHolder.mainBtn.setOnClickListener(v -> KIFFAlarmManager.openAlarmDialog(this, viewHolder.getAdapterPosition(), false));
         viewHolder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alarmManager.removeAlarm(viewHolder.getAdapterPosition());
-                notifyItemRemoved(viewHolder.getAdapterPosition());
+                removeAlarm(viewHolder.getAdapterPosition());
             }
         });
+        viewHolder.removeTV.setBackground(Utils.getRandomGradientDrawable());
+    }
+
+    public void removeAlarm(int i){
+        KIFFAlarmManager.removeAlarm(i);
+        notifyItemRemoved(i);
     }
 
     public void activateVH(ViewHolder viewHolder, boolean on){
@@ -83,20 +92,20 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         if(on) {
             viewHolder.delBtn.setAlpha(1);
-            viewHolder.button.setAlpha(1);
-            viewHolder.textView.setAlpha(1);
+            viewHolder.mainBtn.setAlpha(1);
+            viewHolder.mainTV.setAlpha(1);
         }
         else{
             float alpha = .5f;
             viewHolder.delBtn.setAlpha(alpha);
-            viewHolder.button.setAlpha(alpha);
-            viewHolder.textView.setAlpha(alpha);
+            viewHolder.mainBtn.setAlpha(alpha);
+            viewHolder.mainTV.setAlpha(alpha);
         }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return alarmManager.getAlarms().size();
+        return KIFFAlarmManager.getAlarms().size();
     }
 }
