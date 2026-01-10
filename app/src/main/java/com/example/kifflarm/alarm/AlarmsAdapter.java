@@ -1,5 +1,6 @@
 package com.example.kifflarm.alarm;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import com.example.kifflarm.Utils;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
-    private KIFFAlarmManager KIFFAlarmManager;
+    private kiffAlarmManager KIFFAlarmManager;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -41,8 +42,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     /**
      * Initialize the dataset of the Adapter
      */
-    public AlarmsAdapter(KIFFAlarmManager KIFFAlarmManager) {
+    public AlarmsAdapter(kiffAlarmManager KIFFAlarmManager) {
         this.KIFFAlarmManager = KIFFAlarmManager;
+    }
+
+    public void onResume(){
+        notifyDataSetChanged();
+        Log.e("AlarmsAdapter ZZZ", "onResume");
     }
 
     // Create new views (invoked by the layout manager)
@@ -76,6 +82,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         viewHolder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utils.performHapticFeedback(v);
                 removeAlarm(viewHolder.getAdapterPosition());
             }
         });

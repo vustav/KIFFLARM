@@ -50,7 +50,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/defaultBtnHeight"
-                    android:id="@+id/alarmPopupToneBtn"
+                    android:id="@+id/alarmPopupSoundBtn"
                     android:singleLine="true"
                     android:layout_centerHorizontal="true"
                     android:textStyle="italic"

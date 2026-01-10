@@ -7,11 +7,11 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.kifflarm.alarm.KIFFAlarmManager;
+import com.example.kifflarm.alarm.kiffAlarmManager;
 import com.example.kifflarm.sound.SoundManager;
 
 public class KIFFLARM extends AppCompatActivity {
-    private KIFFAlarmManager KIFFAlarmManager;
+    private kiffAlarmManager kiffAlarmManager;
     private SoundManager soundManager;
     private MainView mainView;
 
@@ -34,8 +34,8 @@ public class KIFFLARM extends AppCompatActivity {
 
         //create classes
         soundManager = new SoundManager(this);
-        KIFFAlarmManager = new KIFFAlarmManager(this);
-        mainView = new MainView(this, KIFFAlarmManager);
+        kiffAlarmManager = new kiffAlarmManager(this);
+        mainView = new MainView(this, kiffAlarmManager);
 
         //add main layout
         ViewGroup layout = findViewById(R.id.main);
@@ -45,7 +45,7 @@ public class KIFFLARM extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        //
+        mainView.onResume();
     }
 
     /** GET **/

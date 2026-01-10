@@ -14,7 +14,7 @@ import com.example.kifflarm.sound.Sound;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-public class Alarm {
+public class Alarm implements Comparable<Alarm>{
     private Context context;
     private android.app.AlarmManager androidAlarmManager;
     private FileManager fileManager;
@@ -176,6 +176,11 @@ public class Alarm {
         return minute;
     }
 
+    public int getComparableTime(){
+        //returns 1156 for 11:56 for easy comparison
+        return Integer.parseInt(getHourAsString()+getMinuteAsString());
+    }
+
     public String getAlarmIdAsString(){
         return Integer.toString(id);
     }
@@ -211,11 +216,6 @@ public class Alarm {
 
     public boolean isActive(){
         return active;
-    }
-
-
-    public boolean playInPhones(){ //speakersMediaPlayer already plays on both speakers and earphones...
-        return false;
     }
 
     public int getColor(){
@@ -287,6 +287,12 @@ public class Alarm {
         }
 
         setSound(new Sound(soundName, Uri.parse(soundUri)));
+    }
+
+    /** COMPARE **/
+    @Override
+    public int compareTo(Alarm compareAlarm) {
+        return getComparableTime() - compareAlarm.getComparableTime();
     }
 }
 

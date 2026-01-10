@@ -7,12 +7,16 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.kifflarm.alarm.Alarm;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class Utils {
@@ -22,30 +26,16 @@ public class Utils {
     }
 
     public static void sortTimes(ArrayList<Alarm> alarms){
-
+        Collections.sort(alarms, new Comparator<Alarm>() {
+            public int compare(Alarm a1, Alarm a2) {
+                return a1.compareTo(a2);
+            }
+        });
     }
 
     public static int insertInArraySorted(ArrayList<Alarm> alarms, Alarm newAlarm){
         for(int i = 0; i < alarms.size(); i++){
             Alarm oldAlarm = alarms.get(i);
-
-            /*
-            if (newAlarm.getHour() <= oldAlarm.getHour()) {
-
-
-                if(newAlarm.getHour() == oldAlarm.getHour()) {
-                    if (newAlarm.getMinute() <= oldAlarm.getMinute()) {
-                        alarms.add(i, newAlarm);
-                        return i;
-                    }
-                }
-                else{
-                    alarms.add(i, newAlarm);
-                    return i;
-                }
-            }
-
-             */
 
             //if hour is smaller, insert
             if(newAlarm.getHour() < oldAlarm.getHour()){
@@ -138,7 +128,7 @@ public class Utils {
         String label = "ALARM";
         String concatLabel = "";
 
-        int nOfCopys = 55;
+        int nOfCopys = 65;
         for(int copy = 0; copy <= nOfCopys; copy++){
 
             int start = 0;
@@ -159,13 +149,13 @@ public class Utils {
         tv.setText(coloredLabel);
 
         //AlarmActivity har Linear och main Relative...
-        /*
+/*
         Random r = new Random();
         int topMargin = r.nextInt(40)+30;
-        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        rlp.setMargins(0, -topMargin, 0, 0);
-        tv.setLayoutParams(rlp);
+        ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        mlp.setMargins(0, -topMargin, 0, 0);
+        tv.setLayoutParams(mlp);
 
-         */
+ */
     }
 }

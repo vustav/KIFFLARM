@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.kifflarm.alarm.Alarm;
-import com.example.kifflarm.alarm.KIFFAlarmManager;
+import com.example.kifflarm.alarm.kiffAlarmManager;
 import com.example.kifflarm.alarm.AlarmsAdapter;
 import com.example.kifflarm.KIFFLARM;
 import com.example.kifflarm.R;
@@ -20,7 +20,7 @@ public class AlarmPopup extends Popup {
 
     private Button soundBtn;
 
-    public AlarmPopup(KIFFLARM kifflarm, KIFFAlarmManager KIFFAlarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
+    public AlarmPopup(KIFFLARM kifflarm, kiffAlarmManager KIFFAlarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
 
         this.alarm = alarm;
@@ -50,11 +50,11 @@ public class AlarmPopup extends Popup {
         RelativeLayout tvLayout = popupView.findViewById(R.id.alarmPopupTVLayout);
         tvLayout.setBackground(Utils.getRandomGradientDrawable());
 
-        soundBtn = popupView.findViewById(R.id.alarmPopupToneBtn);
-        setSoundBtnTxt(alarm.getSound().getName());
+        soundBtn = popupView.findViewById(R.id.alarmPopupSoundBtn);
         soundBtn.setOnClickListener(v -> {
             new SoundPopup(kifflarm, this, alarm);
         });
+        setSoundBtnTxt(alarm.getSound().getName());
 
         Button okBtn = popupView.findViewById(R.id.alarmPopupOkBtn);
         okBtn.setOnClickListener(v -> {

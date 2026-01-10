@@ -1,6 +1,5 @@
 package com.example.kifflarm.popups;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,7 @@ public class SoundPopupAdapter extends RecyclerView.Adapter<SoundPopupAdapter.Vi
             tvBg = view.findViewById(R.id.soundVHTVLayout);
             tv = view.findViewById(R.id.soundVHTV);
             playBtn = view.findViewById(R.id.soundVHPlayBtn);
-            playBtnIcon = view.findViewById(R.id.soundVHPlatBtnIcon);
+            playBtnIcon = view.findViewById(R.id.soundVHPlayBtnIcon);
         }
 
         private void setPlaying(boolean playing){

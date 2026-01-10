@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kifflarm.alarm.Alarm;
 import com.example.kifflarm.alarm.AlarmActivity;
-import com.example.kifflarm.alarm.KIFFAlarmManager;
+import com.example.kifflarm.alarm.kiffAlarmManager;
 import com.example.kifflarm.alarm.AlarmsAdapter;
 import com.example.kifflarm.alarm.AlarmsTouchHelper;
 import com.example.kifflarm.drawables.DrawablePlus;
@@ -23,7 +23,9 @@ public class MainView {
     private KIFFLARM kifflarm;
     private RelativeLayout layout;
 
-    public MainView(KIFFLARM kifflarm, KIFFAlarmManager KIFFAlarmManager){
+    private AlarmsAdapter alarmsAdapter;
+
+    public MainView(KIFFLARM kifflarm, kiffAlarmManager KIFFAlarmManager){
         this.kifflarm = kifflarm;
 
         createLayout();
@@ -31,7 +33,7 @@ public class MainView {
         RecyclerView recyclerView = layout.findViewById(R.id.alarmsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
-        AlarmsAdapter alarmsAdapter = new AlarmsAdapter(KIFFAlarmManager);
+        alarmsAdapter = new AlarmsAdapter(KIFFAlarmManager);
         recyclerView.setAdapter(alarmsAdapter);
 
         AlarmsTouchHelper touchHelper = new AlarmsTouchHelper(alarmsAdapter);
@@ -62,6 +64,12 @@ public class MainView {
                 kifflarm.startActivity(activityIntent);
             }
         });
+    }
+
+    public void onResume(){
+        if(alarmsAdapter != null){
+            alarmsAdapter.onResume();
+        }
     }
 
     private void createLayout(){

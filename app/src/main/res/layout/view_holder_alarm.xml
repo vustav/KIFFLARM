@@ -28,21 +28,18 @@
                 android:id="@+id/alarmVHbutton"/>
         </FrameLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/alarmVHtextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-            <TextView
-                android:id="@+id/alarmVHtextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/defaultTxtColor"
-                android:textSize="@dimen/defaultTvTextSize"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"/>
-        </LinearLayout>
+            android:textColor="@color/defaultTxtColor"
+            android:textSize="@dimen/defaultTvTextSize"
+            android:textStyle="italic"
+            android:fontFamily="@font/default_font"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <RelativeLayout

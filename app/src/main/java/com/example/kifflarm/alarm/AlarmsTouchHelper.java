@@ -3,6 +3,8 @@ package com.example.kifflarm.alarm;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kifflarm.Utils;
+
 public class AlarmsTouchHelper extends ItemTouchHelper.SimpleCallback {
     private AlarmsAdapter adapter;
 
@@ -22,6 +24,7 @@ public class AlarmsTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+        Utils.performHapticFeedback(viewHolder.itemView);
         adapter.removeAlarm(viewHolder.getAdapterPosition());
     }
 

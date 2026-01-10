@@ -2,17 +2,18 @@ package com.example.kifflarm.alarm;
 
 import com.example.kifflarm.FileManager;
 import com.example.kifflarm.KIFFLARM;
+import com.example.kifflarm.Utils;
 import com.example.kifflarm.popups.AlarmPopup;
 
 import java.util.ArrayList;
 
-public class KIFFAlarmManager {
+public class kiffAlarmManager {
     private KIFFLARM kifflarm;
 
     private FileManager fileManager;
     private ArrayList<Alarm> alarms;
 
-    public KIFFAlarmManager(KIFFLARM kifflarm){
+    public kiffAlarmManager(KIFFLARM kifflarm){
         this.kifflarm = kifflarm;
         fileManager = new FileManager(kifflarm);
 
@@ -23,14 +24,15 @@ public class KIFFAlarmManager {
 
         if(!paramsArray.isEmpty()){
             for(ArrayList<String> params : paramsArray){
-                //try {
-                    alarms.add(new Alarm(kifflarm, params));
-                //}
-                //catch (Exception e){
-                    //Log.e("AlarmManager ZZZ", "cottupted params? "+e);
-                //}
+                alarms.add(new Alarm(kifflarm, params));
             }
         }
+
+        Utils.sortTimes(alarms);
+    }
+
+    public void onResume(){
+
     }
 
     public void removeAlarm(int index){
