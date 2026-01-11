@@ -32,8 +32,20 @@
             </intent-filter>
         </activity>
 
+        <!-- TEST, ÄNDRA TILLBAKS TILL AVKOMMENTERAT OM DET INTE FUNKAR -->
+        <receiver
+            android:name="com.example.kifflarm.alarm.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!--
         <receiver android:name=".alarm.AlarmReceiver" />
         <receiver android:name=".alarm.BootCompletedReceiver" />
+        -->
     </application>
-
 </manifest>

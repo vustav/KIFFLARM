@@ -122,7 +122,7 @@ public class Utils {
     }
 
     /** BG **/
-    public static void setupBg(RelativeLayout layout, TextView tv){
+    public static void setupBg(ViewGroup layout, TextView tv){
         layout.setBackground(Utils.getRandomGradientDrawable());
 
         String label = "ALARM";
@@ -148,14 +148,24 @@ public class Utils {
         }
         tv.setText(coloredLabel);
 
-        //AlarmActivity har Linear och main Relative...
-/*
+        //add more if needed
         Random r = new Random();
-        int topMargin = r.nextInt(40)+30;
-        ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        mlp.setMargins(0, -topMargin, 0, 0);
-        tv.setLayoutParams(mlp);
+        int startMargin = r.nextInt(40) + 30;
+        int topMargin = r.nextInt(40) + 30;
+        int endMargin = r.nextInt(80) + 30;
 
- */
+        //if(layout instanceof RelativeLayout) {
+            RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            rlp.setMargins(-startMargin, -topMargin, -endMargin, 0);
+            tv.setLayoutParams(rlp);
+            /*
+        }
+        else if(layout instanceof LinearLayout) {
+            LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            llp.setMargins(-startMargin, -topMargin, -endMargin, 0);
+            tv.setLayoutParams(llp);
+        }
+
+             */
     }
 }

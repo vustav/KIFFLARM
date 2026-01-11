@@ -5,23 +5,13 @@
     android:id="@+id/alarmActivityLayout">
 
     <!-- ALARMS TVs -->
-    <LinearLayout
+    <TextView
+        android:id="@+id/alarmActivityBgTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/alarmActivityBgTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/timeTxtSize"
-            android:textStyle="italic"
-            android:fontFamily="@font/default_font"
-
-            android:layout_marginTop="-15dp"
-            android:layout_marginStart="-15dp"
-            android:layout_marginEnd="-50dp"/>
-    </LinearLayout>
+        android:textSize="@dimen/timeTxtSize"
+        android:textStyle="italic"
+        android:fontFamily="@font/default_font"/>
 
     <!-- UI -->
     <LinearLayout
@@ -70,13 +60,13 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/alarmActivityOffBtn"
-            android:text="TURN OFF"
-            android:textStyle="italic"
-            android:fontFamily="@font/default_font"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/alarmActivityOffBtn"
+                android:text="TURN OFF"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"/>
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

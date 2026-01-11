@@ -20,7 +20,8 @@
             android:singleLine="true"
             android:textColor="@color/defaultTxtColor"
             android:fontFamily="@font/default_font"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/marginMedium"/>
     </RelativeLayout>
 
     <RelativeLayout

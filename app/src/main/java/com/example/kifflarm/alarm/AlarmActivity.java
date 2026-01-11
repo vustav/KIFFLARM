@@ -42,32 +42,37 @@ public class AlarmActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_alarm);
 
-        Intent intent = getIntent();
-        alarm = getAlarm(intent.getStringExtra(Alarm.ALRM_INTENT_ID));
-        alarm = getAlarm(intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+        try {
+            Intent intent = getIntent();
+            alarm = getAlarm(intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+            //alarm = getAlarm(intent.getStringExtra(Alarm.ALRM_INTENT_ID));
 
-        setupMediaPlayer();
+            setupMediaPlayer();
 
-        RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
-        TextView bgTVtv = layout.findViewById(R.id.alarmActivityBgTv);
-        Utils.setupBg(layout, bgTVtv);
-        //setupBg();
+            RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
+            TextView bgTVtv = layout.findViewById(R.id.alarmActivityBgTv);
+            Utils.setupBg(layout, bgTVtv);
+            //setupBg();
 
-        vibrator = ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE));
-        startVibrating();
+            vibrator = ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE));
+            startVibrating();
 
-        TextView timeTv = layout.findViewById(R.id.alarmActivityTimeTV);
-        timeTv.setText(alarm.getTimeAsString());
-        animateTV(timeTv);
+            TextView timeTv = layout.findViewById(R.id.alarmActivityTimeTV);
+            timeTv.setText(alarm.getTimeAsString());
+            animateTV(timeTv);
 
-        Button offBtn = layout.findViewById(R.id.alarmActivityOffBtn);
-        offBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alarmOff();
-                finish();
-            }
-        });
+            Button offBtn = layout.findViewById(R.id.alarmActivityOffBtn);
+            offBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alarmOff();
+                    finish();
+                }
+            });
+        }
+        catch (Exception e){
+            Log.e("AlarmActivity ZZZ", e.toString());
+        }
     }
 
     @Override

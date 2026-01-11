@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import com.example.kifflarm.FileManager;
@@ -94,21 +95,16 @@ public class Alarm implements Comparable<Alarm>{
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALRM_INTENT_ID, Integer.toString(id));
-        //intent.putExtra(ALRM_INTENT_TONE, getRingTone());
 
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(
-        pendingIntent = PendingIntent.getBroadcast(
-                context,
-                id,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
-        );
+        //testar 0 ist för flag för alla exempel gör så
+        int flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
+        pendingIntent = PendingIntent.getBroadcast(context, id, intent,flag);
 
+        //30 sek kan navändas för test
+        long msUntilTriggerHour = 30000;
+        long alarmTimeAtUTC = System.currentTimeMillis() + msUntilTriggerHour;
         AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(getTimeInMS(), pendingIntent);
-        androidAlarmManager.setAlarmClock(
-                info,
-                pendingIntent
-        );
+        androidAlarmManager.setAlarmClock(info, pendingIntent);
 
 /*
         androidAlarmManager.setExactAndAllowWhileIdle(
