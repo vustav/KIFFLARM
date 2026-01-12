@@ -18,10 +18,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.e("AlarmReceiver ZZZ", "onReceive");
 
         Intent activityIntent = new Intent(context, AlarmActivity.class);
 
-        //activityIntent.putExtra(Alarm.ALRM_INTENT_TONE, intent.getStringExtra(Alarm.ALRM_INTENT_TONE));
         activityIntent.putExtra(Alarm.ALRM_INTENT_ID, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

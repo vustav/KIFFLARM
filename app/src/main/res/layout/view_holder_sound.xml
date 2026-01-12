@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/defaultBtnHeight"
+        android:layout_height="@dimen/soundVHheight"
         android:id="@+id/soundVHTVLayout"
 
         android:layout_toStartOf="@id/soundVHPlayLayout">
@@ -25,21 +25,25 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="@dimen/defaultBtnHeight"
-        android:layout_height="@dimen/defaultBtnHeight"
+        android:layout_width="@dimen/soundVHheight"
+        android:layout_height="@dimen/soundVHheight"
         android:layout_alignParentEnd="true"
-        android:id="@+id/soundVHPlayLayout">
+        android:id="@+id/soundVHPlayLayout"
+        android:layout_centerHorizontal="true">
 
 
         <!-- without this FrameLayout the button always covers the ImageView -->
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/soundVHPlayBtn"/>
+                android:layout_height="@dimen/btnheight"
+                android:id="@+id/soundVHPlayBtn"
+                android:background="@drawable/custom_btn"
+                android:layout_marginEnd="@dimen/marginSmall"/>
         </FrameLayout>
 
         <ImageView

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="marginSmall">5dp</dimen>
     <dimen name="marginMedium">10dp</dimen>
     <dimen name="marginLarge">20dp</dimen>
-    <dimen name="defaultBtnHeight">50dp</dimen>
+
+    <!-- BTN -->
+    <dimen name="btnheight">40dp</dimen>
+    <dimen name="buttonMargin">5dp</dimen>
 
     <!-- TEXT -->
     <dimen name="timeTxtSize">40sp</dimen>
@@ -17,11 +21,13 @@
     <!-- ALARM POPUP -->
     <dimen name="alarmPopupSoundBtnWidth">260dp</dimen>
 
-    <!-- ALARMS RECYCLER VIEW -->
+    <!-- ALARMS VH -->
     <dimen name="alarmsVHheight">57dp</dimen>
-    <dimen name="alarmsVHBtnheight">50dp</dimen>
     <dimen name="alarmsVHToggleWidth">50dp</dimen>
     <dimen name="alarmsVHPaddingEnd">10dp</dimen>
+
+    <!-- SOUND VH -->
+    <dimen name="soundVHheight">50dp</dimen>
 
     <!-- SET TIME -->
     <dimen name="watchSize">200dp</dimen>

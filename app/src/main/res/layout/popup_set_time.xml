@@ -76,11 +76,12 @@
             android:layout_height="wrap_content">
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/defaultBtnHeight"
+                android:layout_height="@dimen/btnheight"
                 android:text="OK"
                 android:id="@+id/setTimeOKBtn"
                 android:textStyle="italic"
                 android:fontFamily="@font/default_font"
+                android:background="@drawable/custom_btn"
 
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>

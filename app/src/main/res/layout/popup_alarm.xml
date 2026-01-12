@@ -49,25 +49,31 @@
                 android:layout_height="wrap_content">
                 <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/defaultBtnHeight"
+                    android:layout_height="@dimen/btnheight"
+                    android:paddingStart="@dimen/marginSmall"
+                    android:paddingEnd="@dimen/marginSmall"
                     android:id="@+id/alarmPopupSoundBtn"
                     android:singleLine="true"
                     android:layout_centerHorizontal="true"
                     android:textStyle="italic"
-                    android:fontFamily="@font/default_font"/>
+                    android:fontFamily="@font/default_font"
+                    android:background="@drawable/custom_btn"/>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/marginMedium">
                 <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/defaultBtnHeight"
+                    android:layout_height="@dimen/btnheight"
                     android:text="OK"
                     android:id="@+id/alarmPopupOkBtn"
                     android:layout_centerHorizontal="true"
                     android:textStyle="italic"
-                    android:fontFamily="@font/default_font"/>
+                    android:fontFamily="@font/default_font"
+                    android:background="@drawable/custom_btn"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

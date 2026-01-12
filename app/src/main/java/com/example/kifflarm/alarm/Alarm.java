@@ -1,11 +1,13 @@
 package com.example.kifflarm.alarm;
 
+import android.app.ActivityOptions;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.example.kifflarm.FileManager;
@@ -80,7 +82,6 @@ public class Alarm implements Comparable<Alarm>{
 
     public void updateSchedule(){
         if(active) {
-            //cancelAlarm();
             scheduleAlarm();
         }
         else{
@@ -96,24 +97,13 @@ public class Alarm implements Comparable<Alarm>{
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALRM_INTENT_ID, Integer.toString(id));
 
-        //testar 0 ist för flag för alla exempel gör så
         int flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
-        pendingIntent = PendingIntent.getBroadcast(context, id, intent,flag);
 
-        //30 sek kan navändas för test
-        long msUntilTriggerHour = 30000;
-        long alarmTimeAtUTC = System.currentTimeMillis() + msUntilTriggerHour;
+        pendingIntent = PendingIntent.getBroadcast(context, id, intent, flag);
+
         AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(getTimeInMS(), pendingIntent);
+
         androidAlarmManager.setAlarmClock(info, pendingIntent);
-
-/*
-        androidAlarmManager.setExactAndAllowWhileIdle(
-                android.app.AlarmManager.RTC_WAKEUP,
-                getTimeInMS(),
-                pendingIntent
-        );
-
- */
     }
 
     //står samma intent i docs. om det krånglar, testa att anvöönda global var och köra SAMMA intent

@@ -8,7 +8,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,11 +20,21 @@ import java.util.Random;
 
 public class Utils {
 
+    /** VIBB **/
     public static void performHapticFeedback(View view){
         view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
 
-    public static void sortTimes(ArrayList<Alarm> alarms){
+    /** SORTING **/
+    public static void sortAlarms(ArrayList<Alarm> alarms){
+        /*
+        alarms.sort(new Comparator<Alarm>() {
+            public int compare(Alarm a1, Alarm a2) {
+                return a1.compareTo(a2);
+            }
+        });
+
+         */
         Collections.sort(alarms, new Comparator<Alarm>() {
             public int compare(Alarm a1, Alarm a2) {
                 return a1.compareTo(a2);
@@ -33,28 +42,25 @@ public class Utils {
         });
     }
 
-    public static int insertInArraySorted(ArrayList<Alarm> alarms, Alarm newAlarm){
+    public static void insertAlarm(ArrayList<Alarm> alarms, Alarm newAlarm){
         for(int i = 0; i < alarms.size(); i++){
             Alarm oldAlarm = alarms.get(i);
 
             //if hour is smaller, insert
             if(newAlarm.getHour() < oldAlarm.getHour()){
                 alarms.add(i, newAlarm);
-                return i;
             }
 
             //if same, insert if minute is smaller
             else if(newAlarm.getHour() == oldAlarm.getHour()) {
                 if (newAlarm.getMinute() <= oldAlarm.getMinute()) {
                     alarms.add(i, newAlarm);
-                    return i;
                 }
             }
         }
 
         //if not already added, add it las
         alarms.add(newAlarm);
-        return alarms.size()-1;
     }
 
     /** COLORS **/
@@ -84,26 +90,22 @@ public class Utils {
         return Color.rgb(newR, newG, newB);
     }
 
+    /** GRADIENT DRAWABLES **/
+    public static final int VERTICAL = 0, HORIZONTAL = 1;
     public static GradientDrawable getRandomGradientDrawable(){
         return getRandomGradientDrawable(getRandomColor(), getRandomColor());
     }
 
     public static GradientDrawable getRandomGradientDrawable(int colorOne, int colorTwo){
         Random random = new Random();
-        //GradientDrawable gd;
         if(random.nextInt(2) == 1){
-            //gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{colorOne, colorTwo});
             return getGradientDrawable(colorOne, colorTwo, VERTICAL);
         }
         else{
-            //gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{colorOne, colorTwo});
             return getGradientDrawable(colorOne, colorTwo, HORIZONTAL);
         }
-        //gd.setCornerRadius(0f);
-        //return gd;
     }
 
-    public static final int VERTICAL = 0, HORIZONTAL = 1;
     public static GradientDrawable getGradientDrawable(int colorOne, int colorTwo, int orientation){
         if(orientation == VERTICAL){
             return new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{colorOne, colorTwo});
@@ -113,12 +115,6 @@ public class Utils {
             return new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{colorOne, colorTwo});
         }
         return null;
-    }
-
-    public static void randomizeTVLight(TextView tv){
-        int color = getRandomColor();
-        tv.setBackgroundColor(color);
-        tv.setTextColor(getContrastColor(color));
     }
 
     /** BG **/
@@ -154,18 +150,8 @@ public class Utils {
         int topMargin = r.nextInt(40) + 30;
         int endMargin = r.nextInt(80) + 30;
 
-        //if(layout instanceof RelativeLayout) {
-            RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            rlp.setMargins(-startMargin, -topMargin, -endMargin, 0);
-            tv.setLayoutParams(rlp);
-            /*
-        }
-        else if(layout instanceof LinearLayout) {
-            LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            llp.setMargins(-startMargin, -topMargin, -endMargin, 0);
-            tv.setLayoutParams(llp);
-        }
-
-             */
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        rlp.setMargins(-startMargin, -topMargin, -endMargin, 0);
+        tv.setLayoutParams(rlp);
     }
 }

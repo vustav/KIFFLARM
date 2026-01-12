@@ -38,6 +38,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("AlarmActivity ZZZ", "onCreate");
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_alarm);
@@ -45,17 +46,14 @@ public class AlarmActivity extends AppCompatActivity {
         try {
             Intent intent = getIntent();
             alarm = getAlarm(intent.getStringExtra(Alarm.ALRM_INTENT_ID));
-            //alarm = getAlarm(intent.getStringExtra(Alarm.ALRM_INTENT_ID));
 
             setupMediaPlayer();
 
             RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
             TextView bgTVtv = layout.findViewById(R.id.alarmActivityBgTv);
             Utils.setupBg(layout, bgTVtv);
-            //setupBg();
 
             vibrator = ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE));
-            startVibrating();
 
             TextView timeTv = layout.findViewById(R.id.alarmActivityTimeTV);
             timeTv.setText(alarm.getTimeAsString());
@@ -78,7 +76,7 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        //Log.e("AlarmActivity ZZZ", "onResume");
+        startVibrating();
         playRingtone();
     }
 

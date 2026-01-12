@@ -24,8 +24,9 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/alarmsVHBtnheight"
-                android:id="@+id/alarmVHbutton"/>
+                android:layout_height="@dimen/btnheight"
+                android:id="@+id/alarmVHbutton"
+                android:background="@drawable/custom_btn"/>
         </FrameLayout>
 
         <TextView
@@ -46,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/alarmsVHRemoveLayout"
+        android:layout_marginStart="@dimen/marginLarge"
 
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/alarmsVHToggle">
@@ -56,9 +58,10 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:layout_width="@dimen/alarmsVHBtnheight"
-                android:layout_height="@dimen/alarmsVHBtnheight"
-                android:id="@+id/alarmVHRemovebutton"/>
+                android:layout_width="@dimen/btnheight"
+                android:layout_height="@dimen/btnheight"
+                android:id="@+id/alarmVHRemovebutton"
+                android:background="@drawable/custom_btn"/>
         </FrameLayout>
 
         <TextView
@@ -91,7 +94,7 @@
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/alarmsVHToggle"
         android:layout_width="@dimen/alarmsVHToggleWidth"
-        android:layout_height="@dimen/alarmsVHBtnheight"
+        android:layout_height="@dimen/btnheight"
 
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"/>

@@ -66,12 +66,11 @@ public class AlarmPopup extends Popup {
             public void onDismiss() {
 
                 if(newAlarm) {
-                    Utils.insertInArraySorted(KIFFAlarmManager.getAlarms(), alarm);
+                    Utils.insertAlarm(KIFFAlarmManager.getAlarms(), alarm);
                     alarm.setActive(true);
                 }
                 else{
-                    //inte implementerad
-                    Utils.sortTimes(KIFFAlarmManager.getAlarms());
+                    Utils.sortAlarms(KIFFAlarmManager.getAlarms());
                 }
 
                 //using this since a sort can push everything around

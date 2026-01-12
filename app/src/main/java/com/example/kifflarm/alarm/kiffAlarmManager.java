@@ -17,6 +17,12 @@ public class kiffAlarmManager {
         this.kifflarm = kifflarm;
         fileManager = new FileManager(kifflarm);
 
+        loadAlarms();
+
+        Utils.sortAlarms(alarms);
+    }
+
+    public void loadAlarms(){
         alarms = new ArrayList<>();
 
         //recreate saved alarms if there are any
@@ -27,12 +33,6 @@ public class kiffAlarmManager {
                 alarms.add(new Alarm(kifflarm, params));
             }
         }
-
-        Utils.sortTimes(alarms);
-    }
-
-    public void onResume(){
-
     }
 
     public void removeAlarm(int index){

@@ -21,19 +21,20 @@ import com.example.kifflarm.drawables.DrawablePlus;
 
 public class MainView {
     private KIFFLARM kifflarm;
+    private kiffAlarmManager kiffAlarmManager;
     private RelativeLayout layout;
-
     private AlarmsAdapter alarmsAdapter;
 
-    public MainView(KIFFLARM kifflarm, kiffAlarmManager KIFFAlarmManager){
+    public MainView(KIFFLARM kifflarm, kiffAlarmManager kiffAlarmManager){
         this.kifflarm = kifflarm;
+        this.kiffAlarmManager = kiffAlarmManager;
 
         createLayout();
 
         RecyclerView recyclerView = layout.findViewById(R.id.alarmsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
-        alarmsAdapter = new AlarmsAdapter(KIFFAlarmManager);
+        alarmsAdapter = new AlarmsAdapter(kiffAlarmManager);
         recyclerView.setAdapter(alarmsAdapter);
 
         AlarmsTouchHelper touchHelper = new AlarmsTouchHelper(alarmsAdapter);
@@ -46,7 +47,7 @@ public class MainView {
             @Override
             public void onClick(View v) {
                 Utils.performHapticFeedback(addBtn);
-                KIFFAlarmManager.openNewAlarmDialog(alarmsAdapter);
+                kiffAlarmManager.openNewAlarmDialog(alarmsAdapter);
             }
         });
 
@@ -59,7 +60,7 @@ public class MainView {
             public void onClick(View v) {
                 Intent activityIntent = new Intent(kifflarm, AlarmActivity.class);
 
-                activityIntent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(KIFFAlarmManager.getAlarms().get(0).getId()));
+                activityIntent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(kiffAlarmManager.getAlarms().get(0).getId()));
 
                 kifflarm.startActivity(activityIntent);
             }
@@ -67,6 +68,15 @@ public class MainView {
     }
 
     public void onResume(){
+
+        /*
+        if an alarm goes off when the main Activity is running nothing in it it gets updated .This
+        means that the toggle on the alarm that just went of will still be on. Since the alarm is its
+        own it can only save the change, not update it directly, so the get it we need to reload alarms
+        and update the adapter
+
+         */
+        kiffAlarmManager.loadAlarms();
         if(alarmsAdapter != null){
             alarmsAdapter.onResume();
         }

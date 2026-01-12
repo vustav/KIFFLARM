@@ -17,38 +17,13 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
     private kiffAlarmManager KIFFAlarmManager;
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private RelativeLayout bg;
-        private final TextView mainTV, removeTV;
-        private final Button mainBtn, delBtn;
-        private final SwitchMaterial toggle;
-
-        public ViewHolder(View view) {
-            super(view);
-            // Define click listener for the ViewHolder's View
-            bg = view.findViewById(R.id.alarmVHBg);
-            mainTV = view.findViewById(R.id.alarmVHtextView);
-            mainBtn = view.findViewById(R.id.alarmVHbutton);
-            delBtn = view.findViewById(R.id.alarmVHRemovebutton);
-            toggle = view.findViewById(R.id.alarmsVHToggle);
-            removeTV = view.findViewById(R.id.alarmVHRemovetextView);
-        }
-    }
-
-    /**
-     * Initialize the dataset of the Adapter
-     */
     public AlarmsAdapter(kiffAlarmManager KIFFAlarmManager) {
         this.KIFFAlarmManager = KIFFAlarmManager;
     }
 
     public void onResume(){
+        //explanation in MainView.onResume
         notifyDataSetChanged();
-        Log.e("AlarmsAdapter ZZZ", "onResume");
     }
 
     // Create new views (invoked by the layout manager)
@@ -64,11 +39,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        Log.e("AlarmsAdapter ZZZ", "onBindViewHolder");
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
         Alarm alarm = KIFFAlarmManager.getAlarms().get(position);
-        viewHolder.mainTV.setText(alarm.getTimeAsString());
 
+        viewHolder.mainTV.setText(alarm.getTimeAsString());
         viewHolder.mainTV.setBackground(Utils.getRandomGradientDrawable());
 
         activateVH(viewHolder, KIFFAlarmManager.getAlarmActive(position));
@@ -114,5 +90,24 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return KIFFAlarmManager.getAlarms().size();
+    }
+
+    /** VIEWHOLDEr **/
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private RelativeLayout bg;
+        private final TextView mainTV, removeTV;
+        private final Button mainBtn, delBtn;
+        private final SwitchMaterial toggle;
+
+        public ViewHolder(View view) {
+            super(view);
+            // Define click listener for the ViewHolder's View
+            bg = view.findViewById(R.id.alarmVHBg);
+            mainTV = view.findViewById(R.id.alarmVHtextView);
+            mainBtn = view.findViewById(R.id.alarmVHbutton);
+            delBtn = view.findViewById(R.id.alarmVHRemovebutton);
+            toggle = view.findViewById(R.id.alarmsVHToggle);
+            removeTV = view.findViewById(R.id.alarmVHRemovetextView);
+        }
     }
 }
