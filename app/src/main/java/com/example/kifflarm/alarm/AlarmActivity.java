@@ -47,7 +47,7 @@ public class AlarmActivity extends AppCompatActivity {
             Intent intent = getIntent();
             alarm = getAlarm(intent.getStringExtra(Alarm.ALRM_INTENT_ID));
 
-            setupMediaPlayer();
+            mediaPlayer = KIFFMediaPlayer.getInstance(this, alarm.getSound().getUri());
 
             RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
             TextView bgTVtv = layout.findViewById(R.id.alarmActivityBgTv);
@@ -78,22 +78,6 @@ public class AlarmActivity extends AppCompatActivity {
         super.onResume();
         startVibrating();
         playRingtone();
-    }
-
-    private void setupMediaPlayer(){
-        try {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                    .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
-                    .setLegacyStreamType(AudioManager.STREAM_ALARM)
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build());
-            mediaPlayer.setDataSource(getApplicationContext(), alarm.getSound().getUri());
-            mediaPlayer.setLooping(true);
-        } catch (Exception e) {
-            Log.e("AlarmActivity ZZZ", "setupMediaPlayer"+e);
-        }
     }
 
     private void playRingtone(){

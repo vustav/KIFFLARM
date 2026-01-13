@@ -1,17 +1,15 @@
 package com.example.kifflarm.alarm;
 
-import android.app.ActivityOptions;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.example.kifflarm.FileManager;
 import com.example.kifflarm.Utils;
+import com.example.kifflarm.alarm.receiver.AlarmReceiver;
 import com.example.kifflarm.sound.Sound;
 
 import java.util.ArrayList;
@@ -167,7 +165,7 @@ public class Alarm implements Comparable<Alarm>{
         return Integer.parseInt(getHourAsString()+getMinuteAsString());
     }
 
-    public String getAlarmIdAsString(){
+    public String getIdAsString(){
         return Integer.toString(id);
     }
 
@@ -217,6 +215,13 @@ public class Alarm implements Comparable<Alarm>{
         updateSchedule();
     }
 
+    public void setTestAlarm(){
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        hour = date.getHours();
+        minute = date.getMinutes() + 10;
+    }
+
     public void setSound(Sound sound){
         this.sound = sound;
         save();
@@ -225,7 +230,7 @@ public class Alarm implements Comparable<Alarm>{
 
     /** SAVING **/
     public void save(){
-        fileManager.write(getParams(), getAlarmIdAsString());
+        fileManager.write(getParams(), getIdAsString());
     }
     public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",
             MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri";

@@ -65,6 +65,14 @@ public class MainView {
                 kifflarm.startActivity(activityIntent);
             }
         });
+
+        Button shortAlarmBtn = layout.findViewById(R.id.createShortAlarmBtn);
+        shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     public void onResume(){

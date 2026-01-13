@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- alarm -->
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <!-- alert -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
 
     <application
@@ -34,7 +39,7 @@
         </activity>
 
         <receiver
-            android:name="com.example.kifflarm.alarm.AlarmReceiver"
+            android:name="com.example.kifflarm.alarm.receiver.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
         </receiver>
@@ -42,7 +47,7 @@
 
         <!--
         <receiver
-            android:name="com.example.kifflarm.alarm.AlarmReceiver"
+            android:name="com.example.kifflarm.alarm.receiver.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

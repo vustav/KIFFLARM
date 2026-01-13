@@ -17,7 +17,7 @@ public class SetTimePopup extends Popup {
     private EditText hourET, minuteET, selectedET;
     private int selectedTxt;
 
-    public SetTimePopup(KIFFLARM kifflarm, AlarmPopup alarmPopup, String hour, String minute){
+    public SetTimePopup(KIFFLARM kifflarm, AlarmSettingsPopup alarmSettingsPopup, String hour, String minute){
         super(kifflarm);
 
         selectedTxt = Utils.getRandomColor();
@@ -68,7 +68,7 @@ public class SetTimePopup extends Popup {
                     if (Integer.parseInt(s.toString()) > 23) {
                         hourET.setText("23");
                     }
-                    alarmPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
+                    alarmSettingsPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
                 }
             }
         });
@@ -100,7 +100,7 @@ public class SetTimePopup extends Popup {
                     if (Integer.parseInt(s.toString()) > 59) {
                         minuteET.setText("59");
                     }
-                    alarmPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
+                    alarmSettingsPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
                 }
             }
         });

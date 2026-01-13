@@ -14,19 +14,19 @@ import com.example.kifflarm.KIFFLARM;
 import com.example.kifflarm.R;
 import com.example.kifflarm.Utils;
 
-public class AlarmPopup extends Popup {
+public class AlarmSettingsPopup extends Popup {
     private Alarm alarm;
     private TextView timeTV;
 
     private Button soundBtn;
 
-    public AlarmPopup(KIFFLARM kifflarm, kiffAlarmManager KIFFAlarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
+    public AlarmSettingsPopup(KIFFLARM kifflarm, kiffAlarmManager KIFFAlarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
 
         this.alarm = alarm;
 
         //inflate the View
-        popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_alarm, null);
+        popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_alarm_settings, null);
         popupView.setBackground(Utils.getRandomGradientDrawable());
 
         //create the popupWindow
@@ -43,7 +43,7 @@ public class AlarmPopup extends Popup {
         timeTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SetTimePopup(kifflarm, AlarmPopup.this, alarm.getHourAsString(), alarm.getMinuteAsString());
+                new SetTimePopup(kifflarm, AlarmSettingsPopup.this, alarm.getHourAsString(), alarm.getMinuteAsString());
             }
         });
 

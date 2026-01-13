@@ -3,7 +3,7 @@ package com.example.kifflarm.alarm;
 import com.example.kifflarm.FileManager;
 import com.example.kifflarm.KIFFLARM;
 import com.example.kifflarm.Utils;
-import com.example.kifflarm.popups.AlarmPopup;
+import com.example.kifflarm.popups.AlarmSettingsPopup;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class kiffAlarmManager {
     }
 
     public void openAlarmDialog(AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
-        new AlarmPopup(kifflarm, this, alarmsAdapter, alarm, newAlarm);
+        new AlarmSettingsPopup(kifflarm, this, alarmsAdapter, alarm, newAlarm);
     }
 
     public void openNewAlarmDialog(AlarmsAdapter alarmsAdapter){

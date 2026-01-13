@@ -22,7 +22,7 @@ public class SoundPopupAdapter extends RecyclerView.Adapter<SoundPopupAdapter.Vi
     private SoundPopup soundPopup;
     private SoundManager soundManager;
     private Alarm alarm;
-    private AlarmPopup alarmPopup;
+    private AlarmSettingsPopup alarmSettingsPopup;
 
     private RecyclerView recyclerView;
 
@@ -65,10 +65,10 @@ public class SoundPopupAdapter extends RecyclerView.Adapter<SoundPopupAdapter.Vi
     /**
      * Initialize the dataset of the Adapter
      */
-    public SoundPopupAdapter(RecyclerView recyclerView, SoundManager soundManager, AlarmPopup alarmPopup, SoundPopup soundPopup, Alarm alarm) {
+    public SoundPopupAdapter(RecyclerView recyclerView, SoundManager soundManager, AlarmSettingsPopup alarmSettingsPopup, SoundPopup soundPopup, Alarm alarm) {
         this.recyclerView = recyclerView;
         this.soundPopup = soundPopup;
-        this.alarmPopup = alarmPopup;
+        this.alarmSettingsPopup = alarmSettingsPopup;
         this.soundManager = soundManager;
         this.alarm = alarm;
     }
@@ -97,7 +97,7 @@ public class SoundPopupAdapter extends RecyclerView.Adapter<SoundPopupAdapter.Vi
             @Override
             public void onClick(View v) {
                 alarm.setSound(sound);
-                alarmPopup.setSoundBtnTxt(sound.getName());
+                alarmSettingsPopup.setSoundBtnTxt(sound.getName());
                 soundPopup.dismiss();
             }
         });

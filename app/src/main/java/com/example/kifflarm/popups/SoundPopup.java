@@ -5,7 +5,6 @@ import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.Display;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
@@ -16,7 +15,6 @@ import com.example.kifflarm.alarm.Alarm;
 import com.example.kifflarm.KIFFLARM;
 import com.example.kifflarm.R;
 import com.example.kifflarm.Utils;
-import com.example.kifflarm.alarm.AlarmsAdapter;
 import com.example.kifflarm.sound.Sound;
 import com.example.kifflarm.sound.SoundManager;
 
@@ -26,7 +24,7 @@ public class SoundPopup extends Popup {
     private Sound currentlyPreviewedSound = notPlaying;
     private MediaPlayer mediaPlayer;
 
-    public SoundPopup(KIFFLARM kifflarm, AlarmPopup alarmPopup, Alarm alarm){
+    public SoundPopup(KIFFLARM kifflarm, AlarmSettingsPopup alarmSettingsPopup, Alarm alarm){
         super(kifflarm);
 
         soundManager = kifflarm.getSoundManager();
@@ -55,7 +53,7 @@ public class SoundPopup extends Popup {
         RecyclerView recyclerView = popupView.findViewById(R.id.popupSoundsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
-        SoundPopupAdapter soundPopupAdapter = new SoundPopupAdapter(recyclerView, soundManager, alarmPopup, this, alarm);
+        SoundPopupAdapter soundPopupAdapter = new SoundPopupAdapter(recyclerView, soundManager, alarmSettingsPopup, this, alarm);
         recyclerView.setAdapter(soundPopupAdapter);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {

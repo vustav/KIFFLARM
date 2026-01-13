@@ -2,79 +2,73 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/marginLarge">
+    android:id="@+id/alarmActivityLayout">
 
-    <ScrollView
-        android:orientation="vertical"
+    <!-- ALARMS TVs -->
+    <TextView
+        android:id="@+id/alarmActivityBgTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/timeTxtSize"
+        android:textStyle="italic"
+        android:fontFamily="@font/default_font"/>
 
+    <!-- UI -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="3"
+
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="@dimen/marginLarge">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/timeBoxHeight"
-                    android:id="@+id/alarmPopupTVLayout"
-                    android:layout_centerInParent="true"
-
-                    android:paddingStart="6dp"
-                    android:paddingEnd="6dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/alarmPopupTV"
-                        android:textColor="@color/defaultTxtColor"
-                        android:textSize="@dimen/timeTxtSize"
-                        android:textStyle="italic"
-                        android:fontFamily="@font/default_font"
-
-                        android:layout_centerInParent="true"/>
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/btnheight"
-                    android:paddingStart="@dimen/marginSmall"
-                    android:paddingEnd="@dimen/marginSmall"
-                    android:id="@+id/alarmPopupSoundBtn"
-                    android:singleLine="true"
-                    android:layout_centerHorizontal="true"
-                    android:textStyle="italic"
-                    android:fontFamily="@font/default_font"
-                    android:background="@drawable/custom_btn"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/popupAlarmTimeTV"
+                android:background="@color/alarmsVHbg"
+                android:textColor="@color/defaultTxtColor"
+                android:textSize="@dimen/alarmActivityTextSize"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
 
-                android:layout_marginTop="@dimen/marginMedium">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/btnheight"
-                    android:text="OK"
-                    android:id="@+id/alarmPopupOkBtn"
-                    android:layout_centerHorizontal="true"
-                    android:textStyle="italic"
-                    android:fontFamily="@font/default_font"
-                    android:background="@drawable/custom_btn"/>
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/popupAlarmSnoozeBtn"
+                android:text="SNOOZE"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:background="@drawable/custom_btn"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/popupAlarmOffBtn"
+                android:text="TURN OFF"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:background="@drawable/custom_btn"/>
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>
