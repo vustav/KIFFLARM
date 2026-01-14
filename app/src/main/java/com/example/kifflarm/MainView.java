@@ -1,6 +1,8 @@
 package com.example.kifflarm;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kifflarm.alarm.Alarm;
 import com.example.kifflarm.alarm.AlarmActivity;
+import com.example.kifflarm.alarm.AlarmCannon;
 import com.example.kifflarm.alarm.kiffAlarmManager;
 import com.example.kifflarm.alarm.AlarmsAdapter;
 import com.example.kifflarm.alarm.AlarmsTouchHelper;
@@ -41,36 +44,33 @@ public class MainView {
         ItemTouchHelper helper = new ItemTouchHelper(touchHelper);
         helper.attachToRecyclerView(recyclerView);
 
-        RelativeLayout addBtn = layout.findViewById(R.id.addAlarmBtn);
+        RelativeLayout addBtn = layout.findViewById(R.id.addAlarmBg);
         addBtn.setBackground(Utils.getRandomGradientDrawable());
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.performHapticFeedback(addBtn);
-                kiffAlarmManager.openNewAlarmDialog(alarmsAdapter);
+
+                if (kifflarm.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    kifflarm.askPermission();
+                }
+                else {
+                    kiffAlarmManager.openNewAlarmDialog(alarmsAdapter);
+                }
             }
         });
 
         ImageView addIcon = layout.findViewById(R.id.addAlarmIcon);
         addIcon.setImageDrawable(new DrawablePlus());
 
-        Button fireBtn = layout.findViewById(R.id.fireAlarmBtn);
-        fireBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent activityIntent = new Intent(kifflarm, AlarmActivity.class);
-
-                activityIntent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(kiffAlarmManager.getAlarms().get(0).getId()));
-
-                kifflarm.startActivity(activityIntent);
-            }
-        });
-
         Button shortAlarmBtn = layout.findViewById(R.id.createShortAlarmBtn);
         shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(kifflarm, AlarmActivity.class);
+                intent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(kiffAlarmManager.getAlarms().get(0).getId()));
 
+                new AlarmCannon(kifflarm, intent);
             }
         });
     }
@@ -94,7 +94,7 @@ public class MainView {
         layout = (RelativeLayout) kifflarm.getLayoutInflater().inflate(R.layout.layout_main_view, null);
 
         TextView bgTVtv = layout.findViewById(R.id.mainBgTV);
-        Utils.setupBg(layout, bgTVtv);
+        Utils.createNiceBg(layout, bgTVtv, 65);
     }
 
     public ViewGroup getLayout(){

@@ -1,4 +1,4 @@
-package com.example.kifflarm.alarm;
+package com.example.kifflarm.alarm.singles;
 
 import android.content.Context;
 import android.media.AudioAttributes;
@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.util.Log;
 
 public class KIFFMediaPlayer {
+    //used to get access to the same object when starting and ending the alarm
     private static MediaPlayer mediaPlayer;
 
     private KIFFMediaPlayer(){
@@ -33,7 +34,11 @@ public class KIFFMediaPlayer {
         return mediaPlayer;
     }
 
-    public static MediaPlayer getInstance(){
-        return mediaPlayer;
+    public static void destroy(){
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }

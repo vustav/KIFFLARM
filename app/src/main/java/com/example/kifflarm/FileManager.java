@@ -127,4 +127,21 @@ public class FileManager {
         file.delete();
         Log.e("FileManager ZZZ", "deleted: "+file.getAbsolutePath());
     }
+
+
+    public static Alarm getAlarm(Context context, String id){
+        Alarm alarm = null;
+        FileManager fileManager = new FileManager(context);
+        for(ArrayList<String> params : fileManager.getParamsArray()){
+            for(String s : params){
+                if (s.length() > Alarm.ALARM_ID_TAG.length() && s.substring(0, Alarm.ALARM_ID_TAG.length()).equals(Alarm.ALARM_ID_TAG)) {
+                    if(s.substring(Alarm.ALARM_ID_TAG.length()).equals(id)){
+                        alarm = new Alarm(context, params);
+                        alarm.cancelAlarm(); //the alarm object is just to get data, so make sure it's not scheduled
+                    }
+                }
+            }
+        }
+        return alarm;
+    }
 }

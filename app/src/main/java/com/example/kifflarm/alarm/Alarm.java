@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.example.kifflarm.FileManager;
 import com.example.kifflarm.Utils;
-import com.example.kifflarm.alarm.receiver.AlarmReceiver;
+import com.example.kifflarm.alarm.receivers.AlarmReceiver;
 import com.example.kifflarm.sound.Sound;
 
 import java.util.ArrayList;

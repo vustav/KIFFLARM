@@ -5,6 +5,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,22 +45,25 @@ public class Utils {
 
     public static void insertAlarm(ArrayList<Alarm> alarms, Alarm newAlarm){
         for(int i = 0; i < alarms.size(); i++){
+            Log.e("Utils ZZZ", "insert");
             Alarm oldAlarm = alarms.get(i);
 
             //if hour is smaller, insert
             if(newAlarm.getHour() < oldAlarm.getHour()){
                 alarms.add(i, newAlarm);
+                return;
             }
 
             //if same, insert if minute is smaller
             else if(newAlarm.getHour() == oldAlarm.getHour()) {
                 if (newAlarm.getMinute() <= oldAlarm.getMinute()) {
                     alarms.add(i, newAlarm);
+                    return;
                 }
             }
         }
 
-        //if not already added, add it las
+        //if not already added, add it last
         alarms.add(newAlarm);
     }
 
@@ -118,13 +122,11 @@ public class Utils {
     }
 
     /** BG **/
-    public static void setupBg(ViewGroup layout, TextView tv){
+    public static void createNiceBg(ViewGroup layout, TextView tv, int nOfCopys){
         layout.setBackground(Utils.getRandomGradientDrawable());
 
         String label = "ALARM";
         String concatLabel = "";
-
-        int nOfCopys = 65;
         for(int copy = 0; copy <= nOfCopys; copy++){
 
             int start = 0;

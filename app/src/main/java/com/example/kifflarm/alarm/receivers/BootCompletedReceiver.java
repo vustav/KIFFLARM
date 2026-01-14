@@ -1,12 +1,11 @@
-package com.example.kifflarm.alarm;
+package com.example.kifflarm.alarm.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.example.kifflarm.FileManager;
-import com.example.kifflarm.KIFFLARM;
+import com.example.kifflarm.alarm.Alarm;
 
 import java.util.ArrayList;
 

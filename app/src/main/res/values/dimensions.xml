@@ -15,7 +15,8 @@
     <dimen name="soundVHTxtSize">20sp</dimen>
 
     <!-- MAIN LAYOUT -->
-    <dimen name="addBtnSize">50dp</dimen>
+    <dimen name="addBtnSize">55dp</dimen>
+    <dimen name="addBgSize">50dp</dimen>
     <dimen name="addBtnIconSize">20dp</dimen>
 
     <!-- ALARM POPUP -->
