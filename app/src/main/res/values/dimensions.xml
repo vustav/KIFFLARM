@@ -19,9 +19,6 @@
     <dimen name="addBgSize">50dp</dimen>
     <dimen name="addBtnIconSize">20dp</dimen>
 
-    <!-- ALARM POPUP -->
-    <dimen name="alarmPopupSoundBtnWidth">260dp</dimen>
-
     <!-- ALARMS VH -->
     <dimen name="alarmsVHheight">57dp</dimen>
     <dimen name="alarmsVHToggleWidth">50dp</dimen>
@@ -30,12 +27,17 @@
     <!-- SOUND VH -->
     <dimen name="soundVHheight">50dp</dimen>
 
-    <!-- SET TIME -->
+    <!-- SET ALARM -->
+    <dimen name="buggyTvTopMarginDestroyer">-6dp</dimen>
+    <dimen name="buggyTvBottomMarginDestroyer">-1dp</dimen>
+    <dimen name="alarmPopupSoundBtnWidth">260dp</dimen>
     <dimen name="watchSize">200dp</dimen>
     <dimen name="timeBoxHeight">60dp</dimen>
     <dimen name="timeBoxWidth">40dp</dimen>
     <dimen name="timeBoxWidthRL">40dp</dimen>
     <dimen name="timeBoxWidthItalic">55dp</dimen>
+
+    <dimen name="setAlarmVHToggleWidth">50dp</dimen>
 
     <!-- ALARM ACTIVITY -->
 </resources>

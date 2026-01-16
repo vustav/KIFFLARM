@@ -35,10 +35,12 @@
             android:layout_width="@dimen/addBtnSize"
             android:layout_height="@dimen/addBtnSize">
 
+            <!-- SHADOW -->
             <FrameLayout
                 android:layout_width="@dimen/addBgSize"
                 android:layout_height="@dimen/addBgSize"
-                android:background="#616161"
+                android:background="@color/shadowColor"
+                android:alpha=".5"
 
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"/>

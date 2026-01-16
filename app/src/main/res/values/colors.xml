@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#FFFFFF00</color>
     <color name="defaultTxtColor">#000000</color>
+    <color name="shadowColor">#383838</color>
 
     <!-- ALARMS VIEW HOLDER -->
     <color name="alarmsVHbg">#000000</color>

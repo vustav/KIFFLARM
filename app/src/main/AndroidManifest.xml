@@ -39,7 +39,7 @@
         </activity>
 
         <receiver
-            android:name="com.example.kifflarm.alarm.receivers.AlarmReceiver"
+            android:name="com.kiefer.kifflarm.alarm.receivers.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
         </receiver>
@@ -47,7 +47,7 @@
         <receiver android:name=".alarm.receivers.BootCompletedReceiver"/>
 
         <receiver
-            android:name="com.example.kifflarm.alarm.receivers.NotificationDismissedReceiver"
+            android:name="com.kiefer.kifflarm.alarm.receivers.NotificationDismissedReceiver"
             android:exported="false">
         </receiver>
 
