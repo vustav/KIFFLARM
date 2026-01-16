@@ -12,16 +12,18 @@ import android.view.MotionEvent;
 import com.kiefer.kifflarm.Utils;
 import com.kiefer.kifflarm.popups.SetAlarmPopup;
 
+import java.util.ArrayList;
+
 public class ClockView extends View {
     private SetAlarmPopup setAlarmPopup;
     private Path hourPath, minutePath;
-    private Paint hourPaint, minutePaint;
-    //private Paint canvasPaint;
-    private Bitmap canvasBitmap;
-    //private Canvas drawCanvas;
+    private Paint hourPaint, minutePaint, timeMarkerPaint;
     private int width, height;
+    private int snaptHour, snapMinute;
     private Point midPoint;
-    private float radius;
+    private float radius, hourHand, smallHourRadius, minuteHand, timeMarkerRadius = 20;
+    private boolean initTimeSet = false;
+    private ArrayList<Point> bigHourMarkers, smallHourMarkers, minuteMarkers;
 
     public ClockView(Context context, SetAlarmPopup setAlarmPopup) {
         super(context);
@@ -49,6 +51,14 @@ public class ClockView extends View {
         minutePaint.setStrokeJoin(Paint.Join.ROUND);
         minutePaint.setStrokeCap(Paint.Cap.ROUND);
 
+        timeMarkerPaint = new Paint();
+        timeMarkerPaint.setColor(Utils.getRandomColor());
+        timeMarkerPaint.setAntiAlias(true);
+        timeMarkerPaint.setStrokeWidth(14);
+        timeMarkerPaint.setStyle(Paint.Style.STROKE);
+        timeMarkerPaint.setStrokeJoin(Paint.Join.ROUND);
+        timeMarkerPaint.setStrokeCap(Paint.Cap.ROUND);
+
         //canvasPaint = new Paint(Paint.DITHER_FLAG);
     }
 
@@ -64,15 +74,26 @@ public class ClockView extends View {
         midPoint = new Point(midX, midY);
 
         radius = Math.min(width, height) / 2f;
+        minuteHand = radius;
+        hourHand = radius * .7f;
+        smallHourRadius = hourHand;
 
-        // Create bitmap and canvas for persistent drawing
-        canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        //drawCanvas = new Canvas(canvasBitmap);
+        bigHourMarkers = new ArrayList<>();
+        for(int hour = 0; hour < 12; hour++){
+            bigHourMarkers.add(getPointFromPoint(midPoint, convertHourToAngle(hour), radius));
+        }
 
-        //Log.e("ClockView ZZZ", "onSizeChanged");
+        smallHourMarkers = new ArrayList<>();
+        for(int hour = 0; hour < 12; hour++){
+            smallHourMarkers.add(getPointFromPoint(midPoint, convertHourToAngle(hour), smallHourRadius));
+        }
+
+        minuteMarkers = new ArrayList<>();
+        for(int minute = 0; minute < 60; minute+=5){
+            minuteMarkers.add(getPointFromPoint(midPoint, convertMinuteToAngle(minute), radius));
+        }
     }
 
-    private boolean initTimeSet = false;
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -80,19 +101,27 @@ public class ClockView extends View {
             setInitTime();
             initTimeSet = true;
         }
-        // Draw the persistent bitmap first
-        //canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
-        // Then draw the current path being traced
 
         if(setAlarmPopup.getSelectedTimeUint() == SetAlarmPopup.HOUR) {
+            for(Point p : bigHourMarkers){
+                canvas.drawCircle(p.x, p.y, timeMarkerRadius, timeMarkerPaint);
+            }
+            for(Point p : smallHourMarkers){
+                canvas.drawCircle(p.x, p.y, timeMarkerRadius, timeMarkerPaint);
+            }
+
             canvas.drawPath(hourPath, hourPaint);
         }
         else{
+            for(Point p : minuteMarkers){
+                canvas.drawCircle(p.x, p.y, timeMarkerRadius, timeMarkerPaint);
+            }
+
             canvas.drawPath(minutePath, minutePaint);
         }
-        //Log.e("ClockView ZZZ", "onDraw");
     }
 
+    private boolean snapHands = false;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -104,7 +133,7 @@ public class ClockView extends View {
                     hourPath.reset();
                     hourPath.moveTo(midPoint.x, midPoint.y);
 
-                    Point endPoint = getPointFromPoint(midPoint, getAngleBetweenPoints(midPoint, touch), radius);
+                    Point endPoint = getPointFromPoint(midPoint, getAngleBetweenPoints(midPoint, touch), hourHand);
                     hourPath.lineTo(endPoint.x, endPoint.y);
 
                     setAlarmPopup.setHour(convertAngleToHour(turn90AntiClock(getAngleBetweenPoints(midPoint, touch))));
@@ -113,7 +142,7 @@ public class ClockView extends View {
                     minutePath.reset();
                     minutePath.moveTo(midPoint.x, midPoint.y);
 
-                    Point endPoint = getPointFromPoint(midPoint, getAngleBetweenPoints(midPoint, touch), radius);
+                    Point endPoint = getPointFromPoint(midPoint, getAngleBetweenPoints(midPoint, touch), minuteHand);
                     minutePath.lineTo(endPoint.x, endPoint.y);
 
                     setAlarmPopup.setMinute(convertAngleToMinute(turn90AntiClock(getAngleBetweenPoints(midPoint, touch))));
@@ -122,22 +151,57 @@ public class ClockView extends View {
 
             case MotionEvent.ACTION_MOVE:
                 if(setAlarmPopup.getSelectedTimeUint() == SetAlarmPopup.HOUR) {
-                    hourPath.reset();
-                    hourPath.moveTo(midPoint.x, midPoint.y);
 
-                    Point endPoint = getPointFromPoint(midPoint, getAngleBetweenPoints(midPoint, touch), radius);
-                    hourPath.lineTo(endPoint.x, endPoint.y);
+                    if(!snapHands){
+                        hourPath.reset();
+                        hourPath.moveTo(midPoint.x, midPoint.y);
 
-                    setAlarmPopup.setHour(convertAngleToHour(turn90AntiClock(getAngleBetweenPoints(midPoint, touch))));
+                        Point endPoint = getPointFromPoint(midPoint, getAngleBetweenPoints(midPoint, touch), radius);
+                        hourPath.lineTo(endPoint.x, endPoint.y);
+                    }
+
+                    int hour = convertAngleToHour(turn90AntiClock(getAngleBetweenPoints(midPoint, touch)));
+                    if(hour != snaptHour) {
+                        snaptHour = hour;
+                        Utils.performHapticFeedback(this);
+                        setAlarmPopup.setHour(snaptHour);
+
+                        if(snapHands) {
+                            hourPath.reset();
+                            hourPath.moveTo(midPoint.x, midPoint.y);
+
+                            Point endPoint = getPointFromPoint(midPoint, turn90Clock(convertHourToAngle(snaptHour)), hourHand);
+                            hourPath.lineTo(endPoint.x, endPoint.y);
+                        }
+
+                    }
                 }
                 else{
-                    minutePath.reset();
-                    minutePath.moveTo(midPoint.x, midPoint.y);
 
-                    Point endPoint = getPointFromPoint(midPoint, getAngleBetweenPoints(midPoint, touch), radius);
-                    minutePath.lineTo(endPoint.x, endPoint.y);
+                    if(!snapHands){
+                        minutePath.reset();
+                        minutePath.moveTo(midPoint.x, midPoint.y);
 
-                    setAlarmPopup.setMinute(convertAngleToMinute(turn90AntiClock(getAngleBetweenPoints(midPoint, touch))));
+                        Point endPoint = getPointFromPoint(midPoint, getAngleBetweenPoints(midPoint, touch), radius);
+                        minutePath.lineTo(endPoint.x, endPoint.y);
+                    }
+
+                    int minute = convertAngleToMinute(turn90AntiClock(getAngleBetweenPoints(midPoint, touch)));
+                    if(minute != snapMinute) {
+
+                        snapMinute = minute;
+                        Utils.performHapticFeedback(this);
+                        setAlarmPopup.setMinute(snapMinute);
+
+                        if(snapHands) {
+                            minutePath.reset();
+                            minutePath.moveTo(midPoint.x, midPoint.y);
+
+                            Point endPoint = getPointFromPoint(midPoint, turn90Clock(convertMinuteToAngle(snapMinute)), minuteHand);
+                            minutePath.lineTo(endPoint.x, endPoint.y);
+                        }
+
+                    }
                 }
                 break;
 
@@ -158,16 +222,19 @@ public class ClockView extends View {
 
     public void setInitTime(){
 
+        snaptHour = setAlarmPopup.getHour();
+        snapMinute = setAlarmPopup.getMinute();
+
         hourPath.reset();
         hourPath.moveTo(midPoint.x, midPoint.y);
 
-        float timeAngle = turn90Clock(convertHourToAngle(setAlarmPopup.getHour()));
+        float timeAngle = turn90Clock(convertHourToAngle(snaptHour));
         Point endPoint = getPointFromPoint(midPoint, timeAngle, radius);
         hourPath.lineTo(endPoint.x, endPoint.y);
 
         minutePath.reset();
         minutePath.moveTo(midPoint.x, midPoint.y);
-        timeAngle = turn90Clock(convertMinuteToAngle(setAlarmPopup.getMinute()));
+        timeAngle = turn90Clock(convertMinuteToAngle(snapMinute));
         endPoint = getPointFromPoint(midPoint, timeAngle, radius);
         minutePath.lineTo(endPoint.x, endPoint.y);
 

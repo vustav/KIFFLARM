@@ -14,6 +14,7 @@ import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.Utils;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
+import com.kiefer.kifflarm.views.Clock;
 import com.kiefer.kifflarm.views.ClockView;
 
 public class SetAlarmPopup extends Popup {
@@ -127,8 +128,13 @@ public class SetAlarmPopup extends Popup {
         selectTimeUnit(HOUR);
 
         //CLOCK
-        clockView = new ClockView(kifflarm, this);
         RelativeLayout clockLayout = popupView.findViewById(R.id.clockLayout);
+
+        //Clock clock = new Clock(kifflarm, this);
+        //clockView = clock.getClockView();
+        //clockLayout.addView(clock);
+
+        clockView = new ClockView(kifflarm, this);
         clockLayout.addView(clockView);
 
         LinearLayout tvLayout = popupView.findViewById(R.id.setAlarmPopupTvsLayout);

@@ -77,13 +77,14 @@
 
     <!-- CLOCK -->
     <RelativeLayout
-        android:layout_width="@dimen/watchSize"
-        android:layout_height="@dimen/watchSize"
+        android:layout_width="@dimen/clockSize"
+        android:layout_height="@dimen/clockSize"
         android:id="@+id/clockLayout"
 
         android:layout_centerHorizontal="true"
         android:layout_below="@id/setAlarmPopupTvsLayout"
         android:layout_marginBottom="@dimen/marginMedium">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

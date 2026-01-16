@@ -31,7 +31,8 @@
     <dimen name="buggyTvTopMarginDestroyer">-6dp</dimen>
     <dimen name="buggyTvBottomMarginDestroyer">-1dp</dimen>
     <dimen name="alarmPopupSoundBtnWidth">260dp</dimen>
-    <dimen name="watchSize">200dp</dimen>
+    <dimen name="clockSize">200dp</dimen>
+    <dimen name="clockLayoutSize">220dp</dimen>
     <dimen name="timeBoxHeight">60dp</dimen>
     <dimen name="timeBoxWidth">40dp</dimen>
     <dimen name="timeBoxWidthRL">40dp</dimen>
@@ -39,5 +40,6 @@
 
     <dimen name="setAlarmVHToggleWidth">50dp</dimen>
 
-    <!-- ALARM ACTIVITY -->
+    <!-- CLOCK -->
+    <dimen name="clockMargin">55dp</dimen>
 </resources>
