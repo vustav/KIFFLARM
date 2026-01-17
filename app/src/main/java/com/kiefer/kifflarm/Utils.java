@@ -29,41 +29,10 @@ public class Utils {
 
     /** SORTING **/
     public static void sortAlarms(ArrayList<Alarm> alarms){
-/*
-        Collections.sort(alarms, new Comparator<Alarm>() {
-            public int compare(Alarm a1, Alarm a2) {
-                return a1.compareTo(a2);
-            }
-        });
-*/
         Collections.sort(alarms, getComparator());
     }
 
     public static void insertAlarm(ArrayList<Alarm> alarms, Alarm newAlarm){
-        /*
-        for(int i = 0; i < alarms.size(); i++){
-            Log.e("Utils ZZZ", "insert");
-            Alarm oldAlarm = alarms.get(i);
-
-            //if hour is smaller, insert
-            if(newAlarm.getHour() < oldAlarm.getHour()){
-                alarms.add(i, newAlarm);
-                return;
-            }
-
-            //if same, insert if minute is smaller
-            else if(newAlarm.getHour() == oldAlarm.getHour()) {
-                if (newAlarm.getMinute() <= oldAlarm.getMinute()) {
-                    alarms.add(i, newAlarm);
-                    return;
-                }
-            }
-        }
-
-        //if not already added, add it last
-        alarms.add(newAlarm);
-         */
-
         try {
             int position = Math.abs(Collections.binarySearch(alarms, newAlarm, getComparator())) - 1;
             alarms.add(position, newAlarm);

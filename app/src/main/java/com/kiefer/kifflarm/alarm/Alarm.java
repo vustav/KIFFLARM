@@ -35,7 +35,8 @@ public class Alarm implements Comparable<Alarm>{
     public Alarm(Context context, Sound sound){
         this(context);
         this.sound = sound;
-        setActive(true, true);
+        //activate(true, true);
+        active = true;
     }
 
     //this is for restored alarms
@@ -43,7 +44,7 @@ public class Alarm implements Comparable<Alarm>{
     public Alarm(Context context, ArrayList<String> params){
         this(context);
         restoreParams(params);
-        setActive(active, false);
+        //activate(active, false);
     }
 
     //this are shared for both and new alarms. Setting params here if restoration fails. makes the alarm useless of course =((
@@ -72,7 +73,7 @@ public class Alarm implements Comparable<Alarm>{
         color = Utils.getRandomColor();
     }
 
-    public void setActive(boolean active, boolean save){
+    public void activate(boolean active, boolean save){
         this.active = active;
 
         if(save) {

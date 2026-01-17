@@ -1,6 +1,5 @@
 package com.kiefer.kifflarm.alarm;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         activateVH(viewHolder, alarm.isActive());
         viewHolder.toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            alarm.setActive(isChecked, false);
+            alarm.activate(isChecked, true);
             activateVH(viewHolder, isChecked);
             Utils.performHapticFeedback(viewHolder.toggle);
         });

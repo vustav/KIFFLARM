@@ -36,7 +36,7 @@ public class AlarmUtils {
     }
 
     public static void alarmOff(Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer){
-        alarm.setActive(false, true);
+        alarm.activate(false, true);
         vibrator.cancel();
         mediaPlayer.stop();
     }

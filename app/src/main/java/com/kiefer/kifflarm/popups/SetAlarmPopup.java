@@ -46,7 +46,7 @@ public class SetAlarmPopup extends Popup {
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);
 
-        //set up hour EditText
+        //set up hour TV
         hourLayout = popupView.findViewById(R.id.setAlarmPopupHourLayout);
 
         hourTV = popupView.findViewById(R.id.setAlarmPopupHourET);
@@ -60,34 +60,7 @@ public class SetAlarmPopup extends Popup {
             return false;
         });
 
-        /*
-        //change to 23 if input is more
-        hourTV.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Code to execute before text is changed
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Code to execute when text is changed
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!s.toString().isEmpty()) {
-                    if (Integer.parseInt(s.toString()) > 23) {
-                        setHourETTxt("23");
-                    }
-                    //alarmSettingsPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
-                    setTime(Integer.parseInt(hourTV.getText().toString()), Integer.parseInt(minuteTV.getText().toString()));
-                }
-            }
-        });
-
-         */
-
-        //minue ET
+        //minue TV
         minuteLayout = popupView.findViewById(R.id.setAlarmPopupMinuteLayout);
         minuteTV = popupView.findViewById(R.id.setAlarmPopupMinuteET);
         minuteTV.setText(alarm.getMinuteAsString());
@@ -97,32 +70,6 @@ public class SetAlarmPopup extends Popup {
             }
             return false;
         });
-
-        /*
-        minuteTV.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Code to execute before text is changed
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Code to execute when text is changed
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!s.toString().isEmpty()) {
-                    if (Integer.parseInt(s.toString()) > 59) {
-                        minuteTV.setText("59");
-                    }
-                    //alarmSettingsPopup.setTime(Integer.parseInt(hourET.getText().toString()), Integer.parseInt(minuteET.getText().toString()));
-                    setTime(Integer.parseInt(hourTV.getText().toString()), Integer.parseInt(minuteTV.getText().toString()));
-                }
-            }
-        });
-
-         */
 
         //start with hour selected
         selectTimeUnit(HOUR);
@@ -134,20 +81,14 @@ public class SetAlarmPopup extends Popup {
         clockView = clock.getClockView();
         clockLayout.addView(clock);
 
-        //clockView = new ClockView(kifflarm, this);
-        //clockLayout.addView(clockView);
-
         LinearLayout tvLayout = popupView.findViewById(R.id.setAlarmPopupTvsLayout);
         tvLayout.setBackground(Utils.getRandomGradientDrawable());
 
         SwitchMaterial toggle = popupView.findViewById(R.id.setAlarmPopupToggle);
         toggle.setChecked(alarm.isActive());
         toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            alarm.setActive(isChecked, false);
+            //alarm.activate(isChecked, false); //this is done when ok-btn is presed
             Utils.performHapticFeedback(toggle);
-            //KIFFAlarmManager.setAlarmActive(viewHolder.getAdapterPosition(), isChecked);
-            //activateVH(viewHolder, isChecked);
-            //Utils.performHapticFeedback(viewHolder.toggle);
         });
 
         soundBtn = popupView.findViewById(R.id.setAlarmPopupSoundBtn);
@@ -160,6 +101,7 @@ public class SetAlarmPopup extends Popup {
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
             alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
+            alarm.activate(toggle.isChecked(), false);
             alarm.saveAndSchedule();
 
             if(newAlarm) {
@@ -182,16 +124,6 @@ public class SetAlarmPopup extends Popup {
         });
 
         showAtLocation(popupWindow);
-
-        /*
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-
-            }
-        });
-
-         */
     }
 
     private void selectTimeUnit(int unit){
