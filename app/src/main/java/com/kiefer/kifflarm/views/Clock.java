@@ -15,6 +15,7 @@ public class Clock extends RelativeLayout {
         super(kifflarm);
 
         RelativeLayout layout = (RelativeLayout) kifflarm.getLayoutInflater().inflate(R.layout.layout_clock, null);
+        addView(layout);
 
         clockView = new ClockView(kifflarm, setAlarmPopup);
 

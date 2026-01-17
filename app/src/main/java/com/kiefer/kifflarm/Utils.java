@@ -173,4 +173,14 @@ public class Utils {
         rlp.setMargins(-startMargin, -topMargin, -endMargin, 0);
         tv.setLayoutParams(rlp);
     }
+
+    /** STRING **/
+    public static String timeToString(int time){
+        //add 0 to the start if below 10
+        String timeString = Integer.toString(time);
+        if(time < 10){
+            timeString = "0"+time;
+        }
+        return timeString;
+    }
 }

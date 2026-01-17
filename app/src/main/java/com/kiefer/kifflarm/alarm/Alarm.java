@@ -150,21 +150,11 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public String getHourAsString(){
-
-        //add 0 to the start if below 10
-        String hour = Integer.toString(getHour());
-        if(getHour() < 10){
-            hour = "0"+getHour();
-        }
-        return hour;
+        return Utils.timeToString(getHour());
     }
 
     public String getMinuteAsString(){
-        String minute = Integer.toString(getMinute());
-        if(getMinute() < 10){
-            minute = "0"+getMinute();
-        }
-        return minute;
+        return Utils.timeToString(getMinute());
     }
 
     public int getComparableTime(){

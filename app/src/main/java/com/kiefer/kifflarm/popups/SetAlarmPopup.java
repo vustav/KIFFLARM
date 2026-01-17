@@ -130,12 +130,12 @@ public class SetAlarmPopup extends Popup {
         //CLOCK
         RelativeLayout clockLayout = popupView.findViewById(R.id.clockLayout);
 
-        //Clock clock = new Clock(kifflarm, this);
-        //clockView = clock.getClockView();
-        //clockLayout.addView(clock);
+        Clock clock = new Clock(kifflarm, this);
+        clockView = clock.getClockView();
+        clockLayout.addView(clock);
 
-        clockView = new ClockView(kifflarm, this);
-        clockLayout.addView(clockView);
+        //clockView = new ClockView(kifflarm, this);
+        //clockLayout.addView(clockView);
 
         LinearLayout tvLayout = popupView.findViewById(R.id.setAlarmPopupTvsLayout);
         tvLayout.setBackground(Utils.getRandomGradientDrawable());
@@ -159,6 +159,7 @@ public class SetAlarmPopup extends Popup {
         //okBtn
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
+            alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
             alarm.saveAndSchedule();
 
             if(newAlarm) {
@@ -240,13 +241,13 @@ public class SetAlarmPopup extends Popup {
     }
 
     public void setHour(int hour){
-        alarm.setHour(hour);
-        setHourTvTxt(alarm.getHourAsString());
+        //alarm.setHour(hour);
+        setHourTvTxt(Utils.timeToString(hour));
     }
 
     public void setMinute(int minute){
-        alarm.setMinute(minute);
-        setMinuteTvTxt(alarm.getMinuteAsString());
+        //alarm.setMinute(minute);
+        setMinuteTvTxt(Utils.timeToString(minute));
     }
 
     public void setHourTvTxt(String txt){
