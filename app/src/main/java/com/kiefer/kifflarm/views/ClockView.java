@@ -2,6 +2,7 @@ package com.kiefer.kifflarm.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
 
@@ -17,12 +18,13 @@ import com.kiefer.kifflarm.Utils;
 import com.kiefer.kifflarm.popups.SetAlarmPopup;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ClockView extends View {
     private Context context;
     private SetAlarmPopup setAlarmPopup;
-    private Path hourPath, minutePath, shadowPath;
-    private Paint handPaint, timeMarkerPaint, touchMarkerPaint, textPaint, snapPaint, shadowMarkerPaint, shadowHandPaint, shadowTxtPaint;
+    private Path hourPath, minutePath, shadowPath, triangleMarkerPath;
+    private Paint handPaint, timeMarkerPaint, touchMarkerPaint, textPaint, snapTxtPaint, shadowMarkerPaint, shadowHandPaint, shadowTrianglePaint, shadowTxtPaint;
     private int width, height;
     private int snaptHour=-1, snapMinute=-1;
     private Point midPoint;
@@ -30,9 +32,12 @@ public class ClockView extends View {
     private boolean initTimeSet = false;
 
     private int visualTimeOffset = 2; // when rotating the minutes the snap between numbers the chosen number feels off. This offsets that
-    private ArrayList<Point> bigHourMarkers, smallHourMarkers, minuteMarkers;
-
+    private ArrayList<Marker> bigHourMarkers, smallHourMarkers, minuteMarkers;
+    private Random r;
     private int shadowOffset;
+    public static int CIRCLE = 0, RECTANGLE = 1, TRIANGLE = 2;
+
+    //private int handPaintColor = Color.BLACK;
 
     public ClockView(Context context, SetAlarmPopup setAlarmPopup) {
         super(context);
@@ -42,28 +47,53 @@ public class ClockView extends View {
     }
 
     private void setup() {
+        r = new Random();
+
         hourPath = new Path();
         minutePath = new Path();
         shadowPath = new Path();
+        triangleMarkerPath = new Path();
 
-        int contrastColor = Utils.getContrastColor(setAlarmPopup.getColor());
+        int color = Utils.getRandomColor();
+        int contrastColor = Utils.getContrastColor(color);
 
         shadowOffset = (int) getResources().getDimension(R.dimen.shadowOffset);
 
         handPaint = new Paint();
+        //handPaint.setColor(handPaintColor);
         handPaint.setAntiAlias(true);
-        handPaint.setStrokeWidth(14);
+        handPaint.setStrokeWidth(10);
         handPaint.setStyle(Paint.Style.STROKE);
         handPaint.setStrokeJoin(Paint.Join.ROUND);
         handPaint.setStrokeCap(Paint.Cap.ROUND);
 
+        shadowHandPaint = new Paint();
+        shadowHandPaint.setColor(ContextCompat.getColor(context, R.color.shadowColor));
+        shadowHandPaint.setAntiAlias(true);
+        shadowHandPaint.setStrokeWidth(10);
+        shadowHandPaint.setStyle(Paint.Style.STROKE);
+        shadowHandPaint.setStrokeJoin(Paint.Join.ROUND);
+        shadowHandPaint.setStrokeCap(Paint.Cap.ROUND);
+        shadowHandPaint.setAlpha(127);
+
         timeMarkerPaint = new Paint();
-        timeMarkerPaint.setColor(contrastColor);
+        timeMarkerPaint.setColor(color);
         timeMarkerPaint.setAntiAlias(true);
-        //timeMarkerPaint.setStrokeWidth(1);
         timeMarkerPaint.setStyle(Paint.Style.FILL);
-        //timeMarkerPaint.setStrokeJoin(Paint.Join.ROUND);
         timeMarkerPaint.setStrokeCap(Paint.Cap.ROUND);
+
+        touchMarkerPaint = new Paint();
+        //touchMarkerPaint.setColor(handPaintColor);
+        touchMarkerPaint.setAntiAlias(true);
+        touchMarkerPaint.setStyle(Paint.Style.FILL);
+        touchMarkerPaint.setStrokeCap(Paint.Cap.ROUND);
+
+        shadowTrianglePaint = new Paint();
+        //shadowTrianglePaint.setStrokeWidth(2);
+        shadowTrianglePaint.setColor(ContextCompat.getColor(context, R.color.shadowColor));
+        shadowTrianglePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        shadowTrianglePaint.setAntiAlias(true);
+        shadowTrianglePaint.setAlpha(127);
 
         shadowMarkerPaint = new Paint();
         shadowMarkerPaint.setColor(ContextCompat.getColor(context, R.color.shadowColor));
@@ -72,49 +102,27 @@ public class ClockView extends View {
         shadowMarkerPaint.setStyle(Paint.Style.FILL);
         shadowMarkerPaint.setStrokeCap(Paint.Cap.ROUND);
 
-        shadowHandPaint = new Paint();
-        shadowHandPaint.setColor(ContextCompat.getColor(context, R.color.shadowColor));
-        shadowHandPaint.setAntiAlias(true);
-        shadowHandPaint.setStrokeWidth(20);
-        shadowHandPaint.setStyle(Paint.Style.STROKE);
-        shadowHandPaint.setStrokeJoin(Paint.Join.ROUND);
-        shadowHandPaint.setStrokeCap(Paint.Cap.ROUND);
-        shadowHandPaint.setAlpha(127);
-
-        touchMarkerPaint = new Paint();
-        //touchMarkerPaint.setColor(Utils.getRandomColor());
-        touchMarkerPaint.setAntiAlias(true);
-        //touchMarkerPaint.setStrokeWidth(14);
-        touchMarkerPaint.setStyle(Paint.Style.FILL);
-        //touchMarkerPaint.setStrokeJoin(Paint.Join.ROUND);
-        touchMarkerPaint.setStrokeCap(Paint.Cap.ROUND);
-
         textPaint = new Paint();
-        //textPaint.setColor(contrastColor);
-        textPaint.setColor(Utils.getContrastColor(contrastColor));
+        textPaint.setColor(contrastColor);
         textPaint.setAntiAlias(true);
         textPaint.setStrokeWidth(3);
         textPaint.setTextSize(60);
         Typeface italic = ResourcesCompat.getFont(context, R.font.the_italic_font);
         textPaint.setTypeface(italic);
 
-        snapPaint = new Paint();
-        snapPaint.setColor(Utils.getContrastColor(contrastColor));
-        snapPaint.setAntiAlias(true);
-        snapPaint.setStrokeWidth(3);
-        snapPaint.setTextSize(60);
-        snapPaint.setTypeface(italic);
+        snapTxtPaint = new Paint();
+        snapTxtPaint.setAntiAlias(true);
+        snapTxtPaint.setStrokeWidth(3);
+        snapTxtPaint.setTextSize(60);
+        snapTxtPaint.setTypeface(italic);
 
         shadowTxtPaint = new Paint();
         shadowTxtPaint.setColor(ContextCompat.getColor(context, R.color.shadowColor));
         shadowTxtPaint.setAntiAlias(true);
         shadowTxtPaint.setStrokeWidth(3);
         shadowTxtPaint.setTextSize(60);
-        italic = ResourcesCompat.getFont(context, R.font.the_italic_font);
         shadowTxtPaint.setTypeface(italic);
         shadowTxtPaint.setAlpha(127);
-
-        //canvasPaint = new Paint(Paint.DITHER_FLAG);
     }
 
     @Override
@@ -136,17 +144,17 @@ public class ClockView extends View {
 
         bigHourMarkers = new ArrayList<>();
         for(int hour = 0; hour < 12; hour++){
-            bigHourMarkers.add(getPointFromPoint(midPoint, turnClockwise(convertHourToAngle(hour), 90), clockRadius));
+            bigHourMarkers.add(new Marker(getPointFromPoint(midPoint, turnClockwise(convertHourToAngle(hour), 90), clockRadius)));
         }
 
         smallHourMarkers = new ArrayList<>();
         for(int hour = 0; hour < 12; hour++){
-            smallHourMarkers.add(getPointFromPoint(midPoint, turnClockwise(convertHourToAngle(hour), 90), smallHourRadius));
+            smallHourMarkers.add(new Marker(getPointFromPoint(midPoint, turnClockwise(convertHourToAngle(hour), 90), smallHourRadius)));
         }
 
         minuteMarkers = new ArrayList<>();
         for(int minute = 0; minute < 60; minute+=5){
-            minuteMarkers.add(getPointFromPoint(midPoint, turnClockwise(convertMinuteToAngle(minute), 90), clockRadius));
+            minuteMarkers.add(new Marker(getPointFromPoint(midPoint, turnClockwise(convertMinuteToAngle(minute), 90), clockRadius)));
         }
     }
 
@@ -160,10 +168,6 @@ public class ClockView extends View {
 
         int textOffset = 23;
 
-        //int markerColor = Utils.getRandomColor();
-        //timeMarkerPaint.setColor(markerColor);
-        //textPaint.setColor(Utils.getContrastColor(markerColor));
-
         int handColor = Utils.getRandomColor();
         handPaint.setColor(handColor);
         handPaint.setColor(handColor);
@@ -171,75 +175,206 @@ public class ClockView extends View {
 
         if (setAlarmPopup.getSelectedTimeUint() == SetAlarmPopup.HOUR) {
 
-            //small markers and numbers
+            //12-23 markers
             for(int hour = 0; hour < smallHourMarkers.size(); hour++){
                 if(hour != snaptHour - 12 || snaptHour >= 12) { // snapHour gets another color and is drawn further down
-                    Point p = smallHourMarkers.get(hour);
-                    canvas.drawCircle(p.x+shadowOffset, p.y+shadowOffset, timeMarkerRadius, shadowMarkerPaint);
-                    //canvas.drawText(Integer.toString(hour+12), p.x-textOffset+shadowOffset, p.y+textOffset+shadowOffset, shadowTxtPaint);
-                    canvas.drawCircle(p.x, p.y, timeMarkerRadius, timeMarkerPaint);
+                    Marker m = smallHourMarkers.get(hour);
+                    Point p = m.point;
+                    timeMarkerPaint.setColor(m.color);
+
+                    if(m.shape == CIRCLE) {
+                        drawCircleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);
+                    }
+                    else if(m.shape == RECTANGLE){
+                        drawRectangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);
+                    }
+                    else{
+                        drawTriangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowTrianglePaint);
+                    }
                     canvas.drawText(Integer.toString(hour+12), p.x-textOffset, p.y+textOffset, textPaint);
                 }
             }
 
-            //large markers and numbers
+            //0-11 markers
             for(int hour = 0; hour < bigHourMarkers.size(); hour++){
                 if(hour != snaptHour || snaptHour <= 12) {
-                    Point p = bigHourMarkers.get(hour);
-                    canvas.drawCircle(p.x+shadowOffset, p.y+shadowOffset, timeMarkerRadius, shadowMarkerPaint);
-                    //canvas.drawText(Integer.toString(hour), p.x-textOffset+shadowOffset, p.y+textOffset+shadowOffset, shadowTxtPaint);
-                    canvas.drawCircle(p.x, p.y, timeMarkerRadius, timeMarkerPaint);
+                    Marker m = bigHourMarkers.get(hour);
+                    Point p = m.point;
+                    timeMarkerPaint.setColor(m.color);
+
+                    if(m.shape == CIRCLE) {
+                        drawCircleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);
+                    }
+                    else if(m.shape == RECTANGLE){
+                        drawRectangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);
+                    }
+                    else{
+                        drawTriangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowTrianglePaint);
+                    }
                     canvas.drawText(Integer.toString(hour), p.x - textOffset, p.y + textOffset, textPaint);
                 }
             }
 
-            //small touch and hand
+            //12-23 hand and touch
             if(snaptHour >= 12){
+
+                //hand shadow
                 canvas.drawPath(shadowPath, shadowHandPaint);
-                canvas.drawCircle(endPoint.x+shadowOffset, endPoint.y+shadowOffset, touchMarkerRadius, shadowMarkerPaint);
+
+                //touch shadow
+                drawCircleShadow(canvas, endPoint, touchMarkerRadius, shadowMarkerPaint);
+
+                //hand
                 canvas.drawPath(hourPath, handPaint);
-                canvas.drawCircle(endPoint.x, endPoint.y, touchMarkerRadius, touchMarkerPaint);
+
+                //touch
+                drawCircle(canvas, endPoint, touchMarkerRadius, touchMarkerPaint);
 
                 //draw snapHour marker and text to match the hand
-                snapPaint.setColor(Utils.getContrastColor(touchMarkerPaint.getColor()));
-                Point p = smallHourMarkers.get(snaptHour - 12);
-                canvas.drawCircle(p.x, p.y, timeMarkerRadius, touchMarkerPaint);
-                canvas.drawText(Integer.toString(snaptHour), p.x-textOffset, p.y+textOffset, snapPaint);
+                snapTxtPaint.setColor(Utils.getContrastColor(touchMarkerPaint.getColor()));
+                Marker m = smallHourMarkers.get(snaptHour-12);
+                Point p = m.point;
+
+                if(m.shape == CIRCLE) {
+                    drawCircle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+                }
+                else if(m.shape == RECTANGLE){
+                    drawRectangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+                }
+                else{
+                    drawTriangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+                }
+                canvas.drawText(Integer.toString(snaptHour), p.x-textOffset, p.y+textOffset, snapTxtPaint);
             }
 
-            //large touch and hand
+            //0-11 hand and touch
             else{
-                canvas.drawPath(shadowPath, shadowHandPaint);
-                canvas.drawCircle(endPoint.x+shadowOffset, endPoint.y+shadowOffset, touchMarkerRadius, shadowMarkerPaint);
-                canvas.drawPath(hourPath, handPaint);
-                canvas.drawCircle(endPoint.x, endPoint.y, touchMarkerRadius, touchMarkerPaint);
 
-                snapPaint.setColor(Utils.getContrastColor(touchMarkerPaint.getColor()));
-                Point p = bigHourMarkers.get(snaptHour);
-                canvas.drawCircle(p.x, p.y, timeMarkerRadius, touchMarkerPaint);
-                canvas.drawText(Integer.toString(snaptHour), p.x - textOffset, p.y + textOffset, snapPaint);
+                //hand shadow
+                canvas.drawPath(shadowPath, shadowHandPaint);
+
+                //touch shadow
+                drawCircleShadow(canvas, endPoint, touchMarkerRadius, shadowMarkerPaint);
+
+                //hand
+                canvas.drawPath(hourPath, handPaint);
+
+                //touch
+                drawCircle(canvas, endPoint, touchMarkerRadius, touchMarkerPaint);
+
+                //redraw the og marker with flashing colors
+                snapTxtPaint.setColor(Utils.getContrastColor(touchMarkerPaint.getColor()));
+                Marker m = bigHourMarkers.get(snaptHour);
+                Point p = m.point;
+                if(m.shape == CIRCLE) {
+                    drawCircle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+                }
+                else if(m.shape == RECTANGLE){
+                    drawRectangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+                }
+                else{
+                    drawTriangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+                }
+                canvas.drawText(Integer.toString(snaptHour), p.x - textOffset, p.y + textOffset, snapTxtPaint);
             }
 
         }
         else {
-            int roundedSnapMinute;
             for(int minute = 0; minute < minuteMarkers.size(); minute++){
-                Point p = minuteMarkers.get(minute);
-                canvas.drawCircle(p.x+shadowOffset, p.y+shadowOffset, timeMarkerRadius, shadowMarkerPaint);
-                canvas.drawCircle(p.x, p.y, timeMarkerRadius, timeMarkerPaint);
+                Marker m = minuteMarkers.get(minute);
+                Point p = m.point;
+                timeMarkerPaint.setColor(m.color);
+
+                if(m.shape == CIRCLE) {
+                    drawCircleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);
+                }
+                else if(m.shape == RECTANGLE){
+                    drawRectangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);
+                }
+                else{
+                    drawTriangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowTrianglePaint);
+                }
                 canvas.drawText(Integer.toString(minute * 5), p.x - textOffset, p.y + textOffset, textPaint);
             }
 
+            //hand shadow
             canvas.drawPath(shadowPath, shadowHandPaint);
-            canvas.drawCircle(endPoint.x+shadowOffset, endPoint.y+shadowOffset, touchMarkerRadius, shadowMarkerPaint);
-            canvas.drawPath(minutePath, handPaint);
-            canvas.drawCircle(endPoint.x, endPoint.y, touchMarkerRadius, touchMarkerPaint);
 
-            snapPaint.setColor(Utils.getContrastColor(touchMarkerPaint.getColor()));
-            Point p = minuteMarkers.get(snapMinute / 5);
-            canvas.drawCircle(p.x, p.y, timeMarkerRadius, touchMarkerPaint);
-            canvas.drawText(Integer.toString(5*(Math.round((float)(snapMinute - visualTimeOffset)/5))), p.x - textOffset, p.y + textOffset, snapPaint);
+            //touch shadow
+            drawCircleShadow(canvas, endPoint, touchMarkerRadius, shadowMarkerPaint);
+
+            //hand
+            canvas.drawPath(minutePath, handPaint);
+
+            //touch
+            drawCircle(canvas, endPoint, touchMarkerRadius, touchMarkerPaint);
+
+            //redraw the og marker with flashing colors
+            snapTxtPaint.setColor(Utils.getContrastColor(touchMarkerPaint.getColor()));
+            Marker m = minuteMarkers.get(snapMinute / 5);
+            Point p = m.point;
+            if(m.shape == CIRCLE) {
+                drawCircle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+            }
+            else if(m.shape == RECTANGLE){
+                drawRectangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+            }
+            else{
+                drawTriangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
+            }
+            canvas.drawText(Integer.toString(5*(Math.round((float)(snapMinute - visualTimeOffset)/5))), p.x - textOffset, p.y + textOffset, snapTxtPaint);
         }
+    }
+
+    private void drawCircleWithShadow(Canvas canvas, Point p, float radius, Paint paint, Paint shadowPaint){
+        drawCircleShadow(canvas, p, radius, shadowPaint);
+        drawCircle(canvas, p, radius, paint);
+    }
+
+    private void drawCircle(Canvas canvas, Point p, float radius, Paint paint){
+        canvas.drawCircle(p.x, p.y, radius, paint);
+    }
+
+    private void drawCircleShadow(Canvas canvas, Point p, float radius, Paint shadowPaint){
+        canvas.drawCircle(p.x+shadowOffset, p.y+shadowOffset, radius, shadowPaint);
+    }
+
+    private void drawRectangleWithShadow(Canvas canvas, Point p, float radius, Paint paint, Paint shadowPaint){
+        drawRectangleShadow(canvas, p, radius, shadowPaint);
+        drawRectangle(canvas, p, radius, paint);
+    }
+
+    private void drawRectangle(Canvas canvas, Point p, float radius, Paint paint){
+        canvas.drawRect(p.x-radius, p.y-radius, p.x+radius, p.y+radius, paint);
+    }
+
+    private void drawRectangleShadow(Canvas canvas, Point p, float radius, Paint shadowPaint){
+        canvas.drawRect(p.x-radius+shadowOffset, p.y-radius+shadowOffset, p.x+radius+shadowOffset, p.y+radius+shadowOffset, shadowPaint);
+    }
+
+    private void drawTriangleWithShadow(Canvas canvas, Point p, float radius, Paint paint, Paint shadowPaint){
+        drawTriangleShadow(canvas, p, radius, shadowPaint);
+        drawTriangle(canvas, p, radius, paint);
+    }
+
+    private void drawTriangle(Canvas canvas, Point p, float radius, Paint paint){
+        triangleMarkerPath.reset();
+        triangleMarkerPath.setFillType(Path.FillType.EVEN_ODD);
+        triangleMarkerPath.moveTo(p.x-radius, p.y+radius);
+        triangleMarkerPath.lineTo(p.x+radius, p.y+radius);
+        triangleMarkerPath.lineTo(p.x, p.y-radius);
+        triangleMarkerPath.close();
+        canvas.drawPath(triangleMarkerPath, paint);
+    }
+
+    private void drawTriangleShadow(Canvas canvas, Point p, float radius, Paint shadowPaint){
+        triangleMarkerPath.reset();
+        triangleMarkerPath.setFillType(Path.FillType.EVEN_ODD);
+        triangleMarkerPath.moveTo(p.x-radius+shadowOffset, p.y+radius+shadowOffset);
+        triangleMarkerPath.lineTo(p.x+radius+shadowOffset, p.y+radius+shadowOffset);
+        triangleMarkerPath.lineTo(p.x+shadowOffset, p.y-radius+shadowOffset);
+        triangleMarkerPath.close();
+        canvas.drawPath(triangleMarkerPath, shadowPaint);
     }
 
     private Point endPoint;
@@ -277,6 +412,7 @@ public class ClockView extends View {
                 break;
 
             case MotionEvent.ACTION_MOVE:
+
                 if(setAlarmPopup.getSelectedTimeUint() == SetAlarmPopup.HOUR) {
 
                     //hour-unit and hand size
@@ -323,12 +459,18 @@ public class ClockView extends View {
                         snapMinute = minute;
                         Utils.performHapticFeedback(this);
                         //the -2 is to offset the 105 angle above. Feels better this way.
-                        setAlarmPopup.setMinute(snapMinute - visualTimeOffset);
+                        int offsetTime = snapMinute - visualTimeOffset;
+                        if(offsetTime < 0){
+                            offsetTime = 60 + offsetTime; // to avoid time: -1 and -2
+                        }
+                        setAlarmPopup.setMinute(offsetTime);
                     }
                 }
                 break;
 
             case MotionEvent.ACTION_UP:
+                //handPaint.setColor(handPaintColor);
+                //touchMarkerPaint.setColor(handPaintColor);
                 if(setAlarmPopup.getSelectedTimeUint() == SetAlarmPopup.HOUR) {
                     setAlarmPopup.switchTimeUnit();
                 }
@@ -372,7 +514,7 @@ public class ClockView extends View {
             minutePath.reset();
             shadowPath.reset();
             minutePath.moveTo(midPoint.x, midPoint.y);
-            minutePath.moveTo(midPoint.x+shadowOffset, midPoint.y+shadowOffset);
+            shadowPath.moveTo(midPoint.x+shadowOffset, midPoint.y+shadowOffset);
             timeAngle = turnClockwise(convertMinuteToAngle(snapMinute), 90);
             endPoint = getPointFromPoint(midPoint, timeAngle, longHand);
             minutePath.lineTo(endPoint.x, endPoint.y);
@@ -465,6 +607,20 @@ public class ClockView extends View {
         private Point(float x, float y){
             this.x = x;
             this.y = y;
+        }
+    }
+
+    /** CLASS MARKER **/
+    private class Marker{
+        private Point point;
+        private int shape;
+
+        private int color;
+
+        private Marker(Point point){
+            this.point = point;
+            shape = r.nextInt(3);
+            color = Utils.getRandomColor();
         }
     }
 }

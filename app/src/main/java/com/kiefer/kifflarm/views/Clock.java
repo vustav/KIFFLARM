@@ -1,6 +1,7 @@
 package com.kiefer.kifflarm.views;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -14,12 +15,14 @@ public class Clock extends RelativeLayout {
     public Clock(KIFFLARM kifflarm, SetAlarmPopup setAlarmPopup){
         super(kifflarm);
 
-        RelativeLayout layout = (RelativeLayout) kifflarm.getLayoutInflater().inflate(R.layout.layout_clock, null);
+        FrameLayout layout = (FrameLayout) kifflarm.getLayoutInflater().inflate(R.layout.layout_clock, null);
         addView(layout);
 
         clockView = new ClockView(kifflarm, setAlarmPopup);
 
         FrameLayout clockViewLayout = layout.findViewById(R.id.clockViewLayout);
+        FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.clockLayoutSize));
+        clockView.setLayoutParams(flp);
         clockViewLayout.addView(clockView);
     }
 

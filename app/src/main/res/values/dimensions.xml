@@ -41,9 +41,12 @@
     <!-- CLOCK -->
     <dimen name="clockMargin">55dp</dimen>
 
-    <dimen name="clockLayoutSize">220dp</dimen>
+    <dimen name="clockLayoutSize">250dp</dimen>
+    <dimen name="clockPopupHeight">510dp</dimen>
     <dimen name="clockSize">200dp</dimen>
-    <dimen name="clockOffset">20dp</dimen>
+    <dimen name="clockOffset">40dp</dimen>
+
+    <!-- SHADOW -->
     <dimen name="shadowOffset">5dp</dimen>
 
 </resources>

@@ -1,167 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/clockLayoutSize"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/marginLarge">
+    android:id="@+id/popupSetAlarmBg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TIME -->
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/setAlarmPopupBgTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/setAlarmPopupTvsLayout"
+        android:textSize="@dimen/timeTxtSize"
+        android:textStyle="italic"
+        android:fontFamily="@font/default_font"/>
 
-        android:layout_marginBottom="@dimen/marginLarge"
-        android:layout_centerHorizontal="true">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/marginLarge"
+        android:paddingBottom="@dimen/marginLarge">
 
-        <RelativeLayout
-            android:layout_width="@dimen/timeBoxWidthItalic"
-            android:layout_height="@dimen/timeBoxHeight"
-            android:id="@+id/setAlarmPopupHourLayout"
-
-            android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
-            android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/setAlarmPopupHourET"
-                android:textColor="@color/defaultTxtColor"
-                android:textSize="@dimen/timeTxtSize"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"
-
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
-        <RelativeLayout
+        <!-- TIME -->
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/timeBoxHeight"
-            android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/defaultTxtColor"
-                android:textSize="@dimen/timeTxtSize"
-                android:text=":"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"
+            android:layout_height="wrap_content"
 
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="@dimen/timeBoxWidthItalic"
-            android:layout_height="@dimen/timeBoxHeight"
-            android:id="@+id/setAlarmPopupMinuteLayout"
-
-            android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
-            android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/setAlarmPopupMinuteET"
-                android:textColor="@color/defaultTxtColor"
-                android:textSize="@dimen/timeTxtSize"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"
-
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"/>
-        </RelativeLayout>
-    </LinearLayout>
-
-    <!-- CLOCK -->
-    <RelativeLayout
-        android:layout_width="@dimen/clockLayoutSize"
-        android:layout_height="@dimen/clockLayoutSize"
-        android:id="@+id/clockLayout"
-
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/setAlarmPopupTvsLayout"
-        android:layout_marginBottom="@dimen/marginMedium">
-    </RelativeLayout>
-
-    <!-- TOGGLE -->
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/setAlarmPopupToggleLayout"
-
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/marginMedium"
-        android:layout_below="@id/clockLayout">
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/setAlarmPopupToggle"
-            android:layout_width="@dimen/setAlarmVHToggleWidth"
-            android:layout_height="@dimen/btnheight"
-
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/setAlarmPopupSoundLayout"
-
-        android:layout_marginBottom="@dimen/marginMedium"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/setAlarmPopupToggleLayout">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/btnheight"
-            android:paddingStart="@dimen/marginSmall"
-            android:paddingEnd="@dimen/marginSmall"
-            android:id="@+id/setAlarmPopupSoundBtn"
-            android:singleLine="true"
+            android:layout_marginBottom="@dimen/marginLarge"
             android:layout_centerHorizontal="true"
-            android:textStyle="italic"
-            android:fontFamily="@font/default_font"
-            android:background="@drawable/custom_btn"/>
+            android:id="@+id/setAlarmTVSShadowLayout">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/shadowColor"
+                android:alpha=".5"
+                android:layout_marginTop="@dimen/shadowOffset"
+                android:layout_marginStart="@dimen/shadowOffset"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/setAlarmPopupTvsLayout"
+                android:layout_marginEnd="@dimen/shadowOffset"
+                android:layout_marginBottom="@dimen/shadowOffset">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/timeBoxWidthItalic"
+                    android:layout_height="@dimen/timeBoxHeight"
+                    android:id="@+id/setAlarmPopupHourLayout"
+
+                    android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
+                    android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/setAlarmPopupHourET"
+                        android:textColor="@color/defaultTxtColor"
+                        android:textSize="@dimen/timeTxtSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"
+
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/timeBoxHeight"
+                    android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/defaultTxtColor"
+                        android:textSize="@dimen/timeTxtSize"
+                        android:text=":"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"
+
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/timeBoxWidthItalic"
+                    android:layout_height="@dimen/timeBoxHeight"
+                    android:id="@+id/setAlarmPopupMinuteLayout"
+
+                    android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
+                    android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/setAlarmPopupMinuteET"
+                        android:textColor="@color/defaultTxtColor"
+                        android:textSize="@dimen/timeTxtSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"
+
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- CLOCK -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/clockLayout"
+
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/setAlarmTVSShadowLayout"
+            android:layout_marginBottom="@dimen/marginMedium">
+        </RelativeLayout>
+
+        <!-- TOGGLE -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/setAlarmPopupToggleLayout"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/marginMedium"
+            android:layout_below="@id/clockLayout">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/setAlarmPopupToggle"
+                android:layout_width="@dimen/setAlarmVHToggleWidth"
+                android:layout_height="@dimen/btnheight"
+
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/setAlarmPopupSoundLayout"
+
+            android:layout_marginBottom="@dimen/marginMedium"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/setAlarmPopupToggleLayout">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btnheight"
+                android:paddingStart="@dimen/marginSmall"
+                android:paddingEnd="@dimen/marginSmall"
+                android:id="@+id/setAlarmPopupSoundBtn"
+                android:singleLine="true"
+                android:layout_centerHorizontal="true"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:background="@drawable/custom_btn"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/setAlarmPopupSoundLayout">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/btnheight"
+                    android:text="CANCEL"
+                    android:id="@+id/setTimeCancelBtn"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:background="@drawable/custom_btn"
+
+                    android:layout_marginEnd="@dimen/marginSmall"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/btnheight"
+                    android:text="OK"
+                    android:id="@+id/setTimeOKBtn"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:background="@drawable/custom_btn"
+
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/setAlarmPopupSoundLayout">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/btnheight"
-                android:text="CANCEL"
-                android:id="@+id/setTimeCancelBtn"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"
-                android:background="@drawable/custom_btn"
-
-                android:layout_marginEnd="@dimen/marginSmall"
-                android:layout_centerHorizontal="true"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/btnheight"
-                android:text="OK"
-                android:id="@+id/setTimeOKBtn"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"
-                android:background="@drawable/custom_btn"
-
-                android:layout_centerHorizontal="true"/>
-        </RelativeLayout>
-    </LinearLayout>
 </RelativeLayout>

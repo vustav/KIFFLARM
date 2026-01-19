@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Display;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +45,11 @@ public class SoundPopup extends Popup {
         Display display = kifflarm.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+
+        //bg
+        RelativeLayout bg = popupView.findViewById(R.id.soundPopupBg);
+        TextView bgTv = popupView.findViewById(R.id.soundPopupBgTV);
+        Utils.createNiceBg(bg, bgTv, 65);
 
         popupWindow.setWidth(size.x-size.x/5);
 

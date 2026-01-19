@@ -28,23 +28,41 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <TextView
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/alarmActivityTimeTV"
-                android:background="@color/alarmsVHbg"
-                android:textColor="@color/defaultTxtColor"
-                android:textSize="@dimen/alarmActivityTextSize"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"
+                android:layout_centerInParent="true">
 
-                android:layout_centerInParent="true"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/shadowColor"
+                    android:layout_marginTop="@dimen/shadowOffset"
+                    android:layout_marginStart="@dimen/shadowOffset"
+                    android:alpha=".5"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/alarmActivityTimeTV"
+                    android:background="@color/alarmsVHbg"
+                    android:textColor="@color/defaultTxtColor"
+                    android:textSize="@dimen/alarmActivityTextSize"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+
+                    android:layout_marginEnd="@dimen/shadowOffset"
+                    android:layout_marginBottom="@dimen/shadowOffset"/>
+            </FrameLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/marginLarge"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:layout_marginEnd="@dimen/marginLarge">
 
             <Button
                 android:layout_width="match_parent"
@@ -59,7 +77,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/marginLarge"
+            android:layout_marginBottom="@dimen/marginLarge"
+            android:layout_marginEnd="@dimen/marginLarge">
 
             <Button
                 android:layout_width="match_parent"

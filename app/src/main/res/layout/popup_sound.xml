@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/marginLarge">
+    android:id="@+id/soundPopupBg">
+
+    <TextView
+        android:id="@+id/soundPopupBgTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/timeTxtSize"
+        android:textStyle="italic"
+        android:fontFamily="@font/default_font"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/popupSoundsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:paddingTop="20dp"
+        android:paddingBottom="50dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

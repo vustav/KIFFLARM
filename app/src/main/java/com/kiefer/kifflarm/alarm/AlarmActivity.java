@@ -55,10 +55,21 @@ public class AlarmActivity extends AppCompatActivity {
             offBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
-                    KIFFMediaPlayer.destroy();
-                    KIFFVibrator.destroy();
-                    finish();
+                    kill(alarm, vibrator, mediaPlayer);
+                }
+            });
+
+            Button snoozeBtn = layout.findViewById(R.id.alarmActivitySnoozeBtn);
+            snoozeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Alarm snoozeAlarm = new Alarm(AlarmActivity.this, alarm.getSound());
+                    snoozeAlarm.setTime(alarm.getHour(), alarm.getMinute() + alarm.getSnooze());
+                    snoozeAlarm.activate(true, false);
+                    snoozeAlarm.updateSchedule();
+
+                    kill(alarm, vibrator, mediaPlayer);
                 }
             });
 
@@ -95,6 +106,13 @@ public class AlarmActivity extends AppCompatActivity {
         tvTxtAnimation.setRepeatMode(ValueAnimator.REVERSE);
         tvTxtAnimation.addUpdateListener(animator -> tv.setTextColor((int) animator.getAnimatedValue()));
         tvTxtAnimation.start();
+    }
+
+    private void kill(Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer){
+        AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
+        KIFFMediaPlayer.destroy();
+        KIFFVibrator.destroy();
+        finish();
     }
 
     @Override

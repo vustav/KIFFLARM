@@ -4,7 +4,6 @@
     android:layout_marginLeft="@dimen/marginMedium"
     android:layout_marginRight="@dimen/marginMedium"
     android:gravity="center_vertical"
-    android:id="@+id/alarmVHBg"
     android:paddingStart="@dimen/marginLarge"
     android:paddingEnd="@dimen/alarmsVHPaddingEnd"
 
@@ -12,90 +11,109 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/alarmsVHRemoveLayout"
+        android:layout_height="match_parent"
+        android:background="@color/shadowColor"
+        android:alpha=".5"
 
-        android:layout_centerVertical="true">
-
-        <!-- without this FrameLayout the button always covers the TextView -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/btnheight"
-                android:id="@+id/alarmVHbutton"
-                android:background="@drawable/custom_btn"/>
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/alarmVHtextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/defaultTxtColor"
-            android:textSize="@dimen/defaultTvTextSize"
-            android:textStyle="italic"
-            android:fontFamily="@font/default_font"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"
-
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
+        android:layout_marginStart="@dimen/shadowOffset"
+        android:layout_marginTop="@dimen/shadowOffset"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/alarmsVHRemoveLayout"
-        android:layout_marginStart="@dimen/marginLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/alarmVHBg"
 
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@id/alarmsVHToggle">
+        android:layout_marginEnd="@dimen/shadowOffset"
+        android:layout_marginBottom="@dimen/shadowOffset">
 
-        <!-- without this FrameLayout the button always covers the TextView -->
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="@dimen/btnheight"
-                android:layout_height="@dimen/btnheight"
-                android:id="@+id/alarmVHRemovebutton"
-                android:background="@drawable/custom_btn"/>
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/alarmVHRemovetextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/defaultTxtColor"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/default_font"
-            android:textStyle="italic"
-            android:text=" - "/>
-    </RelativeLayout>
-
-    <!--
-    <RelativeLayout
-        android:layout_width="@dimen/alarmsVHBtnheight"
-        android:layout_height="@dimen/alarmsVHBtnheight"
-        android:id="@+id/alarmsVHCheckLayout"
-
-        android:layout_alignParentEnd="true">
-
-        <CheckBox
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/alarmsVHCheck"/>
+            android:layout_toStartOf="@id/alarmsVHRemoveLayout">
+
+            <!-- without this FrameLayout the button always covers the TextView -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/marginSmall"
+                android:layout_centerVertical="true">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/btnheight"
+                    android:id="@+id/alarmVHbutton"
+                    android:background="@drawable/custom_btn"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/alarmVHtextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/defaultTxtColor"
+                android:textSize="@dimen/defaultTvTextSize"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alarmsVHRemoveLayout"
+            android:layout_marginStart="@dimen/marginLarge"
+
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/alarmsVHToggle">
+
+            <!-- without this FrameLayout the button always covers the TextView -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="@dimen/btnheight"
+                    android:layout_height="@dimen/btnheight"
+                    android:id="@+id/alarmVHRemovebutton"
+                    android:background="@drawable/custom_btn"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/alarmVHRemovetextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/defaultTxtColor"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/default_font"
+                android:textStyle="italic"
+                android:text=" - "/>
+        </RelativeLayout>
+
+        <!--
+        <RelativeLayout
+            android:layout_width="@dimen/alarmsVHBtnheight"
+            android:layout_height="@dimen/alarmsVHBtnheight"
+            android:id="@+id/alarmsVHCheckLayout"
+
+            android:layout_alignParentEnd="true">
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/alarmsVHCheck"/>
+        </RelativeLayout>
+        -->
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/alarmsVHToggle"
+            android:layout_width="@dimen/alarmsVHToggleWidth"
+            android:layout_height="@dimen/btnheight"
+
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
-    -->
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/alarmsVHToggle"
-        android:layout_width="@dimen/alarmsVHToggleWidth"
-        android:layout_height="@dimen/btnheight"
-
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"/>
 </RelativeLayout>

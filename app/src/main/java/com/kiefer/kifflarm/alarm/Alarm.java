@@ -19,7 +19,7 @@ public class Alarm implements Comparable<Alarm>{
     private Context context;
     private android.app.AlarmManager androidAlarmManager;
     private FileManager fileManager;
-    private int hour, minute;
+    private int hour, minute, snooze = 1;
     private boolean active;
     private int id;
     private Sound sound;
@@ -144,6 +144,10 @@ public class Alarm implements Comparable<Alarm>{
 
     public int getMinute(){
         return minute;
+    }
+
+    public int getSnooze() {
+        return snooze;
     }
 
     public String getTimeAsString(){

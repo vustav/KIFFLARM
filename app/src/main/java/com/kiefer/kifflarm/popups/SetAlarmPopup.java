@@ -1,6 +1,7 @@
 package com.kiefer.kifflarm.popups;
 
 import android.graphics.Color;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -24,7 +25,6 @@ public class SetAlarmPopup extends Popup {
     private RelativeLayout hourLayout, minuteLayout;
     private int selectedTxt;
     private ClockView clockView;
-
     private int color;
     public static int TIME_UNIT, HOUR = 0, MINUTE = 1;
 
@@ -38,16 +38,27 @@ public class SetAlarmPopup extends Popup {
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_set_alarm, null);
         color = Utils.getRandomColor();
-        popupView.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
+        //popupView.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
 
         //create the popupWindow
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        //int width = (int) popupView.getResources().getDimension(R.dimen.clockLayoutSize);
+        int height = (int) popupView.getResources().getDimension(R.dimen.clockPopupHeight);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        kifflarm.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        //int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels - displayMetrics.widthPixels/5;
+
         boolean focusable = true;
         popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);
+
+        //bg
+        RelativeLayout bg = popupView.findViewById(R.id.popupSetAlarmBg);
+        TextView bgTv = popupView.findViewById(R.id.setAlarmPopupBgTV);
+        Utils.createNiceBg(bg, bgTv, 65);
 
         //set up hour TV
         hourLayout = popupView.findViewById(R.id.setAlarmPopupHourLayout);

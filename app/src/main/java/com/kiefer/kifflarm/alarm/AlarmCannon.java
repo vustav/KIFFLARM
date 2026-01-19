@@ -62,7 +62,7 @@ public class AlarmCannon {
         RemoteViews remoteViews = getRemoteViews(alarm);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.watch)
+                .setSmallIcon(R.drawable.custom_btn)
                 .setContentTitle(context.getResources().getString(R.string.app_name))
                 .setContentText(alarm.getTimeAsString())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
