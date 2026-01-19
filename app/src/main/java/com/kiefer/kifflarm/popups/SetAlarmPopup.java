@@ -24,6 +24,8 @@ public class SetAlarmPopup extends Popup {
     private RelativeLayout hourLayout, minuteLayout;
     private int selectedTxt;
     private ClockView clockView;
+
+    private int color;
     public static int TIME_UNIT, HOUR = 0, MINUTE = 1;
 
     public SetAlarmPopup(KIFFLARM kifflarm, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
@@ -35,7 +37,8 @@ public class SetAlarmPopup extends Popup {
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_set_alarm, null);
-        popupView.setBackground(Utils.getRandomGradientDrawable());
+        color = Utils.getRandomColor();
+        popupView.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
 
         //create the popupWindow
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -195,6 +198,9 @@ public class SetAlarmPopup extends Popup {
     }
 
     /** GET **/
+    public int getColor() {
+        return color;
+    }
 
     public Alarm getAlarm(){
         return alarm;

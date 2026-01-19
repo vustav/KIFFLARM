@@ -44,5 +44,6 @@
     <dimen name="clockLayoutSize">220dp</dimen>
     <dimen name="clockSize">200dp</dimen>
     <dimen name="clockOffset">20dp</dimen>
+    <dimen name="shadowOffset">5dp</dimen>
 
 </resources>
