@@ -63,7 +63,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                 removeAlarm(viewHolder.getAdapterPosition());
             }
         });
-        viewHolder.removeTV.setBackground(Utils.getRandomGradientDrawable());
+        viewHolder.delTV.setBackground(Utils.getRandomGradientDrawable());
     }
 
     public void removeAlarm(int i){
@@ -76,12 +76,14 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         if(on) {
             viewHolder.delBtn.setAlpha(1);
+            viewHolder.delTV.setAlpha(1);
             viewHolder.mainBtn.setAlpha(1);
             viewHolder.mainTV.setAlpha(1);
         }
         else{
             float alpha = .5f;
             viewHolder.delBtn.setAlpha(alpha);
+            viewHolder.delTV.setAlpha(alpha);
             viewHolder.mainBtn.setAlpha(alpha);
             viewHolder.mainTV.setAlpha(alpha);
         }
@@ -108,8 +110,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
     /** VIEWHOLDEr **/
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private RelativeLayout bg;
-        private final TextView mainTV, removeTV;
+        private RelativeLayout bg, shadow;
+        private final TextView mainTV, delTV;
         private final Button mainBtn, delBtn;
         private final SwitchMaterial toggle;
 
@@ -117,11 +119,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             super(view);
             // Define click listener for the ViewHolder's View
             bg = view.findViewById(R.id.alarmVHBg);
+            shadow = view.findViewById(R.id.alarmVHShadow);
             mainTV = view.findViewById(R.id.alarmVHtextView);
             mainBtn = view.findViewById(R.id.alarmVHbutton);
             delBtn = view.findViewById(R.id.alarmVHRemovebutton);
             toggle = view.findViewById(R.id.alarmsVHToggle);
-            removeTV = view.findViewById(R.id.alarmVHRemovetextView);
+            delTV = view.findViewById(R.id.alarmVHRemovetextView);
         }
     }
 }

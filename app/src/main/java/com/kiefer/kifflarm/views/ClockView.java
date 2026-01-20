@@ -181,6 +181,7 @@ public class ClockView extends View {
                     Marker m = smallHourMarkers.get(hour);
                     Point p = m.point;
                     timeMarkerPaint.setColor(m.color);
+                    textPaint.setColor(Utils.getContrastColor(m.color));
 
                     if(m.shape == CIRCLE) {
                         drawCircleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);
@@ -201,6 +202,7 @@ public class ClockView extends View {
                     Marker m = bigHourMarkers.get(hour);
                     Point p = m.point;
                     timeMarkerPaint.setColor(m.color);
+                    textPaint.setColor(Utils.getContrastColor(m.color));
 
                     if(m.shape == CIRCLE) {
                         drawCircleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);
@@ -249,7 +251,6 @@ public class ClockView extends View {
 
             //0-11 hand and touch
             else{
-
                 //hand shadow
                 canvas.drawPath(shadowPath, shadowHandPaint);
 
@@ -284,6 +285,7 @@ public class ClockView extends View {
                 Marker m = minuteMarkers.get(minute);
                 Point p = m.point;
                 timeMarkerPaint.setColor(m.color);
+                textPaint.setColor(Utils.getContrastColor(m.color));
 
                 if(m.shape == CIRCLE) {
                     drawCircleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowMarkerPaint);

@@ -3,6 +3,8 @@ package com.kiefer.kifflarm.popups;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -41,13 +43,10 @@ public class SetAlarmPopup extends Popup {
         //popupView.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
 
         //create the popupWindow
-        //int width = (int) popupView.getResources().getDimension(R.dimen.clockLayoutSize);
-        int height = (int) popupView.getResources().getDimension(R.dimen.clockPopupHeight);
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         kifflarm.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        //int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels - displayMetrics.widthPixels/5;
+        int height = (int) popupView.getResources().getDimension(R.dimen.clockPopupHeight);
 
         boolean focusable = true;
         popupWindow = new PopupWindow(popupView, width, height, focusable);

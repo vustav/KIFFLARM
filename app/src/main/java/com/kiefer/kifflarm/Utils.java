@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -141,6 +142,68 @@ public class Utils {
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         rlp.setMargins(-startMargin, -topMargin, -endMargin, 0);
         tv.setLayoutParams(rlp);
+    }
+    public static void createNiceBg(ViewGroup layout, TextView tv, int nOfCopys, int height){
+
+
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int width = layout.getWidth();
+                int height = layout.getHeight();
+
+
+                Log.e("Utils ZZZ", "h: "+height);
+                layout.setBackground(Utils.getRandomGradientDrawable());
+
+                String label = "ALARM";
+                String concatLabel = "";
+                for(int copy = 0; copy <= nOfCopys; copy++){
+
+                    int start = 0;
+
+                    if(copy == 0){
+                        Random r = new Random();
+                        start = r.nextInt(label.length());
+                    }
+                    for(int i = start; i < label.length(); i++){
+                        concatLabel += String.valueOf(label.charAt(i));
+                    }
+                    tv.setText(concatLabel);
+                    Log.e("Utils ZZZ", "tv h: "+tv.getLayoutParams().height);
+                }
+
+                SpannableString coloredLabel = new SpannableString(concatLabel);
+                for(int i = 0; i < coloredLabel.length() - 1; i++){
+                    coloredLabel.setSpan(new ForegroundColorSpan(Utils.getRandomColor()), i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                tv.setText(coloredLabel);
+
+                //add more if needed
+                Random r = new Random();
+                int startMargin = r.nextInt(40) + 30;
+                int topMargin = r.nextInt(40) + 30;
+                int endMargin = r.nextInt(80) + 30;
+
+                RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                rlp.setMargins(-startMargin, -topMargin, -endMargin, 0);
+                tv.setLayoutParams(rlp);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /** STRING **/

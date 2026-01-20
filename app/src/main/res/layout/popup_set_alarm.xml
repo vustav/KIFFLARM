@@ -13,6 +13,24 @@
         android:textStyle="italic"
         android:fontFamily="@font/default_font"/>
 
+    <!-- TOGGLE -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/setAlarmPopupToggleLayout"
+
+        android:layout_centerHorizontal="true"
+
+        android:layout_alignParentEnd="true">
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/setAlarmPopupToggle"
+            android:layout_width="@dimen/setAlarmVHToggleWidth"
+            android:layout_height="@dimen/btnheight"
+
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginBottom="@dimen/marginLarge"
+            android:layout_marginBottom="@dimen/marginSmall"
             android:layout_centerHorizontal="true"
             android:id="@+id/setAlarmTVSShadowLayout">
 
@@ -115,24 +133,6 @@
             android:layout_marginBottom="@dimen/marginMedium">
         </RelativeLayout>
 
-        <!-- TOGGLE -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/setAlarmPopupToggleLayout"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/marginMedium"
-            android:layout_below="@id/clockLayout">
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/setAlarmPopupToggle"
-                android:layout_width="@dimen/setAlarmVHToggleWidth"
-                android:layout_height="@dimen/btnheight"
-
-                android:layout_centerInParent="true"/>
-        </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
 
             android:layout_marginBottom="@dimen/marginMedium"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/setAlarmPopupToggleLayout">
+            android:layout_below="@id/clockLayout">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/btnheight"
