@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/alarmsVHheight"
+    android:layout_height="@dimen/soundVHheight"
     android:layout_marginLeft="@dimen/marginMedium"
     android:layout_marginRight="@dimen/marginMedium"
     android:gravity="center_vertical"
     android:paddingStart="@dimen/marginSmall"
     android:paddingEnd="@dimen/marginSmall"
 
-    android:layout_marginBottom="@dimen/marginMedium">
+    android:layout_marginBottom="@dimen/marginSmall">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -63,17 +63,18 @@
                 android:layout_centerVertical="true">
 
                 <Button
-                    android:layout_width="@dimen/btnheight"
-                    android:layout_height="@dimen/btnheight"
+                    android:layout_width="@dimen/soundVHBtnHeight"
+                    android:layout_height="@dimen/soundVHBtnHeight"
                     android:id="@+id/soundVHPlayBtn"
                     android:background="@drawable/custom_btn"
                     android:layout_marginEnd="@dimen/marginSmall"/>
             </FrameLayout>
 
             <ImageView
-                android:layout_width="@dimen/addBtnIconSize"
-                android:layout_height="@dimen/addBtnIconSize"
-                android:layout_centerInParent="true"
+                android:layout_width="@dimen/soundVHBtnIcon"
+                android:layout_height="@dimen/soundVHBtnIcon"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="9dp"
                 android:id="@+id/soundVHPlayBtnIcon"/>
         </RelativeLayout>
     </RelativeLayout>

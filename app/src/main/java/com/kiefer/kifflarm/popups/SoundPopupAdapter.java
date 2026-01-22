@@ -52,6 +52,7 @@ public class SoundPopupAdapter extends RecyclerView.Adapter<SoundPopupAdapter.Vi
 
         Sound sound = soundManager.getSounds().get(viewHolder.getAdapterPosition());
         viewHolder.tv.setText(sound.getName());
+        viewHolder.tv.setTextColor(Utils.getContrastColor(color));
 
         viewHolder.tvBg.setOnClickListener(new View.OnClickListener() {
             @Override

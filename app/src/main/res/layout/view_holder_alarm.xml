@@ -4,8 +4,8 @@
     android:layout_marginLeft="@dimen/marginMedium"
     android:layout_marginRight="@dimen/marginMedium"
     android:gravity="center_vertical"
-    android:paddingStart="@dimen/marginLarge"
-    android:paddingEnd="@dimen/alarmsVHPaddingEnd"
+    android:paddingStart="@dimen/marginMedium"
+    android:paddingEnd="@dimen/marginMedium"
 
     android:layout_marginBottom="@dimen/marginMedium">
 

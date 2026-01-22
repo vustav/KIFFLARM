@@ -25,7 +25,9 @@
     <dimen name="alarmsVHPaddingEnd">10dp</dimen>
 
     <!-- SOUND VH -->
-    <dimen name="soundVHheight">50dp</dimen>
+    <dimen name="soundVHheight">45dp</dimen>
+    <dimen name="soundVHBtnHeight">30dp</dimen>
+    <dimen name="soundVHBtnIcon">15dp</dimen>
 
     <!-- SET ALARM -->
     <dimen name="buggyTvTopMarginDestroyer">-6dp</dimen>
