@@ -20,7 +20,13 @@ public class Alarm implements Comparable<Alarm>{
     private android.app.AlarmManager androidAlarmManager;
     private FileManager fileManager;
     protected int hour, minute, snooze = 1;
-    protected boolean active, isSnooze;
+    protected boolean active;
+
+    //when the user clicks snooze a new alarm with this true is created. it's used to differ between
+    // a snooze and a user created alarm since snoozes are deleted after the alarm while regular alarms
+    // is only deactivated.
+    private boolean isSnooze;
+
     protected int id;
     private Sound sound;
 
@@ -308,7 +314,7 @@ public class Alarm implements Comparable<Alarm>{
         }
         catch (Exception e){
             Log.e("Alarm ZZZ", "restore: "+e.toString());
-            removeAlarm();
+            removeAlarm(); //this remove is now working (but it's better than a crash I guess in case of broken files)
         }
     }
 
