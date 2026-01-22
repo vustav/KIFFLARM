@@ -2,6 +2,7 @@ package com.kiefer.kifflarm.popups;
 
 import android.graphics.Color;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -57,7 +58,7 @@ public class SetAlarmPopup extends Popup {
         //bg
         RelativeLayout bg = popupView.findViewById(R.id.popupSetAlarmBg);
         TextView bgTv = popupView.findViewById(R.id.setAlarmPopupBgTV);
-        Utils.createNiceBg(bg, bgTv, 65);
+        Utils.createNiceBg(bg, bgTv, 35);
 
         //set up hour TV
         hourLayout = popupView.findViewById(R.id.setAlarmPopupHourLayout);
@@ -113,21 +114,26 @@ public class SetAlarmPopup extends Popup {
         //okBtn
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
+            //Log.e("SeAlarmtPopup ZZZ", "ok 0");
             alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
-            alarm.activate(toggle.isChecked(), false);
+            alarm.activate(toggle.isChecked(), false, 4);
             alarm.saveAndSchedule();
 
+            //Log.e("SeAlarmtPopup ZZZ", "ok 1");
+
             if(newAlarm) {
-                Utils.insertAlarm(kifflarm.getAlarms(), alarm);
+                alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(kifflarm.getAlarms(), alarm));
             }
             else{
                 Utils.sortAlarms(kifflarm.getAlarms());
-            }
 
-            //using this since a sort can push everything around
-            alarmsAdapter.notifyDataSetChanged();
+                //using this since a sort can push everything around
+                alarmsAdapter.notifyDataSetChangedLocal();
+            }
+            //Log.e("SeAlarmtPopup ZZZ", "ok 2");
 
             dismiss();
+            //Log.e("SeAlarmtPopup ZZZ", "ok 4");
         });
 
         //cancelBtn

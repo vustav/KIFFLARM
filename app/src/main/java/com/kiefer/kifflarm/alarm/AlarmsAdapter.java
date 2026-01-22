@@ -1,12 +1,16 @@
 package com.kiefer.kifflarm.alarm;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
@@ -24,7 +28,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
     public void onResume(){
         //explanation in MainView.onResume
-        notifyDataSetChanged();
+        notifyDataSetChangedLocal();
     }
 
     // Create new views (invoked by the layout manager)
@@ -37,10 +41,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        //Log.e("AlarmsAdapter ZZZ", "onBindViewHolder");
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
         Alarm alarm = kifflarm.getAlarms().get(viewHolder.getAdapterPosition());
@@ -49,10 +51,18 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         viewHolder.mainTV.setBackground(Utils.getRandomGradientDrawable());
 
         activateVH(viewHolder, alarm.isActive());
+        viewHolder.check = 0;
+
         viewHolder.toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            alarm.activate(isChecked, true);
-            activateVH(viewHolder, isChecked);
-            Utils.performHapticFeedback(viewHolder.toggle);
+            //to avoid triggers on inBindViewHolder calls. Got random alarms activated, no idea what was going on.
+            //Log.e("AlarmsAdapter ZZZ", "0");
+            //int check = 0;
+            if(++viewHolder.check > 0) {
+                //Log.e("AlarmsAdapter ZZZ", "1");
+                alarm.activate(isChecked, true, 1);
+                activateVH(viewHolder, isChecked);
+                Utils.performHapticFeedback(viewHolder.toggle);
+            }
         });
 
         viewHolder.mainBtn.setOnClickListener(v -> openAlarmDialog(this, viewHolder.getAdapterPosition(), false));
@@ -108,12 +118,23 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         openAlarmDialog(alarmsAdapter, new Alarm(kifflarm, kifflarm.getSoundManager().getRandomSound()), true);
     }
 
+    public void notifyDataSetChangedLocal(){
+        super.notifyDataSetChanged();
+    }
+
+    public void notifyItemInsertedLocal(int index){
+        super.notifyItemInserted(index);
+    }
+
     /** VIEWHOLDEr **/
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout bg, shadow;
         private final TextView mainTV, delTV;
         private final Button mainBtn, delBtn;
         private final SwitchMaterial toggle;
+        //private final CheckBox checkBox;
+
+        private int check = 0;
 
         public ViewHolder(View view) {
             super(view);
@@ -125,6 +146,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             delBtn = view.findViewById(R.id.alarmVHRemovebutton);
             toggle = view.findViewById(R.id.alarmsVHToggle);
             delTV = view.findViewById(R.id.alarmVHRemovetextView);
+            //checkBox = view.findViewById(R.id.alarmsVHCheck);
         }
     }
 }

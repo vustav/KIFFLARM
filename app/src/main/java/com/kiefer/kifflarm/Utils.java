@@ -33,16 +33,18 @@ public class Utils {
         Collections.sort(alarms, getComparator());
     }
 
-    public static void insertAlarm(ArrayList<Alarm> alarms, Alarm newAlarm){
+    public static int insertAlarm(ArrayList<Alarm> alarms, Alarm newAlarm){
         try {
             int position = Math.abs(Collections.binarySearch(alarms, newAlarm, getComparator())) - 1;
             alarms.add(position, newAlarm);
+            return position;
         }
         catch (Exception e){
             //sometimes crashes. I Think it is when alarms with the same time as the first are added.
             Log.e("Utils ZZZ", "insertAlarm");
             alarms.add(newAlarm);
             sortAlarms(alarms);
+            return -1;
         }
     }
 
@@ -110,7 +112,7 @@ public class Utils {
 
     /** BG **/
     public static void createNiceBg(ViewGroup layout, TextView tv, int nOfCopys){
-        layout.setBackground(Utils.getRandomGradientDrawable());
+        layout.setBackground(getRandomGradientDrawable());
 
         String label = "ALARM";
         String concatLabel = "";
@@ -144,8 +146,6 @@ public class Utils {
         tv.setLayoutParams(rlp);
     }
     public static void createNiceBg(ViewGroup layout, TextView tv, int nOfCopys, int height){
-
-
         layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -154,27 +154,37 @@ public class Utils {
                 int height = layout.getHeight();
 
 
-                Log.e("Utils ZZZ", "h: "+height);
-                layout.setBackground(Utils.getRandomGradientDrawable());
+                Log.e("Utils ZZZ", "layout h: "+height);
+                layout.setBackground(getRandomGradientDrawable());
 
-                String label = "ALARM";
-                String concatLabel = "";
-                for(int copy = 0; copy <= nOfCopys; copy++){
 
-                    int start = 0;
 
-                    if(copy == 0){
-                        Random r = new Random();
-                        start = r.nextInt(label.length());
+                tv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        tv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                        String label = "ALARM";
+                        String concatLabel = "";
+
+                        for(int copy = 0; copy <= nOfCopys; copy++){
+
+                            int start = 0;
+
+                            if(copy == 0){
+                                Random r = new Random();
+                                start = r.nextInt(label.length());
+                            }
+                            for(int i = start; i < label.length(); i++){
+                                concatLabel += String.valueOf(label.charAt(i));
+                            }
+                            tv.setText(concatLabel);
+                            Log.e("Utils ZZZ", "tv h: "+tv.getHeight());
+                        }
                     }
-                    for(int i = start; i < label.length(); i++){
-                        concatLabel += String.valueOf(label.charAt(i));
-                    }
-                    tv.setText(concatLabel);
-                    Log.e("Utils ZZZ", "tv h: "+tv.getLayoutParams().height);
-                }
+                });
 
-                SpannableString coloredLabel = new SpannableString(concatLabel);
+                SpannableString coloredLabel = new SpannableString(tv.getText());
                 for(int i = 0; i < coloredLabel.length() - 1; i++){
                     coloredLabel.setSpan(new ForegroundColorSpan(Utils.getRandomColor()), i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
@@ -186,24 +196,12 @@ public class Utils {
                 int topMargin = r.nextInt(40) + 30;
                 int endMargin = r.nextInt(80) + 30;
 
-                RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 rlp.setMargins(-startMargin, -topMargin, -endMargin, 0);
                 tv.setLayoutParams(rlp);
+                Log.e("Utils ZZZ", "tv h no loop: "+tv.getHeight());
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     /** STRING **/
@@ -214,5 +212,19 @@ public class Utils {
             timeString = "0"+time;
         }
         return timeString;
+    }
+
+    /** NMBRS **/
+    public static int getRandomOffset(int max){
+        Random r  = new Random();
+        return max - r.nextInt(max+1) - r.nextInt(max+1);
+    }
+    public static int getRandomOffset(){
+        return getRandomOffset(5);
+    }
+
+    public static int getRandomPositiveOffset(int min, int max){
+        Random r  = new Random();
+        return r.nextInt(max-min+1)+min;
     }
 }

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Vibrator;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -30,7 +31,12 @@ public class AlarmCannon {
     public AlarmCannon(Context context, Intent intent){
         this.context = context;
 
+        Log.e("AlarmCannon ZZZ", "intent == null"+(intent == null));
+        Log.e("AlarmCannon ZZZ", "id: "+intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+
         Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+
+        Log.e("AlarmCannon ZZZ", "alarm == null"+(alarm == null));
 
         String channelId = alarm.getIdAsString() + "c";
         int notificationId = alarm.getId();
@@ -71,8 +77,7 @@ public class AlarmCannon {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(true)
                 .setContentIntent(fullScreenPendingIntent)
-                .setCustomContentView(remoteViews)
-                ;
+                .setCustomContentView(remoteViews);
 
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 
 import android.graphics.Paint;
@@ -166,8 +167,6 @@ public class ClockView extends View {
             initTimeSet = true;
         }
 
-        int textOffset = 23;
-
         int handColor = Utils.getRandomColor();
         handPaint.setColor(handColor);
         handPaint.setColor(handColor);
@@ -192,7 +191,7 @@ public class ClockView extends View {
                     else{
                         drawTriangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowTrianglePaint);
                     }
-                    canvas.drawText(Integer.toString(hour+12), p.x-textOffset, p.y+textOffset, textPaint);
+                    canvas.drawText(Integer.toString(hour+12), p.x-m.xOffset, p.y+m.yOffset, textPaint);
                 }
             }
 
@@ -213,7 +212,7 @@ public class ClockView extends View {
                     else{
                         drawTriangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowTrianglePaint);
                     }
-                    canvas.drawText(Integer.toString(hour), p.x - textOffset, p.y + textOffset, textPaint);
+                    canvas.drawText(Integer.toString(hour), p.x-m.xOffset, p.y+m.yOffset, textPaint);
                 }
             }
 
@@ -246,7 +245,7 @@ public class ClockView extends View {
                 else{
                     drawTriangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
                 }
-                canvas.drawText(Integer.toString(snaptHour), p.x-textOffset, p.y+textOffset, snapTxtPaint);
+                canvas.drawText(Integer.toString(snaptHour), p.x-m.xOffset, p.y+m.yOffset, snapTxtPaint);
             }
 
             //0-11 hand and touch
@@ -276,7 +275,7 @@ public class ClockView extends View {
                 else{
                     drawTriangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
                 }
-                canvas.drawText(Integer.toString(snaptHour), p.x - textOffset, p.y + textOffset, snapTxtPaint);
+                canvas.drawText(Integer.toString(snaptHour), p.x-m.xOffset, p.y+m.yOffset, snapTxtPaint);
             }
 
         }
@@ -296,7 +295,7 @@ public class ClockView extends View {
                 else{
                     drawTriangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowTrianglePaint);
                 }
-                canvas.drawText(Integer.toString(minute * 5), p.x - textOffset, p.y + textOffset, textPaint);
+                canvas.drawText(Integer.toString(minute * 5), p.x-m.xOffset, p.y+m.yOffset, textPaint);
             }
 
             //hand shadow
@@ -324,7 +323,7 @@ public class ClockView extends View {
             else{
                 drawTriangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
             }
-            canvas.drawText(Integer.toString(5*(Math.round((float)(snapMinute - visualTimeOffset)/5))), p.x - textOffset, p.y + textOffset, snapTxtPaint);
+            canvas.drawText(Integer.toString(5*(Math.round((float)(snapMinute - visualTimeOffset)/5))), p.x - m.xOffset, p.y + m.yOffset, snapTxtPaint);
         }
     }
 
@@ -615,14 +614,15 @@ public class ClockView extends View {
     /** CLASS MARKER **/
     private class Marker{
         private Point point;
-        private int shape;
-
+        private int shape, xOffset, yOffset;
         private int color;
 
         private Marker(Point point){
             this.point = point;
             shape = r.nextInt(3);
             color = Utils.getRandomColor();
+            xOffset = Utils.getRandomPositiveOffset(13, 43);
+            yOffset = Utils.getRandomPositiveOffset(12, 42);
         }
     }
 }

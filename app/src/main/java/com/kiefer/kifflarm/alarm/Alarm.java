@@ -19,9 +19,9 @@ public class Alarm implements Comparable<Alarm>{
     private Context context;
     private android.app.AlarmManager androidAlarmManager;
     private FileManager fileManager;
-    private int hour, minute, snooze = 1;
-    private boolean active;
-    private int id;
+    protected int hour, minute, snooze = 1;
+    protected boolean active, isSnooze;
+    protected int id;
     private Sound sound;
 
     private int color;
@@ -50,6 +50,7 @@ public class Alarm implements Comparable<Alarm>{
     //this are shared for both and new alarms. Setting params here if restoration fails. makes the alarm useless of course =((
     private Alarm(Context context){
         this.context = context;
+        isSnooze = false;
 
         androidAlarmManager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         fileManager = new FileManager(context);
@@ -73,7 +74,8 @@ public class Alarm implements Comparable<Alarm>{
         color = Utils.getRandomColor();
     }
 
-    public void activate(boolean active, boolean save){
+    public void activate(boolean active, boolean save, int caller){
+        //Log.e("Alarm ZZZ", "caller: "+caller+", activate: "+active);
         this.active = active;
 
         if(save) {
@@ -146,7 +148,7 @@ public class Alarm implements Comparable<Alarm>{
         return minute;
     }
 
-    public int getSnooze() {
+    public int getSnoozeTime() {
         return snooze;
     }
 
@@ -201,7 +203,12 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public boolean isActive(){
+        Log.e("Alarm ZZZ", "getActive: "+active);
         return active;
+    }
+
+    public boolean isSnooze() {
+        return isSnooze;
     }
 
     public int getColor(){
@@ -224,8 +231,10 @@ public class Alarm implements Comparable<Alarm>{
 
     public void setSound(Sound sound){
         this.sound = sound;
-        //save();
-        //Log.e("Alarm ZZZ", "setSound: "+sound.getName());
+    }
+
+    public void setIsSnooze(boolean snooze){
+        isSnooze = snooze;
     }
 
     /** SAVING **/
@@ -233,9 +242,10 @@ public class Alarm implements Comparable<Alarm>{
         fileManager.write(getParams(), getIdAsString());
     }
     public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",
-            MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri";
+            MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri",
+            SNOOZE_TAG = "snooze";
 
-    private ArrayList<String> getParams(){
+    protected ArrayList<String> getParams(){
         ArrayList<String> params = new ArrayList<>();
         if(active){
             params.add(ACTIVE_TAG +"true");
@@ -249,6 +259,13 @@ public class Alarm implements Comparable<Alarm>{
         params.add(RINGTONE_NAME_TAG + getSound().getName());
         params.add(RINGTONE_URI_TAG + getSound().getUri());
 
+        if(isSnooze){
+            params.add(SNOOZE_TAG+"true");
+        }
+        else{
+            params.add(SNOOZE_TAG+"false");
+        }
+
         return params;
     }
 
@@ -257,29 +274,42 @@ public class Alarm implements Comparable<Alarm>{
         //two empty strings that hopefully will be filled
         String soundName = "", soundUri = "";
 
-        for(String s : params){
-            //check length or it will crash when  trying to get a long substring from a short string
-            if (s.length() > ACTIVE_TAG.length() && s.substring(0, ACTIVE_TAG.length()).equals(ACTIVE_TAG)) {
-                if (s.substring(ACTIVE_TAG.length()).equals("true")) {
-                    active = true;
-                } else {
-                    active = false;
+        try {
+            for (String s : params) {
+                //check length or it will crash when  trying to get a long substring from a short string
+                if (s.length() > ACTIVE_TAG.length() && s.substring(0, ACTIVE_TAG.length()).equals(ACTIVE_TAG)) {
+                    if (s.substring(ACTIVE_TAG.length()).equals("true")) {
+                        active = true;
+                    } else {
+                        active = false;
+                    }
+                } else if (s.length() > ALARM_ID_TAG.length() && s.substring(0, ALARM_ID_TAG.length()).equals(ALARM_ID_TAG)) {
+                    id = Integer.parseInt(s.substring(ALARM_ID_TAG.length()));
+                } else if (s.length() > HOUR_TAG.length() && s.substring(0, HOUR_TAG.length()).equals(HOUR_TAG)) {
+                    hour = Integer.parseInt(s.substring(HOUR_TAG.length()));
+                } else if (s.length() > MINUTE_TAG.length() && s.substring(0, MINUTE_TAG.length()).equals(MINUTE_TAG)) {
+                    minute = Integer.parseInt(s.substring(MINUTE_TAG.length()));
+                } else if (s.length() > RINGTONE_NAME_TAG.length() && s.substring(0, RINGTONE_NAME_TAG.length()).equals(RINGTONE_NAME_TAG)) {
+                    soundName = s.substring(RINGTONE_NAME_TAG.length());
+                } else if (s.length() > RINGTONE_URI_TAG.length() && s.substring(0, RINGTONE_URI_TAG.length()).equals(RINGTONE_URI_TAG)) {
+                    soundUri = s.substring(RINGTONE_URI_TAG.length());
+                } else if (s.length() > SNOOZE_TAG.length() && s.substring(0, SNOOZE_TAG.length()).equals(SNOOZE_TAG)) {
+                    if (s.substring(SNOOZE_TAG.length()).equals("true")) {
+                        isSnooze = true;
+                    } else {
+                        isSnooze = false;
+                    }
                 }
-            } else if (s.length() > ALARM_ID_TAG.length() && s.substring(0, ALARM_ID_TAG.length()).equals(ALARM_ID_TAG)) {
-                id = Integer.parseInt(s.substring(ALARM_ID_TAG.length()));
-            } else if (s.length() > HOUR_TAG.length() && s.substring(0, HOUR_TAG.length()).equals(HOUR_TAG)) {
-                hour = Integer.parseInt(s.substring(HOUR_TAG.length()));
-            } else if (s.length() > MINUTE_TAG.length() && s.substring(0, MINUTE_TAG.length()).equals(MINUTE_TAG)) {
-                minute = Integer.parseInt(s.substring(MINUTE_TAG.length()));
-            } else if (s.length() > RINGTONE_NAME_TAG.length() && s.substring(0, RINGTONE_NAME_TAG.length()).equals(RINGTONE_NAME_TAG)) {
-                soundName = s.substring(RINGTONE_NAME_TAG.length());
-            } else if (s.length() > RINGTONE_URI_TAG.length() && s.substring(0, RINGTONE_URI_TAG.length()).equals(RINGTONE_URI_TAG)) {
-                soundUri = s.substring(RINGTONE_URI_TAG.length());
             }
-        }
 
-        //create the sound after loading both strings
-        setSound(new Sound(soundName, Uri.parse(soundUri)));
+
+            //create the sound after loading both strings
+            setSound(new Sound(soundName, Uri.parse(soundUri)));
+        }
+        catch (Exception e){
+            Log.e("Alarm ZZZ", "restore: "+e.toString());
+            removeAlarm();
+        }
     }
 
     /** COMPARE **/

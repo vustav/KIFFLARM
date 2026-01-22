@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -165,10 +166,21 @@ public class KIFFLARM extends AppCompatActivity {
         shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TRIGGER ALARM
                 Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
                 intent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(getAlarms().get(0).getId()));
 
                 new AlarmCannon(KIFFLARM.this, intent);
+
+                //ACTIVE CHECK
+                /*
+                Log.e("KIFFLARM ZZZ","----------------------------");
+                for(Alarm a : alarms){
+                    Log.e("KIFFLARM ZZZ","alarm "+alarms.indexOf(a)+", active: "+a.isActive());
+                }
+                Log.e("KIFFLARM ZZZ","----------------------------");
+
+                 */
             }
         });
     }
