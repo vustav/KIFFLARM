@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.kiefer.kifflarm.FileManager;
-import com.kiefer.kifflarm.Utils;
+import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.receivers.AlarmReceiver;
 import com.kiefer.kifflarm.sound.Sound;
 
@@ -19,7 +19,7 @@ public class Alarm implements Comparable<Alarm>{
     private Context context;
     private android.app.AlarmManager androidAlarmManager;
     private FileManager fileManager;
-    protected int hour, minute, snooze = 1;
+    protected int hour, minute, snoozeTime = 5;
     protected boolean active;
 
     //when the user clicks snooze a new alarm with this true is created. it's used to differ between
@@ -155,7 +155,8 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public int getSnoozeTime() {
-        return snooze;
+        Log.e("Alarm ZZZ", "getSnoozeTime: "+snoozeTime);
+        return snoozeTime;
     }
 
     public String getTimeAsString(){
@@ -168,6 +169,10 @@ public class Alarm implements Comparable<Alarm>{
 
     public String getMinuteAsString(){
         return Utils.timeToString(getMinute());
+    }
+
+    public String getSnoozeAsString(){
+        return Utils.timeToString(getSnoozeTime());
     }
 
     public int getComparableTime(){
@@ -209,7 +214,7 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public boolean isActive(){
-        Log.e("Alarm ZZZ", "getActive: "+active);
+        //Log.e("Alarm ZZZ", "getActive: "+active);
         return active;
     }
 
@@ -226,6 +231,12 @@ public class Alarm implements Comparable<Alarm>{
         setHour(hour);
         setMinute(minute);
     }
+
+    public void setSnoozeTime(int snooze){
+        Log.e("Alarm ZZZ", "setSnoozeTime: "+snooze);
+        snoozeTime = snooze;
+    }
+
 
     public void setHour(int hour){
         this.hour = hour;
@@ -249,7 +260,7 @@ public class Alarm implements Comparable<Alarm>{
     }
     public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",
             MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri",
-            SNOOZE_TAG = "snooze";
+            SNOOZE_ON_TAG = "snooze_on", SNOOZE_TIME_TAG = "snooze_time";
 
     protected ArrayList<String> getParams(){
         ArrayList<String> params = new ArrayList<>();
@@ -266,16 +277,19 @@ public class Alarm implements Comparable<Alarm>{
         params.add(RINGTONE_URI_TAG + getSound().getUri());
 
         if(isSnooze){
-            params.add(SNOOZE_TAG+"true");
+            params.add(SNOOZE_ON_TAG +"true");
         }
         else{
-            params.add(SNOOZE_TAG+"false");
+            params.add(SNOOZE_ON_TAG +"false");
         }
+
+        params.add(SNOOZE_TIME_TAG + snoozeTime);
 
         return params;
     }
 
     private void restoreParams(ArrayList<String> params){
+        Log.e("Alarm ZZZ", "restore");
 
         //two empty strings that hopefully will be filled
         String soundName = "", soundUri = "";
@@ -286,26 +300,40 @@ public class Alarm implements Comparable<Alarm>{
                 if (s.length() > ACTIVE_TAG.length() && s.substring(0, ACTIVE_TAG.length()).equals(ACTIVE_TAG)) {
                     if (s.substring(ACTIVE_TAG.length()).equals("true")) {
                         active = true;
+                        Log.e("Alarm ZZZ", "restore1: "+s);
                     } else {
                         active = false;
+                        Log.e("Alarm ZZZ", "restore2: "+s);
                     }
-                } else if (s.length() > ALARM_ID_TAG.length() && s.substring(0, ALARM_ID_TAG.length()).equals(ALARM_ID_TAG)) {
+                } else if (s.length() > ALARM_ID_TAG.length() && s.startsWith(ALARM_ID_TAG)) {
                     id = Integer.parseInt(s.substring(ALARM_ID_TAG.length()));
-                } else if (s.length() > HOUR_TAG.length() && s.substring(0, HOUR_TAG.length()).equals(HOUR_TAG)) {
+                    Log.e("Alarm ZZZ", "restore3: "+s);
+                } else if (s.length() > HOUR_TAG.length() && s.startsWith(HOUR_TAG)) {
                     hour = Integer.parseInt(s.substring(HOUR_TAG.length()));
-                } else if (s.length() > MINUTE_TAG.length() && s.substring(0, MINUTE_TAG.length()).equals(MINUTE_TAG)) {
+                    Log.e("Alarm ZZZ", "restore4: "+s);
+                } else if (s.length() > MINUTE_TAG.length() && s.startsWith(MINUTE_TAG)) {
                     minute = Integer.parseInt(s.substring(MINUTE_TAG.length()));
-                } else if (s.length() > RINGTONE_NAME_TAG.length() && s.substring(0, RINGTONE_NAME_TAG.length()).equals(RINGTONE_NAME_TAG)) {
+                    Log.e("Alarm ZZZ", "restore5: "+s);
+                } else if (s.length() > RINGTONE_NAME_TAG.length() && s.startsWith(RINGTONE_NAME_TAG)) {
                     soundName = s.substring(RINGTONE_NAME_TAG.length());
-                } else if (s.length() > RINGTONE_URI_TAG.length() && s.substring(0, RINGTONE_URI_TAG.length()).equals(RINGTONE_URI_TAG)) {
+                    Log.e("Alarm ZZZ", "restore6: "+s);
+                } else if (s.length() > RINGTONE_URI_TAG.length() && s.startsWith(RINGTONE_URI_TAG)) {
                     soundUri = s.substring(RINGTONE_URI_TAG.length());
-                } else if (s.length() > SNOOZE_TAG.length() && s.substring(0, SNOOZE_TAG.length()).equals(SNOOZE_TAG)) {
-                    if (s.substring(SNOOZE_TAG.length()).equals("true")) {
+                    Log.e("Alarm ZZZ", "restore7: "+s);
+                } else if (s.length() > SNOOZE_ON_TAG.length() && s.substring(0, SNOOZE_ON_TAG.length()).equals(SNOOZE_ON_TAG)) {
+                    if (s.substring(SNOOZE_ON_TAG.length()).equals("true")) {
                         isSnooze = true;
+                        Log.e("Alarm ZZZ", "restore8: "+s);
                     } else {
                         isSnooze = false;
+                        Log.e("Alarm ZZZ", "restore9: "+s);
                     }
+                } else if (s.length() > SNOOZE_TIME_TAG.length() && s.substring(0, SNOOZE_TIME_TAG.length()).equals(SNOOZE_TIME_TAG)) {
+                    Log.e("Alarm ZZZ", "restoreTTIIMMEE: "+s);
+                    snoozeTime = Integer.parseInt(s.substring(SNOOZE_TIME_TAG.length()));
+                    setSnoozeTime(Integer.parseInt(s.substring(SNOOZE_TIME_TAG.length())));
                 }
+                Log.e("Alarm ZZZ", "------------");
             }
 
 

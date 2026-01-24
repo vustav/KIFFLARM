@@ -14,13 +14,8 @@ import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 
 public class NotificationDismissedReceiver extends BroadcastReceiver {
-    //private Context context;
-    //private Alarm alarm;
-    //private MediaPlayer mediaPlayer;
-    //private Vibrator vibrator;
     @Override
     public void onReceive(Context context, Intent intent) {
-        //this.context = context;
         try {
             Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
 

@@ -10,9 +10,11 @@
 
     <!-- TEXT -->
     <dimen name="timeTxtSize">40sp</dimen>
+    <dimen name="timeLabelSize">15sp</dimen>
     <dimen name="defaultTvTextSize">15sp</dimen>
     <dimen name="alarmActivityTextSize">100sp</dimen>
     <dimen name="soundVHTxtSize">20sp</dimen>
+    <dimen name="snoozeTvTextSize">30sp</dimen>
 
     <!-- MAIN LAYOUT -->
     <dimen name="addBtnSize">55dp</dimen>
@@ -44,7 +46,7 @@
     <dimen name="clockMargin">55dp</dimen>
 
     <dimen name="clockLayoutSize">250dp</dimen>
-    <dimen name="clockPopupHeight">450dp</dimen>
+    <dimen name="clockPopupHeight">455dp</dimen>
     <dimen name="clockSize">200dp</dimen>
     <dimen name="clockOffset">40dp</dimen>
 

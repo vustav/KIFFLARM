@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.kiefer.kifflarm.FileManager;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.Utils;
+import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 

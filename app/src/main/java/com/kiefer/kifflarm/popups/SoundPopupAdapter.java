@@ -14,7 +14,7 @@ import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.drawables.DrawablePlay;
 import com.kiefer.kifflarm.drawables.DrawableStop;
 import com.kiefer.kifflarm.sound.Sound;
-import com.kiefer.kifflarm.Utils;
+import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.sound.SoundManager;
 

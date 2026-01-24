@@ -3,7 +3,7 @@ package com.kiefer.kifflarm.alarm;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kiefer.kifflarm.Utils;
+import com.kiefer.kifflarm.utils.Utils;
 
 public class AlarmsTouchHelper extends ItemTouchHelper.SimpleCallback {
     private AlarmsAdapter adapter;

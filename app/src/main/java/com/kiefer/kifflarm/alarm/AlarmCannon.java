@@ -10,7 +10,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Vibrator;
 import android.util.Log;
-import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import androidx.core.app.ActivityCompat;
@@ -19,7 +18,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.kiefer.kifflarm.FileManager;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.Utils;
+import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 import com.kiefer.kifflarm.alarm.receivers.NotificationDismissedReceiver;
 import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;

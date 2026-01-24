@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +26,7 @@ import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.sound.SoundManager;
+import com.kiefer.kifflarm.utils.Utils;
 
 import java.util.ArrayList;
 

@@ -13,10 +13,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.Utils;
+import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.sound.Sound;
 import com.kiefer.kifflarm.sound.SoundManager;
 

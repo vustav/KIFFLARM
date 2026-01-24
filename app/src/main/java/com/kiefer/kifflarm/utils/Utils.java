@@ -1,4 +1,4 @@
-package com.kiefer.kifflarm;
+package com.kiefer.kifflarm.utils;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -18,7 +18,6 @@ import com.kiefer.kifflarm.alarm.Alarm;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 
 public class Utils {

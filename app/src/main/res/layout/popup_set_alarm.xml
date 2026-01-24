@@ -37,90 +37,250 @@
         android:paddingTop="@dimen/marginLarge"
         android:paddingBottom="@dimen/marginLarge">
 
-        <!-- TIME -->
-        <FrameLayout
+        <!-- TIME / SNOOZE -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/setAlarmPopupTimeLayout"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/marginMedium">
 
-            android:layout_marginBottom="@dimen/marginSmall"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/setAlarmTVSShadowLayout">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/shadowColor"
-                android:alpha=".5"
-                android:layout_marginTop="@dimen/shadowOffset"
-                android:layout_marginStart="@dimen/shadowOffset"/>
-
+            <!-- TIME -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/setAlarmPopupTvsLayout"
-                android:layout_marginEnd="@dimen/shadowOffset"
-                android:layout_marginBottom="@dimen/shadowOffset">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="@dimen/timeBoxWidthItalic"
-                    android:layout_height="@dimen/timeBoxHeight"
-                    android:id="@+id/setAlarmPopupHourLayout"
-
-                    android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
-                    android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/setAlarmPopupHourET"
-                        android:textColor="@color/defaultTxtColor"
-                        android:textSize="@dimen/timeTxtSize"
-                        android:textStyle="italic"
-                        android:fontFamily="@font/default_font"
-
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"/>
-                </RelativeLayout>
-
-                <RelativeLayout
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/timeBoxHeight"
-                    android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer">
+                    android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="TME"
+                        android:id="@+id/setAlarmPopupTimeLabel"
                         android:textColor="@color/defaultTxtColor"
-                        android:textSize="@dimen/timeTxtSize"
-                        android:text=":"
+                        android:textSize="@dimen/timeLabelSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"/>
+
+                    <!--
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TME"
+                        android:textColor="@color/shadowColor"
+                        android:alpha=".5"
+                        android:textSize="@dimen/timeLabelSize"
                         android:textStyle="italic"
                         android:fontFamily="@font/default_font"
+                        android:layout_marginTop="@dimen/shadowOffset"
+                        android:layout_marginStart="@dimen/shadowOffset"/>
+                        -->
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                        android:layout_centerVertical="true"/>
-                </RelativeLayout>
+                    android:id="@+id/setAlarmTimeTVSsLayout"
+                    android:layout_marginEnd="@dimen/marginMedium">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/shadowColor"
+                        android:alpha=".5"
+                        android:layout_marginTop="@dimen/shadowOffset"
+                        android:layout_marginStart="@dimen/shadowOffset"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:id="@+id/setAlarmPopupTvsLayout"
+                        android:layout_marginEnd="@dimen/shadowOffset"
+                        android:layout_marginBottom="@dimen/shadowOffset">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/timeBoxWidthItalic"
+                            android:layout_height="@dimen/timeBoxHeight"
+                            android:id="@+id/setAlarmPopupHourLayout"
+
+                            android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
+                            android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/setAlarmPopupHourET"
+                                android:textColor="@color/defaultTxtColor"
+                                android:textSize="@dimen/timeTxtSize"
+                                android:textStyle="italic"
+                                android:fontFamily="@font/default_font"
+
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentEnd="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/timeBoxHeight"
+                            android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/defaultTxtColor"
+                                android:textSize="@dimen/timeTxtSize"
+                                android:text=":"
+                                android:textStyle="italic"
+                                android:fontFamily="@font/default_font"
+
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/timeBoxWidthItalic"
+                            android:layout_height="@dimen/timeBoxHeight"
+                            android:id="@+id/setAlarmPopupMinuteLayout"
+
+                            android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
+                            android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/setAlarmPopupMinuteET"
+                                android:textColor="@color/defaultTxtColor"
+                                android:textSize="@dimen/timeTxtSize"
+                                android:textStyle="italic"
+                                android:fontFamily="@font/default_font"
+
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentStart="true"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- SNOOZE -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SNZ"
+                        android:id="@+id/setAlarmPopupSnoozeLabel"
+                        android:textColor="@color/defaultTxtColor"
+                        android:textSize="@dimen/timeLabelSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"/>
+                    <!--
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SNZ"
+                        android:textColor="@color/shadowColor"
+                        android:alpha=".5"
+                        android:textSize="@dimen/timeLabelSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"
+                        android:layout_marginTop="@dimen/shadowOffset"
+                        android:layout_marginStart="@dimen/shadowOffset"/>
+                        -->
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/setAlarmSnoozeTVSsLayout"
+                    android:layout_marginEnd="@dimen/marginMedium">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/shadowColor"
+                        android:alpha=".5"
+                        android:layout_marginTop="@dimen/shadowOffset"
+                        android:layout_marginStart="@dimen/shadowOffset"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:id="@+id/setAlarmPopupSnoozeTvLayout"
+                        android:layout_marginEnd="@dimen/shadowOffset"
+                        android:layout_marginBottom="@dimen/shadowOffset">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/timeBoxWidthItalic"
+                            android:layout_height="@dimen/timeBoxHeight"
+                            android:id="@+id/setAlarmPopupSnoozeLayout"
+
+                            android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
+                            android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/setAlarmPopupSnoozeET"
+                                android:textColor="@color/defaultTxtColor"
+                                android:textSize="@dimen/timeTxtSize"
+                                android:textStyle="italic"
+                                android:fontFamily="@font/default_font"
+                                android:layout_marginTop="18dp"
+
+                                android:layout_centerHorizontal="true"/>
+                        </RelativeLayout>
+                    </FrameLayout>
+                </FrameLayout>
+            </LinearLayout>
+            <!--
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/setAlarmSnoozeTVLayout"
+
+                android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
+                android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
+
+                <FrameLayout
+                    android:layout_width="@dimen/timeBoxWidthItalic"
+                    android:layout_height="@dimen/timeBoxHeight"
+                    android:background="@color/shadowColor"
+                    android:alpha=".5"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginStart="@dimen/shadowOffset"/>
 
                 <RelativeLayout
                     android:layout_width="@dimen/timeBoxWidthItalic"
                     android:layout_height="@dimen/timeBoxHeight"
-                    android:id="@+id/setAlarmPopupMinuteLayout"
-
-                    android:layout_marginTop="@dimen/buggyTvTopMarginDestroyer"
-                    android:layout_marginBottom="@dimen/buggyTvBottomMarginDestroyer">
+                    android:id="@+id/setAlarmPopupSnoozeLayout"
+                    android:background="#FFFFFF">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/setAlarmPopupMinuteET"
+                        android:id="@+id/setAlarmPopupSnoozeET"
                         android:textColor="@color/defaultTxtColor"
                         android:textSize="@dimen/timeTxtSize"
                         android:textStyle="italic"
                         android:fontFamily="@font/default_font"
+                        android:text="5"
 
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true"/>
+                        android:layout_centerInParent="true"/>
                 </RelativeLayout>
-            </LinearLayout>
-        </FrameLayout>
+            </FrameLayout>
+            -->
+        </LinearLayout>
 
         <!-- CLOCK -->
         <RelativeLayout
@@ -129,7 +289,7 @@
             android:id="@+id/clockLayout"
 
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/setAlarmTVSShadowLayout"
+            android:layout_below="@id/setAlarmPopupTimeLayout"
             android:layout_marginBottom="@dimen/marginMedium">
         </RelativeLayout>
 

@@ -4,9 +4,8 @@ import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.Utils;
+import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.views.Clock;
@@ -24,19 +23,19 @@ import com.kiefer.kifflarm.views.ClockView;
 public class SetAlarmPopup extends Popup {
     private Alarm alarm;
     private Button soundBtn;
-    private TextView hourTV, minuteTV;
-    private RelativeLayout hourLayout, minuteLayout;
-    private int selectedTxt;
+    private TextView hourTV, minuteTV, snoozeTV, timeLabel, snoozeLabel;
+    private RelativeLayout hourLayout, minuteLayout, snoozeLayout;
+    private int selectedTxtColor, timeGradientTopColor, snoozeGradientTopColor;
     private ClockView clockView;
     private int color;
-    public static int TIME_UNIT, HOUR = 0, MINUTE = 1;
+    public static int CLOCK_VALUE, HOUR = 0, MINUTE = 1, SNOOZE = 2;
 
     public SetAlarmPopup(KIFFLARM kifflarm, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
 
         this.alarm = alarm;
 
-        selectedTxt = Utils.getRandomColor();
+        selectedTxtColor = Utils.getRandomColor();
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_set_alarm, null);
@@ -69,24 +68,41 @@ public class SetAlarmPopup extends Popup {
         //a touchListener to activate the EditText on click
         hourTV.setOnTouchListener((v, event) -> {
             if(event.getAction() == MotionEvent.ACTION_DOWN){
-                selectTimeUnit(HOUR);
+                selectClockValue(HOUR);
             }
             return false;
         });
 
-        //minue TV
+        //minute TV
         minuteLayout = popupView.findViewById(R.id.setAlarmPopupMinuteLayout);
         minuteTV = popupView.findViewById(R.id.setAlarmPopupMinuteET);
         minuteTV.setText(alarm.getMinuteAsString());
         minuteTV.setOnTouchListener((v, event) -> {
             if(event.getAction() == MotionEvent.ACTION_DOWN){
-                selectTimeUnit(MINUTE);
+                selectClockValue(MINUTE);
             }
             return false;
         });
 
+        //snooze TV
+        snoozeLayout = popupView.findViewById(R.id.setAlarmPopupSnoozeLayout);
+        snoozeTV = popupView.findViewById(R.id.setAlarmPopupSnoozeET);
+        snoozeTV.setText(alarm.getSnoozeAsString());
+        snoozeTV.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                selectClockValue(SNOOZE);
+            }
+            return false;
+        });
+
+        //set up labels
+        timeLabel = popupView.findViewById(R.id.setAlarmPopupTimeLabel);
+        snoozeLabel = popupView.findViewById(R.id.setAlarmPopupSnoozeLabel);
+        timeLabel.setBackgroundColor(timeGradientTopColor);
+        snoozeLabel.setBackgroundColor(snoozeGradientTopColor);
+
         //start with hour selected
-        selectTimeUnit(HOUR);
+        selectClockValue(HOUR);
 
         //CLOCK
         RelativeLayout clockLayout = popupView.findViewById(R.id.clockLayout);
@@ -96,7 +112,11 @@ public class SetAlarmPopup extends Popup {
         clockLayout.addView(clock);
 
         LinearLayout tvLayout = popupView.findViewById(R.id.setAlarmPopupTvsLayout);
-        tvLayout.setBackground(Utils.getRandomGradientDrawable());
+        timeGradientTopColor = Utils.getRandomColor();
+        tvLayout.setBackground(Utils.getGradientDrawable(timeGradientTopColor, Utils.getRandomColor(), Utils.VERTICAL));
+        FrameLayout snoozeLayout = popupView.findViewById(R.id.setAlarmPopupSnoozeTvLayout);
+        snoozeGradientTopColor = Utils.getRandomColor();
+        snoozeLayout.setBackground(Utils.getGradientDrawable(snoozeGradientTopColor, Utils.getRandomColor(), Utils.VERTICAL));
 
         SwitchMaterial toggle = popupView.findViewById(R.id.setAlarmPopupToggle);
         toggle.setChecked(alarm.isActive());
@@ -116,7 +136,8 @@ public class SetAlarmPopup extends Popup {
         okBtn.setOnClickListener(v -> {
             //Log.e("SeAlarmtPopup ZZZ", "ok 0");
             alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
-            alarm.activate(toggle.isChecked(), false, 4);
+            alarm.setSnoozeTime(Integer.parseInt(String.valueOf(snoozeTV.getText())));
+            alarm.activate(true, false, 4);
             alarm.saveAndSchedule();
 
             //Log.e("SeAlarmtPopup ZZZ", "ok 1");
@@ -145,28 +166,72 @@ public class SetAlarmPopup extends Popup {
         showAtLocation(popupWindow);
     }
 
-    private void selectTimeUnit(int unit){
+    private void selectClockValue(int unit){
+        Log.e("SetAlarmPopup ZZZ", "unit: "+unit);
         if(unit == HOUR){
-            TIME_UNIT = HOUR;
+            CLOCK_VALUE = HOUR;
 
-            hourTV.setTextColor(selectedTxt);
-            hourLayout.setBackgroundColor(Utils.getContrastColor(selectedTxt));
+            hourTV.setTextColor(selectedTxtColor);
+            hourLayout.setBackgroundColor(Utils.getContrastColor(selectedTxtColor));
 
             minuteTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
             minuteLayout.setBackgroundColor(Color.TRANSPARENT);
+            snoozeTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            snoozeLayout.setBackgroundColor(Color.TRANSPARENT);
+
+            /*
+            timeLabel.setTextColor(selectedTxtColor);
+            timeLabel.setBackgroundColor(Utils.getContrastColor(selectedTxtColor));
+            snoozeLabel.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            snoozeLabel.setBackgroundColor(snoozeGradientTopColor);
+
+             */
+
+            if(clockView != null) {
+                clockView.updateTimeUnit();
+            }
+        }
+        else if(unit == MINUTE){
+            CLOCK_VALUE = MINUTE;
+
+            minuteTV.setTextColor(selectedTxtColor);
+            minuteLayout.setBackgroundColor(Utils.getContrastColor(selectedTxtColor));
+
+            hourTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            hourLayout.setBackgroundColor(Color.TRANSPARENT);
+            snoozeTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            snoozeLayout.setBackgroundColor(Color.TRANSPARENT);
+
+            /*
+            timeLabel.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            timeLabel.setBackgroundColor(timeGradientTopColor);
+            snoozeLabel.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            snoozeLabel.setBackgroundColor(snoozeGradientTopColor);
+
+             */
 
             if(clockView != null) {
                 clockView.updateTimeUnit();
             }
         }
         else{
-            TIME_UNIT = MINUTE;
+            CLOCK_VALUE = SNOOZE;
 
-            minuteTV.setTextColor(selectedTxt);
-            minuteLayout.setBackgroundColor(Utils.getContrastColor(selectedTxt));
+            snoozeTV.setTextColor(selectedTxtColor);
+            snoozeLayout.setBackgroundColor(Utils.getContrastColor(selectedTxtColor));
 
             hourTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
             hourLayout.setBackgroundColor(Color.TRANSPARENT);
+            minuteTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            minuteLayout.setBackgroundColor(Color.TRANSPARENT);
+
+            /*
+            timeLabel.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
+            timeLabel.setBackgroundColor(timeGradientTopColor);
+            snoozeLabel.setTextColor(selectedTxtColor);
+            snoozeLabel.setBackgroundColor(Utils.getContrastColor(selectedTxtColor));
+
+             */
 
             if(clockView != null) {
                 clockView.updateTimeUnit();
@@ -174,31 +239,30 @@ public class SetAlarmPopup extends Popup {
         }
     }
 
-    public void switchTimeUnit(){
-        if(TIME_UNIT == HOUR){
-            selectTimeUnit(MINUTE);
+    public void setClockValue(int value){
+        if(value == HOUR){
+            selectClockValue(HOUR);
+        }
+        else if(value == MINUTE){
+            selectClockValue(MINUTE);
         }
         else{
-            selectTimeUnit(HOUR);
+            selectClockValue(SNOOZE);
         }
     }
 
     /** SET **/
-    private void setTime(int hour, int minute){
-        alarm.setTime(hour, minute);
-        setHourTvTxt(alarm.getHourAsString());
-        setMinuteTvTxt(alarm.getMinuteAsString());
-        //updateAdapter();
-    }
 
     public void setHour(int hour){
-        //alarm.setHour(hour);
         setHourTvTxt(Utils.timeToString(hour));
     }
 
     public void setMinute(int minute){
-        //alarm.setMinute(minute);
         setMinuteTvTxt(Utils.timeToString(minute));
+    }
+
+    public void setSnooze(int snooze){
+        setSnoozeTvTxt(Utils.timeToString(snooze));
     }
 
     public void setHourTvTxt(String txt){
@@ -207,6 +271,10 @@ public class SetAlarmPopup extends Popup {
 
     public void setMinuteTvTxt(String txt){
         minuteTV.setText(txt);
+    }
+
+    public void setSnoozeTvTxt(String txt){
+        snoozeTV.setText(txt);
     }
 
     public void setSoundBtnTxt(String txt){
@@ -222,7 +290,7 @@ public class SetAlarmPopup extends Popup {
         return alarm;
     }
     public int getSelectedTimeUint(){
-        return TIME_UNIT;
+        return CLOCK_VALUE;
     }
 
     public int getHour(){
@@ -231,6 +299,10 @@ public class SetAlarmPopup extends Popup {
 
     public int getMinute(){
         return alarm.getMinute();
+    }
+
+    public int getSnoozeTime(){
+        return alarm.getSnoozeTime();
     }
 }
 
