@@ -12,12 +12,13 @@ import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.receivers.AlarmReceiver;
 import com.kiefer.kifflarm.sound.Sound;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 public class Alarm implements Comparable<Alarm>{
     private Context context;
-    private android.app.AlarmManager androidAlarmManager;
+    private android.app.AlarmManager alarmManager;
     private FileManager fileManager;
     protected int hour, minute, snoozeTime = 5;
     protected boolean active;
@@ -58,7 +59,7 @@ public class Alarm implements Comparable<Alarm>{
         this.context = context;
         isSnooze = false;
 
-        androidAlarmManager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         fileManager = new FileManager(context);
 
         Calendar calendar = Calendar.getInstance();
@@ -80,21 +81,18 @@ public class Alarm implements Comparable<Alarm>{
         color = Utils.getRandomColor();
     }
 
-    public void activate(boolean active, boolean save, int caller){
-        //Log.e("Alarm ZZZ", "caller: "+caller+", activate: "+active);
+    public void activate(boolean active){
         this.active = active;
-
-        if(save) {
-            saveAndSchedule();
-        }
     }
 
     public void saveAndSchedule(){
+        Log.e("Alarm ZZZ", "saveAndSchedule");
         save();
         updateSchedule();
     }
 
     public void updateSchedule(){
+        Log.e("Alarm ZZZ", "updateSchedule");
         if(active) {
             scheduleAlarm();
         }
@@ -103,9 +101,7 @@ public class Alarm implements Comparable<Alarm>{
         }
     }
 
-    /** körde new Intent i cancel förut men testar det här nu.. ändra tillbaks om det krånglar **/
-    private PendingIntent pendingIntent;
-    public void scheduleAlarm(){
+    private void scheduleAlarm(){
         Log.e("Alarm ZZZ", "schedule "+hour+":"+minute);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
@@ -113,18 +109,17 @@ public class Alarm implements Comparable<Alarm>{
 
         int flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
 
-        pendingIntent = PendingIntent.getBroadcast(context, id, intent, flag);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, flag);
 
         AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(getTimeInMS(), pendingIntent);
 
-        androidAlarmManager.setAlarmClock(info, pendingIntent);
+        alarmManager.setAlarmClock(info, pendingIntent);
     }
 
-    //står samma intent i docs. om det krånglar, testa att anvöönda global var och köra SAMMA intent
-    public void cancelAlarm(){
+    private void cancelAlarm(){
         Log.e("Alarm ZZZ", "cancel "+hour+":"+minute);
-        /*
-        androidAlarmManager.cancel(
+
+        alarmManager.cancel(
                 PendingIntent.getBroadcast(
                         context,
                         id, // use same id that is used to schedule the alarm to cancel it
@@ -132,12 +127,6 @@ public class Alarm implements Comparable<Alarm>{
                         PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
                 )
         );
-
-         */
-        if(pendingIntent != null) {
-            androidAlarmManager.cancel(pendingIntent);
-            pendingIntent = null;
-        }
     }
 
     public void removeAlarm(){
@@ -155,7 +144,6 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public int getSnoozeTime() {
-        Log.e("Alarm ZZZ", "getSnoozeTime: "+snoozeTime);
         return snoozeTime;
     }
 
@@ -233,7 +221,6 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public void setSnoozeTime(int snooze){
-        Log.e("Alarm ZZZ", "setSnoozeTime: "+snooze);
         snoozeTime = snooze;
     }
 
@@ -260,9 +247,10 @@ public class Alarm implements Comparable<Alarm>{
     }
     public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",
             MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri",
-            SNOOZE_ON_TAG = "snooze_on", SNOOZE_TIME_TAG = "snooze_time";
+            IS_SNOOZE_TAG = "snooze_on", SNOOZE_TIME_TAG = "snooze_time";
 
     protected ArrayList<String> getParams(){
+
         ArrayList<String> params = new ArrayList<>();
         if(active){
             params.add(ACTIVE_TAG +"true");
@@ -277,73 +265,115 @@ public class Alarm implements Comparable<Alarm>{
         params.add(RINGTONE_URI_TAG + getSound().getUri());
 
         if(isSnooze){
-            params.add(SNOOZE_ON_TAG +"true");
+            params.add(IS_SNOOZE_TAG +"true");
         }
         else{
-            params.add(SNOOZE_ON_TAG +"false");
+            params.add(IS_SNOOZE_TAG +"false");
         }
 
         params.add(SNOOZE_TIME_TAG + snoozeTime);
+
+
+
+        /*
+        ArrayList<Param> params2 = new ArrayList<>();
+        params2.add(new Param(ACTIVE_TAG, Boolean.toString(active)));
+        params2.add(new Param(ALARM_ID_TAG, Integer.toString(id)));
+        params2.add(new Param(HOUR_TAG, Integer.toString(hour)));
+        params2.add(new Param(MINUTE_TAG, Integer.toString(minute)));
+        params2.add(new Param(RINGTONE_NAME_TAG, getSound().getName()));
+        params2.add(new Param(RINGTONE_URI_TAG, getSound().getUri().toString()));
+        params2.add(new Param(IS_SNOOZE_TAG, Boolean.toString(isSnooze)));
+        params2.add(new Param(SNOOZE_TIME_TAG, Integer.toString(snoozeTime)));
+
+        Log.e("Alarm ZZZ", "getParams, size: "+params2.size());
+
+         */
 
         return params;
     }
 
     private void restoreParams(ArrayList<String> params){
-        Log.e("Alarm ZZZ", "restore");
 
         //two empty strings that hopefully will be filled
         String soundName = "", soundUri = "";
 
-        try {
+       // try {
+
             for (String s : params) {
                 //check length or it will crash when  trying to get a long substring from a short string
                 if (s.length() > ACTIVE_TAG.length() && s.substring(0, ACTIVE_TAG.length()).equals(ACTIVE_TAG)) {
                     if (s.substring(ACTIVE_TAG.length()).equals("true")) {
                         active = true;
-                        Log.e("Alarm ZZZ", "restore1: "+s);
                     } else {
                         active = false;
-                        Log.e("Alarm ZZZ", "restore2: "+s);
                     }
                 } else if (s.length() > ALARM_ID_TAG.length() && s.startsWith(ALARM_ID_TAG)) {
                     id = Integer.parseInt(s.substring(ALARM_ID_TAG.length()));
-                    Log.e("Alarm ZZZ", "restore3: "+s);
                 } else if (s.length() > HOUR_TAG.length() && s.startsWith(HOUR_TAG)) {
                     hour = Integer.parseInt(s.substring(HOUR_TAG.length()));
-                    Log.e("Alarm ZZZ", "restore4: "+s);
                 } else if (s.length() > MINUTE_TAG.length() && s.startsWith(MINUTE_TAG)) {
                     minute = Integer.parseInt(s.substring(MINUTE_TAG.length()));
-                    Log.e("Alarm ZZZ", "restore5: "+s);
                 } else if (s.length() > RINGTONE_NAME_TAG.length() && s.startsWith(RINGTONE_NAME_TAG)) {
                     soundName = s.substring(RINGTONE_NAME_TAG.length());
-                    Log.e("Alarm ZZZ", "restore6: "+s);
                 } else if (s.length() > RINGTONE_URI_TAG.length() && s.startsWith(RINGTONE_URI_TAG)) {
                     soundUri = s.substring(RINGTONE_URI_TAG.length());
-                    Log.e("Alarm ZZZ", "restore7: "+s);
-                } else if (s.length() > SNOOZE_ON_TAG.length() && s.substring(0, SNOOZE_ON_TAG.length()).equals(SNOOZE_ON_TAG)) {
-                    if (s.substring(SNOOZE_ON_TAG.length()).equals("true")) {
+                } else if (s.length() > IS_SNOOZE_TAG.length() && s.substring(0, IS_SNOOZE_TAG.length()).equals(IS_SNOOZE_TAG)) {
+                    if (s.substring(IS_SNOOZE_TAG.length()).equals("true")) {
                         isSnooze = true;
-                        Log.e("Alarm ZZZ", "restore8: "+s);
                     } else {
                         isSnooze = false;
-                        Log.e("Alarm ZZZ", "restore9: "+s);
                     }
                 } else if (s.length() > SNOOZE_TIME_TAG.length() && s.substring(0, SNOOZE_TIME_TAG.length()).equals(SNOOZE_TIME_TAG)) {
-                    Log.e("Alarm ZZZ", "restoreTTIIMMEE: "+s);
                     snoozeTime = Integer.parseInt(s.substring(SNOOZE_TIME_TAG.length()));
-                    setSnoozeTime(Integer.parseInt(s.substring(SNOOZE_TIME_TAG.length())));
                 }
-                Log.e("Alarm ZZZ", "------------");
+            }
+
+            //create the sound after loading both strings
+            setSound(new Sound(soundName, Uri.parse(soundUri)));
+
+        /*
+        Log.e("Alarm ZZZ", "restore, size: "+params.size());
+
+        try {
+            Log.e("Alarm ZZZ", "class: " + params.get(0).getClass());
+        }
+        catch (Exception e){
+            Log.e("Alarm ZZZ", "trytry"+e.toString());
+        }
+
+            for (Param p : params) {
+                if (p.key.equals(ACTIVE_TAG)) {
+                    active = Boolean.parseBoolean(p.value);
+                } else if (p.key.equals(ALARM_ID_TAG)) {
+                    id = Integer.parseInt(p.value);
+                } else if (p.key.equals(HOUR_TAG)) {
+                    hour = Integer.parseInt(p.value);
+                } else if (p.key.equals(MINUTE_TAG)) {
+                    minute = Integer.parseInt(p.value);
+                } else if (p.key.equals(RINGTONE_NAME_TAG)) {
+                    soundName = p.value;
+                } else if (p.key.equals(RINGTONE_URI_TAG)) {
+                    soundUri = p.value;
+                } else if (p.key.equals(IS_SNOOZE_TAG)) {
+                    isSnooze = Boolean.parseBoolean(p.value);
+                } else if (p.key.equals(SNOOZE_TIME_TAG)) {
+                    snoozeTime = Integer.parseInt(p.value);
+                }
             }
 
 
             //create the sound after loading both strings
             setSound(new Sound(soundName, Uri.parse(soundUri)));
+/*
         }
         catch (Exception e){
-            Log.e("Alarm ZZZ", "restore: "+e.toString());
+            Log.e("Alarm ZZZ", "restore: "+e);
             removeAlarm(); //this remove is now working (but it's better than a crash I guess in case of broken files)
         }
+
+ */
+
     }
 
     /** COMPARE **/
@@ -351,5 +381,18 @@ public class Alarm implements Comparable<Alarm>{
     public int compareTo(Alarm compareAlarm) {
         return getComparableTime() - compareAlarm.getComparableTime();
     }
+
+    /** CLASS PARAM **/
+    /*
+    public class Param implements Serializable{
+        public String key, value;
+
+        public Param(String key, String value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+     */
 }
 

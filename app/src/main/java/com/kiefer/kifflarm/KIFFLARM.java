@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -55,7 +56,7 @@ public class KIFFLARM extends AppCompatActivity {
         soundManager = new SoundManager(this);
         fileManager = new FileManager(this);
 
-        loadAlarms();
+        //loadAlarms();
 
         checkPermissions();
     }
@@ -189,14 +190,23 @@ public class KIFFLARM extends AppCompatActivity {
     public void loadAlarms(){
         alarms = new ArrayList<>();
 
+        //try {
+
         //recreate saved alarms if there are any
         ArrayList<ArrayList<String>> paramsArray = fileManager.getParamsArray();
-
+        //ArrayList<ArrayList<Alarm.Param>> paramsArray = new ArrayList<>();
         if(!paramsArray.isEmpty()){
             for(ArrayList<String> params : paramsArray){
                 alarms.add(new Alarm(this, params));
             }
         }
+            /*
+        }
+        catch (Exception e){
+            Log.e("KIFFLARM ZZZ", "loadAlarms, "+e);
+        }
+
+             */
 
         Utils.sortAlarms(alarms);
     }

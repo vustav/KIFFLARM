@@ -30,12 +30,9 @@ public class AlarmCannon {
     public AlarmCannon(Context context, Intent intent){
         this.context = context;
 
-        Log.e("AlarmCannon ZZZ", "intent == null"+(intent == null));
-        Log.e("AlarmCannon ZZZ", "id: "+intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+        Log.e("AlarmCannon ZZZ", "1");
 
         Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
-
-        Log.e("AlarmCannon ZZZ", "alarm == null"+(alarm == null));
 
         String channelId = alarm.getIdAsString() + "c";
         int notificationId = alarm.getId();
@@ -56,13 +53,15 @@ public class AlarmCannon {
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, notificationId, activityIntent, flag);
 
+        Log.e("AlarmCannon ZZZ", "2");
+
         //swipe
         Intent swipeIntent = new Intent(context, NotificationDismissedReceiver.class);
         swipeIntent.putExtra(Alarm.ALRM_INTENT_ID, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
         PendingIntent swipePendingIntent = PendingIntent.getBroadcast(context, notificationId, swipeIntent, flag);
 
-        //style
-        //NotificationCompat.DecoratedCustomViewStyle style = new NotificationCompat.DecoratedCustomViewStyle();
+
+        Log.e("AlarmCannon ZZZ", "3");
 
         RemoteViews remoteViews = getRemoteViews(alarm);
 
@@ -70,7 +69,7 @@ public class AlarmCannon {
                 .setSmallIcon(R.drawable.custom_btn)
                 .setContentTitle(context.getResources().getString(R.string.app_name))
                 .setContentText(alarm.getTimeAsString())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setFullScreenIntent(fullScreenPendingIntent, true)
                 .setDeleteIntent(swipePendingIntent)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -88,7 +87,9 @@ public class AlarmCannon {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        Log.e("AlarmCannon ZZZ", "4");
         NotificationManagerCompat.from(context).notify(notificationId, builder.build());
+        Log.e("AlarmCannon ZZZ", "5");
     }
 
     private void createNotificationChannel(String id, String description) {
@@ -110,30 +111,10 @@ public class AlarmCannon {
     private RemoteViews getRemoteViews(Alarm alarm){
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.notification);
 
-        /*
-        RelativeLayout layout = new RelativeLayout(context);
-        //RelativeLayout layout1 = remoteViews.
-        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(100, 100);
-        layout.setLayoutParams(rlp);
-        TextView tv = new TextView(context);
-        layout.addView(tv);
-        Utils.createNiceBg(layout, tv, 20);
-
-        Bitmap bitmap = Bitmap.createBitmap(layout.getWidth(), layout.getHeight(), Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(bitmap);
-
-        layout.draw(canvas);
-
-         */
-
-        //remoteViews.setImageViewBitmap(R.id.notificationIV, bitmap);
         remoteViews.setTextViewText(R.id.notificationTV, alarm.getTimeAsString());
         remoteViews.setTextColor(R.id.notificationTV, Utils.getRandomColor());
-        //remoteViews.setTextViewTextSize(R.id.notificationTV, TypedValue.COMPLEX_UNIT_SP, 30);
 
         remoteViews.setTextViewText(R.id.notificationTVShadow, alarm.getTimeAsString());
-        //remoteViews.setTextViewTextSize(R.id.notificationTV, TypedValue.COMPLEX_UNIT_SP, 30);
 
         return remoteViews;
     }

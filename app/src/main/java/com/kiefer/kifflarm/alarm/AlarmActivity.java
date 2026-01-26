@@ -22,6 +22,7 @@ import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 
 public class AlarmActivity extends AppCompatActivity {
+    public static boolean isActive = false, kill = false;
     //private Alarm alarm;
     //private Vibrator vibrator;
     private ValueAnimator tvBgAnimation, tvTxtAnimation;
@@ -31,6 +32,7 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.e("AlarmActivity ZZZ", "onCreate");
         super.onCreate(savedInstanceState);
+        isActive = true;
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_alarm);
 
@@ -55,7 +57,7 @@ public class AlarmActivity extends AppCompatActivity {
             offBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    kill(alarm, vibrator, mediaPlayer);
+                    killAlarm(alarm, vibrator, mediaPlayer);
                 }
             });
 
@@ -66,8 +68,9 @@ public class AlarmActivity extends AppCompatActivity {
                     Alarm newAlarm = new Alarm(AlarmActivity.this, alarm.getSound());
                     newAlarm.setIsSnooze(true);
                     newAlarm.setTime(alarm.getHour(), alarm.getMinute() + alarm.getSnoozeTime());
-                    newAlarm.activate(true, true, 0);
-                    kill(alarm, vibrator, mediaPlayer);
+                    newAlarm.activate(true);
+                    newAlarm.saveAndSchedule();
+                    killAlarm(alarm, vibrator, mediaPlayer);
                 }
             });
         }
@@ -79,6 +82,15 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+
+        /*
+        This is the result of a weird behaviour where AlarmActivity starts before the notification is tapped
+        if the phone is woken from sleep. To get around this NotificationDismissedListener set kill = true
+        and we kill the activity here
+         */
+        if(kill){
+            finish();
+        }
     }
 
     private void animateTV(TextView tv){
@@ -103,7 +115,7 @@ public class AlarmActivity extends AppCompatActivity {
         tvTxtAnimation.start();
     }
 
-    private void kill(Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer){
+    private void killAlarm(Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer){
         AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
         KIFFMediaPlayer.destroy();
         KIFFVibrator.destroy();
@@ -114,17 +126,10 @@ public class AlarmActivity extends AppCompatActivity {
         }
     }
 
-    private void killSnooze(Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer){
-        AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
-        alarm.removeAlarm();
-        KIFFMediaPlayer.destroy();
-        KIFFVibrator.destroy();
-        finish();
-    }
-
     @Override
     public void onDestroy(){
         super.onDestroy();
+        isActive = false;
 
         tvTxtAnimation.end();
         tvTxtAnimation = null;
@@ -138,5 +143,15 @@ public class AlarmActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("AlarmActivity ZZZ", "onDestroy, "+e);
         }
+    }
+
+    public static boolean isActive(){
+        //explanation in onResume
+        return isActive;
+    }
+
+    public static void killActivity(){
+        //explanation in onResume
+        kill = true;
     }
 }

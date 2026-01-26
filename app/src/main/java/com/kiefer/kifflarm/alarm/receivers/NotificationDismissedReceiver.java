@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.kiefer.kifflarm.FileManager;
 import com.kiefer.kifflarm.alarm.Alarm;
+import com.kiefer.kifflarm.alarm.AlarmActivity;
 import com.kiefer.kifflarm.alarm.AlarmUtils;
 import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
@@ -16,7 +17,9 @@ import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 public class NotificationDismissedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.e("NotificationDismissedReceiver ZZZ", "1");
         try {
+            Log.e("NotificationDismissedReceiver ZZZ", "2");
             Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
 
             MediaPlayer mediaPlayer = KIFFMediaPlayer.getInstance(context, alarm.getSound().getUri());
@@ -26,6 +29,16 @@ public class NotificationDismissedReceiver extends BroadcastReceiver {
             AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
             KIFFMediaPlayer.destroy();
             KIFFVibrator.destroy();
+
+            //explanation in AlarmActivity.onResume
+            try {
+                if (AlarmActivity.isActive()) {
+                    AlarmActivity.killActivity();
+                }
+            }
+            catch (Exception e){
+                Log.e("NotificationDismissedReceiver ZZZ", "onReceive, "+e);
+            }
         }
         catch (Exception e){
             Log.e("NotificationDismissedReceiver ZZZ", e.toString());

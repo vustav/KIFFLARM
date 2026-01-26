@@ -27,10 +27,11 @@
         android:layout_marginEnd="@dimen/shadowOffset"
         android:layout_marginBottom="@dimen/shadowOffset">
 
+        <!-- MAIN -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toStartOf="@id/alarmsVHBtnLayout">
+            android:layout_toStartOf="@id/alarmsVHDelBtnLayout">
 
             <!-- without this FrameLayout the button always covers the TextView -->
             <FrameLayout
@@ -43,12 +44,12 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/btnheight"
-                    android:id="@+id/alarmVHbutton"
+                    android:id="@+id/alarmVHMainButton"
                     android:background="@drawable/custom_btn"/>
             </FrameLayout>
 
             <TextView
-                android:id="@+id/alarmVHtextView"
+                android:id="@+id/alarmVHMainBtnTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/defaultTxtColor"
@@ -74,14 +75,15 @@
                 android:layout_marginTop="13dp"/>
         </RelativeLayout>
 
+        <!-- DEL -->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/alarmsVHBtnLayout"
+            android:id="@+id/alarmsVHDelBtnLayout"
             android:layout_marginStart="@dimen/marginLarge"
 
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/alarmsVHToggle">
+            android:layout_toStartOf="@id/alarmsVHToggleBtnLayout">
 
             <!-- without this FrameLayout the button always covers the TextView -->
             <FrameLayout
@@ -91,12 +93,12 @@
                 <Button
                     android:layout_width="@dimen/btnheight"
                     android:layout_height="@dimen/btnheight"
-                    android:id="@+id/alarmVHRemovebutton"
+                    android:id="@+id/alarmVHRemoveButton"
                     android:background="@drawable/custom_btn"/>
             </FrameLayout>
 
             <TextView
-                android:id="@+id/alarmVHRemovetextView"
+                android:id="@+id/alarmVHRemoveTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/defaultTxtColor"
@@ -105,6 +107,36 @@
                 android:fontFamily="@font/default_font"
                 android:textStyle="italic"
                 android:text=" - "/>
+        </RelativeLayout>
+
+        <!-- TOGGLE -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alarmsVHToggleBtnLayout"
+            android:layout_marginStart="@dimen/marginSmall"
+            android:layout_marginEnd="@dimen/marginSmall"
+
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true">
+
+            <!-- without this FrameLayout the button always covers the TextView -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="@dimen/btnheight"
+                    android:layout_height="@dimen/btnheight"
+                    android:id="@+id/alarmVHToggleButton"
+                    android:background="@drawable/custom_btn"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
+                android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"
+                android:id="@+id/alarmsVHToggleButtonIndicator"
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
 
         <!--
@@ -121,6 +153,7 @@
                 android:id="@+id/alarmsVHCheck"/>
         </RelativeLayout>
         -->
+        <!--
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/alarmsVHToggle"
             android:layout_width="@dimen/alarmsVHToggleWidth"
@@ -128,5 +161,6 @@
 
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"/>
+            -->
     </RelativeLayout>
 </RelativeLayout>

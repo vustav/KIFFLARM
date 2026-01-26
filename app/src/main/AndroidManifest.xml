@@ -25,6 +25,10 @@
         <!-- Alarm -->
         <activity
             android:name=".alarm.AlarmActivity"
+            android:parentActivityName=".KIFFLARM"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
             android:exported="false"/>
 
         <!-- MAIN -->
@@ -33,7 +37,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,7 +47,17 @@
             android:exported="true">
         </receiver>
 
-        <receiver android:name=".alarm.receivers.BootCompletedReceiver"/>
+        <receiver android:name=".alarm.receivers.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <!--For HTC devices-->
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name="com.kiefer.kifflarm.alarm.receivers.NotificationDismissedReceiver"

@@ -4,15 +4,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.Utils;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.kiefer.kifflarm.popups.SetAlarmPopup;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
@@ -58,19 +59,36 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         //no need to edit a snooze
         if(!alarm.isSnooze()) {
+            /*
             viewHolder.toggle.setVisibility(View.VISIBLE);
             viewHolder.toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 //if (++viewHolder.toggleCheck > 0) {
                     if (!alarm.isSnooze()) {
-                        alarm.activate(isChecked, true, 1);
+                        alarm.activate(isChecked);
+                        alarm.saveAndSchedule(2);
                         activateVH(viewHolder, isChecked);
                     }
                     Utils.performHapticFeedback(viewHolder.toggle);
                 //}
             });
+
+             */
+
+            viewHolder.toggleBtn.setVisibility(View.VISIBLE);
+            viewHolder.toggleBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alarm.activate(!alarm.isActive());
+                    alarm.saveAndSchedule();
+                    activateVH(viewHolder, alarm.isActive());
+                }
+            });
+
+
         }
         else{
-            viewHolder.toggle.setVisibility(View.INVISIBLE);
+            //viewHolder.toggle.setVisibility(View.INVISIBLE);
+            viewHolder.toggleBtn.setVisibility(View.INVISIBLE);
         }
 
         //no need to edit a snooze
@@ -97,20 +115,27 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     public void activateVH(ViewHolder viewHolder, boolean on){
-        viewHolder.toggle.setChecked(on);
+        //viewHolder.toggle.setChecked(on);
+
 
         if(on) {
+            viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOn, null));
+            viewHolder.toggleIndicator.setAlpha(1);
             viewHolder.delBtn.setAlpha(1);
             viewHolder.delTV.setAlpha(1);
             viewHolder.mainBtn.setAlpha(1);
             viewHolder.mainTV.setAlpha(1);
+            viewHolder.toggleBtn.setAlpha(1);
         }
         else{
             float alpha = .5f;
+            viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOff, null));
+            viewHolder.toggleIndicator.setAlpha(alpha);
             viewHolder.delBtn.setAlpha(alpha);
             viewHolder.delTV.setAlpha(alpha);
             viewHolder.mainBtn.setAlpha(alpha);
             viewHolder.mainTV.setAlpha(alpha);
+            viewHolder.toggleBtn.setAlpha(alpha);
         }
     }
 
@@ -146,19 +171,23 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         private RelativeLayout bg;
         private final TextView mainTV, delTV, snoozeIndicatorTV;
         private final Button mainBtn, delBtn;
-        private final SwitchMaterial toggle;
+        //private final SwitchMaterial toggle;
+        private final Button toggleBtn;
+        private final FrameLayout toggleIndicator;
         //private int toggleCheck = 0; //seems to be needed to not trigger the toggle in onBindViewHolder
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
             bg = view.findViewById(R.id.alarmVHBg);
-            mainTV = view.findViewById(R.id.alarmVHtextView);
-            mainBtn = view.findViewById(R.id.alarmVHbutton);
-            delBtn = view.findViewById(R.id.alarmVHRemovebutton);
-            toggle = view.findViewById(R.id.alarmsVHToggle);
-            delTV = view.findViewById(R.id.alarmVHRemovetextView);
+            mainTV = view.findViewById(R.id.alarmVHMainBtnTextView);
+            mainBtn = view.findViewById(R.id.alarmVHMainButton);
+            delBtn = view.findViewById(R.id.alarmVHRemoveButton);
+            //toggle = view.findViewById(R.id.alarmsVHToggle);
+            toggleBtn = view.findViewById(R.id.alarmVHToggleButton);
+            delTV = view.findViewById(R.id.alarmVHRemoveTextView);
             snoozeIndicatorTV = view.findViewById(R.id.alarmVHSnoozeIndicatorTV);
+            toggleIndicator = view.findViewById(R.id.alarmsVHToggleButtonIndicator);
             //checkBox = view.findViewById(R.id.alarmsVHCheck);
         }
     }

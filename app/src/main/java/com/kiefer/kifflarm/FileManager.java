@@ -101,14 +101,18 @@ public class FileManager {
 
         ArrayList<ArrayList<String>> paramsArray = new ArrayList<>();
 
+        Log.e("FileManaer ZZZ", "getParamsArray, size: "+filesInDirectory.length);
+
         if(filesInDirectory != null) {
             for (File file : filesInDirectory) {
                 Object o = read(file.getAbsolutePath());
 
+                Log.e("FileManaer ZZZ", "getParamsArray, o class: "+o.getClass());
                 try {
                     ArrayList<String> params = (ArrayList<String>) o;
                     paramsArray.add(params);
                 } catch (Exception e) {
+                    Log.e("FileManager ZZZ", "getParamsArray, "+e);
                     e.printStackTrace();
                 }
             }
@@ -130,18 +134,35 @@ public class FileManager {
 
 
     public static Alarm getAlarm(Context context, String id){
-        Alarm alarm = null;
+        //Alarm alarm = null;
         FileManager fileManager = new FileManager(context);
-        for(ArrayList<String> params : fileManager.getParamsArray()){
-            for(String s : params){
-                if (s.length() > Alarm.ALARM_ID_TAG.length() && s.substring(0, Alarm.ALARM_ID_TAG.length()).equals(Alarm.ALARM_ID_TAG)) {
-                    if(s.substring(Alarm.ALARM_ID_TAG.length()).equals(id)){
-                        alarm = new Alarm(context, params);
-                        alarm.cancelAlarm(); //the alarm object is just to get data, so make sure it's not scheduled
+
+        try {
+            for(ArrayList<String> params : fileManager.getParamsArray()){
+                for(String p : params){
+
+                if (p.length() > Alarm.ALARM_ID_TAG.length() && p.substring(0, Alarm.ALARM_ID_TAG.length()).equals(Alarm.ALARM_ID_TAG)) {
+                    if(p.substring(Alarm.ALARM_ID_TAG.length()).equals(id)){
+                        return new Alarm(context, params);
+
+                        //alarm.cancelAlarm(0); //the alarm object is just to get data, so make sure it's not scheduled
                     }
+                }
+
+                 /*
+
+
+                    if (p.key.equals(Alarm.ALARM_ID_TAG) && p.value.equals(id)) {
+                        return new Alarm(context, params);
+                    }
+
+                  */
                 }
             }
         }
-        return alarm;
+        catch (Exception e){
+            Log.e("FileManager ZZZ", "lkjsadhflkjsahflkjf");
+        }
+        return null;
     }
 }

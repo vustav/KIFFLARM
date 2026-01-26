@@ -25,6 +25,7 @@
     <dimen name="alarmsVHheight">57dp</dimen>
     <dimen name="alarmsVHToggleWidth">50dp</dimen>
     <dimen name="alarmsVHPaddingEnd">10dp</dimen>
+    <dimen name="alarmsVHToggleBtnIndicatorSize">15dp</dimen>
 
     <!-- SOUND VH -->
     <dimen name="soundVHheight">45dp</dimen>

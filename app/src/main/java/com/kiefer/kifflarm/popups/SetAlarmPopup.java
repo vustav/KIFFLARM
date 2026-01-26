@@ -118,12 +118,15 @@ public class SetAlarmPopup extends Popup {
         snoozeGradientTopColor = Utils.getRandomColor();
         snoozeLayout.setBackground(Utils.getGradientDrawable(snoozeGradientTopColor, Utils.getRandomColor(), Utils.VERTICAL));
 
+        /*
         SwitchMaterial toggle = popupView.findViewById(R.id.setAlarmPopupToggle);
         toggle.setChecked(alarm.isActive());
         toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             //alarm.activate(isChecked, false); //this is done when ok-btn is presed
             Utils.performHapticFeedback(toggle);
         });
+
+         */
 
         soundBtn = popupView.findViewById(R.id.setAlarmPopupSoundBtn);
         soundBtn.setOnClickListener(v -> {
@@ -137,7 +140,8 @@ public class SetAlarmPopup extends Popup {
             //Log.e("SeAlarmtPopup ZZZ", "ok 0");
             alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
             alarm.setSnoozeTime(Integer.parseInt(String.valueOf(snoozeTV.getText())));
-            alarm.activate(true, false, 4);
+
+            alarm.activate(true);
             alarm.saveAndSchedule();
 
             //Log.e("SeAlarmtPopup ZZZ", "ok 1");
@@ -167,7 +171,6 @@ public class SetAlarmPopup extends Popup {
     }
 
     private void selectClockValue(int unit){
-        Log.e("SetAlarmPopup ZZZ", "unit: "+unit);
         if(unit == HOUR){
             CLOCK_VALUE = HOUR;
 
