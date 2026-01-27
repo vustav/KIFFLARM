@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.kiefer.kifflarm.FileManager;
 import com.kiefer.kifflarm.R;
@@ -39,7 +40,7 @@ public class AlarmActivity extends AppCompatActivity {
         try {
             Intent intent = getIntent();
 
-            Alarm alarm = FileManager.getAlarm(this, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+            Alarm alarm = FileManager.getAlarm(this, intent.getStringExtra(Alarm.ALRM_ID_TAG));
 
             MediaPlayer mediaPlayer = KIFFMediaPlayer.getInstance(this, alarm.getSound().getUri());
 
@@ -53,11 +54,14 @@ public class AlarmActivity extends AppCompatActivity {
             timeTv.setText(alarm.getTimeAsString());
             animateTV(timeTv);
 
+            int notificationID = Integer.parseInt(intent.getStringExtra(AlarmCannon.NOTIFICATION_ID_TAG));
             Button offBtn = layout.findViewById(R.id.alarmActivityOffBtn);
             offBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     killAlarm(alarm, vibrator, mediaPlayer);
+
+                    NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
                 }
             });
 
@@ -71,6 +75,8 @@ public class AlarmActivity extends AppCompatActivity {
                     newAlarm.activate(true);
                     newAlarm.saveAndSchedule();
                     killAlarm(alarm, vibrator, mediaPlayer);
+
+                    NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
                 }
             });
         }

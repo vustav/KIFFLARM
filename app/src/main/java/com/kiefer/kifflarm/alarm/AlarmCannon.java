@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Vibrator;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.ActivityCompat;
@@ -27,12 +26,12 @@ import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 public class AlarmCannon {
     private Context context;
 
+    public static String NOTIFICATION_ID_TAG = "nidt";
+
     public AlarmCannon(Context context, Intent intent){
         this.context = context;
 
-        Log.e("AlarmCannon ZZZ", "1");
-
-        Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+        Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));
 
         String channelId = alarm.getIdAsString() + "c";
         int notificationId = alarm.getId();
@@ -49,19 +48,15 @@ public class AlarmCannon {
 
         //activity
         Intent activityIntent = new Intent(context, AlarmActivity.class);
-        activityIntent.putExtra(Alarm.ALRM_INTENT_ID, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+        activityIntent.putExtra(Alarm.ALRM_ID_TAG, intent.getStringExtra(Alarm.ALRM_ID_TAG));
+        activityIntent.putExtra(NOTIFICATION_ID_TAG, Integer.toString(notificationId));
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, notificationId, activityIntent, flag);
 
-        Log.e("AlarmCannon ZZZ", "2");
-
         //swipe
         Intent swipeIntent = new Intent(context, NotificationDismissedReceiver.class);
-        swipeIntent.putExtra(Alarm.ALRM_INTENT_ID, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+        swipeIntent.putExtra(Alarm.ALRM_ID_TAG, intent.getStringExtra(Alarm.ALRM_ID_TAG));
         PendingIntent swipePendingIntent = PendingIntent.getBroadcast(context, notificationId, swipeIntent, flag);
-
-
-        Log.e("AlarmCannon ZZZ", "3");
 
         RemoteViews remoteViews = getRemoteViews(alarm);
 
@@ -87,9 +82,7 @@ public class AlarmCannon {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        Log.e("AlarmCannon ZZZ", "4");
         NotificationManagerCompat.from(context).notify(notificationId, builder.build());
-        Log.e("AlarmCannon ZZZ", "5");
     }
 
     private void createNotificationChannel(String id, String description) {

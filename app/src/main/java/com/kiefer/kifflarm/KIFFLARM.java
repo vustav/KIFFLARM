@@ -2,12 +2,15 @@ package com.kiefer.kifflarm;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,6 +29,7 @@ import com.kiefer.kifflarm.alarm.AlarmCannon;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
+import com.kiefer.kifflarm.popups.VolumePopup;
 import com.kiefer.kifflarm.sound.SoundManager;
 import com.kiefer.kifflarm.utils.Utils;
 
@@ -37,6 +41,8 @@ public class KIFFLARM extends AppCompatActivity {
     private RelativeLayout layout;
     private AlarmsAdapter alarmsAdapter;
     private ArrayList<Alarm> alarms;
+
+    private final boolean SHOW_TRIGGER = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +62,15 @@ public class KIFFLARM extends AppCompatActivity {
         soundManager = new SoundManager(this);
         fileManager = new FileManager(this);
 
-        //loadAlarms();
-
         checkPermissions();
+
+        //this ensures the layout is ready when the popup is created
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                checkVolume(layout);
+            }
+        });
     }
 
     @Override
@@ -71,7 +83,8 @@ public class KIFFLARM extends AppCompatActivity {
         own it can only save the change, not update it directly, so the get it we need to reload alarms
         and update the adapter
          */
-        loadAlarms();
+        loadAlarms(); //load here instead of onCreate since turning an alarm off in AlarmActivity does not update alarms here, they are saved there and needs to be reloaded here
+
         if(getAlarmsAdapter() != null){
             getAlarmsAdapter().onResume();
         }
@@ -106,6 +119,24 @@ public class KIFFLARM extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
+    }
+
+    boolean volumeWarned = false; //without this you get two popups. Probably something with getViewTreeObserver
+    private void checkVolume(ViewGroup layout){
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
+        float volume = ((float) currentVolume) / maxVolume;
+
+        if(volume < .5f){
+            if(!volumeWarned) {
+                new VolumePopup(KIFFLARM.this);
+                volumeWarned = true;
+            }
+        }
+    }
+
+    private void raiseVolume(){
     }
 
     @Override
@@ -164,16 +195,17 @@ public class KIFFLARM extends AppCompatActivity {
         addIcon.setImageDrawable(new DrawablePlus());
 
         Button shortAlarmBtn = layout.findViewById(R.id.createShortAlarmBtn);
-        shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TRIGGER ALARM
-                Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
-                intent.putExtra(Alarm.ALRM_INTENT_ID, Integer.toString(getAlarms().get(0).getId()));
+        if(SHOW_TRIGGER) {
+            shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TRIGGER ALARM
+                    Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
+                    intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(getAlarms().get(0).getId()));
 
-                new AlarmCannon(KIFFLARM.this, intent);
+                    new AlarmCannon(KIFFLARM.this, intent);
 
-                //ACTIVE CHECK
+                    //ACTIVE CHECK
                 /*
                 Log.e("KIFFLARM ZZZ","----------------------------");
                 for(Alarm a : alarms){
@@ -182,8 +214,12 @@ public class KIFFLARM extends AppCompatActivity {
                 Log.e("KIFFLARM ZZZ","----------------------------");
 
                  */
-            }
-        });
+                }
+            });
+        }
+        else{
+            shortAlarmBtn.setVisibility(View.INVISIBLE);
+        }
     }
 
     /** ALARMS **/

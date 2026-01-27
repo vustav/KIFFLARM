@@ -1,5 +1,6 @@
 package com.kiefer.kifflarm.alarm;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        Log.e("AlarmsAdapter ZZZ", "onBind");
+
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
         Alarm alarm = kifflarm.getAlarms().get(viewHolder.getAdapterPosition());
@@ -59,21 +62,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         //no need to edit a snooze
         if(!alarm.isSnooze()) {
-            /*
-            viewHolder.toggle.setVisibility(View.VISIBLE);
-            viewHolder.toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                //if (++viewHolder.toggleCheck > 0) {
-                    if (!alarm.isSnooze()) {
-                        alarm.activate(isChecked);
-                        alarm.saveAndSchedule(2);
-                        activateVH(viewHolder, isChecked);
-                    }
-                    Utils.performHapticFeedback(viewHolder.toggle);
-                //}
-            });
-
-             */
-
             viewHolder.toggleBtn.setVisibility(View.VISIBLE);
             viewHolder.toggleBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,8 +71,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                     activateVH(viewHolder, alarm.isActive());
                 }
             });
-
-
         }
         else{
             //viewHolder.toggle.setVisibility(View.INVISIBLE);
@@ -115,8 +101,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     public void activateVH(ViewHolder viewHolder, boolean on){
-        //viewHolder.toggle.setChecked(on);
-
+        Log.e("AlarmsAdapter ZZZ", "activate: "+on);
 
         if(on) {
             viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOn, null));

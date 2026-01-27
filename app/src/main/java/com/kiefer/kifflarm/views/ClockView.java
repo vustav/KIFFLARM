@@ -314,6 +314,9 @@ public class ClockView extends View {
                     if(offsetTime < 0){
                         offsetTime = MathUtils.MAX_SNOOZE + offsetTime; // to avoid time: -1 and -2
                     }
+                    else if(offsetTime == 0){
+                        offsetTime = MathUtils.MAX_SNOOZE;
+                    }
                     setAlarmPopup.setSnooze(offsetTime);
                 }
             }
@@ -488,8 +491,8 @@ public class ClockView extends View {
             canvas.drawText(Integer.toString(5*(Math.round((float)(snapMinute - visualTimeOffset)/5))), p.x - m.xOffset, p.y + m.yOffset, snapTxtPaint);
         }
         else{
-            for(int minute = 0; minute < snoozeMarkers.size(); minute++){
-                Marker m = snoozeMarkers.get(minute);
+            for(int snooze = 0; snooze < snoozeMarkers.size(); snooze++){
+                Marker m = snoozeMarkers.get(snooze);
                 Point p = m.point;
                 timeMarkerPaint.setColor(m.color);
                 textPaint.setColor(Utils.getContrastColor(m.color));
@@ -503,7 +506,11 @@ public class ClockView extends View {
                 else{
                     drawTriangleWithShadow(canvas, p, timeMarkerRadius, timeMarkerPaint, shadowTrianglePaint);
                 }
-                canvas.drawText(Integer.toString(minute * snoozeInterval), p.x-m.xOffset, p.y+m.yOffset, textPaint);
+                int drawnSnze = snooze * snoozeInterval;
+                if(drawnSnze == 0){
+                    drawnSnze = MathUtils.MAX_SNOOZE;
+                }
+                canvas.drawText(Integer.toString(drawnSnze), p.x-m.xOffset, p.y+m.yOffset, textPaint);
             }
 
             //hand shadow
@@ -531,7 +538,12 @@ public class ClockView extends View {
             else{
                 drawTriangle(canvas, p, timeMarkerRadius, touchMarkerPaint);
             }
-            canvas.drawText(Integer.toString(snoozeInterval*(Math.round((float)(snapSnooze - visualTimeOffsetSnooze)/snoozeInterval))), p.x - m.xOffset, p.y + m.yOffset, snapTxtPaint);
+
+            int drawnSooze = snoozeInterval*(Math.round((float)(snapSnooze - visualTimeOffsetSnooze)/snoozeInterval));
+            if(drawnSooze == 0){
+                drawnSooze = MathUtils.MAX_SNOOZE;
+            }
+            canvas.drawText(Integer.toString(drawnSooze), p.x - m.xOffset, p.y + m.yOffset, snapTxtPaint);
         }
     }
 

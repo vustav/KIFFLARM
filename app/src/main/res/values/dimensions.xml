@@ -22,10 +22,11 @@
     <dimen name="addBtnIconSize">20dp</dimen>
 
     <!-- ALARMS VH -->
-    <dimen name="alarmsVHheight">57dp</dimen>
+    <dimen name="alarmsVHheight">55dp</dimen>
     <dimen name="alarmsVHToggleWidth">50dp</dimen>
     <dimen name="alarmsVHPaddingEnd">10dp</dimen>
-    <dimen name="alarmsVHToggleBtnIndicatorSize">15dp</dimen>
+    <dimen name="alarmsVHToggleBtnIndicatorSize">10dp</dimen>
+    <dimen name="smallBtnHeight">30dp</dimen>
 
     <!-- SOUND VH -->
     <dimen name="soundVHheight">45dp</dimen>
@@ -53,5 +54,11 @@
 
     <!-- SHADOW -->
     <dimen name="shadowOffset">5dp</dimen>
+
+    <!-- VOLUME POPUP -->
+    <dimen name="volumeSeekWidth">30dp</dimen>
+    <dimen name="volumeSeekHeight">130dp</dimen>
+    <dimen name="volumePopupHeight">200dp</dimen>
+    <dimen name="volumePopupWidth">190dp</dimen>
 
 </resources>

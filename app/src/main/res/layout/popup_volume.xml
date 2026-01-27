@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/volumePopupBg">
+
+    <!-- BG TV -->
+    <TextView
+        android:id="@+id/volumePopupBgTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/timeTxtSize"
+        android:textStyle="italic"
+        android:fontFamily="@font/default_font"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/volumePopupMainLayout">
+
+        <!-- SEEK CONTAINER -->
+        <FrameLayout
+            android:layout_width="@dimen/volumeSeekWidth"
+            android:layout_height="@dimen/volumeSeekHeight"
+            android:id="@+id/volumePopupSeekContainer"
+
+            android:layout_marginTop="@dimen/marginLarge"
+            android:layout_marginEnd="@dimen/marginLarge"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+
+        <!-- TXT -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/volumePopupTextLayout"
+            android:layout_marginStart="@dimen/marginLarge"
+            android:layout_marginEnd="@dimen/marginMedium"
+            android:layout_marginTop="@dimen/marginLarge"
+            android:padding="@dimen/marginSmall"
+
+            android:layout_toStartOf="@id/volumePopupSeekContainer"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/defaultTvTextSize"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:text="@string/volume_warning"
+                android:id="@+id/volumePopupMainTV"/>
+
+        </FrameLayout>
+
+
+    </RelativeLayout>
+    <!-- BTNS -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_marginBottom="@dimen/marginLarge"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/volumePopupMainLayout">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btnheight"
+                android:text="CANCEL"
+                android:id="@+id/volumePopupCancelBtn"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:background="@drawable/custom_btn"
+
+                android:layout_marginEnd="@dimen/marginSmall"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btnheight"
+                android:text="RAISE IT"
+                android:id="@+id/volumePopupRaiseBtn"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:background="@drawable/custom_btn"
+
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

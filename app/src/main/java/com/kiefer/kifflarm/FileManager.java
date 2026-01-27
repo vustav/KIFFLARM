@@ -101,13 +101,10 @@ public class FileManager {
 
         ArrayList<ArrayList<String>> paramsArray = new ArrayList<>();
 
-        Log.e("FileManaer ZZZ", "getParamsArray, size: "+filesInDirectory.length);
-
         if(filesInDirectory != null) {
             for (File file : filesInDirectory) {
                 Object o = read(file.getAbsolutePath());
 
-                Log.e("FileManaer ZZZ", "getParamsArray, o class: "+o.getClass());
                 try {
                     ArrayList<String> params = (ArrayList<String>) o;
                     paramsArray.add(params);

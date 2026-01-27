@@ -32,7 +32,6 @@ public class SoundPopup extends Popup {
 
         //inflate the View
         popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_sound, null);
-        popupView.setBackground(Utils.getRandomGradientDrawable());
 
         //create the popupWindow
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;

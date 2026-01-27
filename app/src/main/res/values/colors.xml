@@ -16,4 +16,6 @@
     <color name="snoozeTxtColor">#FF2B00</color>
     <color name="indicatorOff">#FF2B00</color>
     <color name="indicatorOn">#3DF826</color>
+
+    <!-- VOLUME POPUP -->
 </resources>

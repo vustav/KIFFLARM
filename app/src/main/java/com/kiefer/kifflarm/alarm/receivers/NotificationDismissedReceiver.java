@@ -20,7 +20,7 @@ public class NotificationDismissedReceiver extends BroadcastReceiver {
         Log.e("NotificationDismissedReceiver ZZZ", "1");
         try {
             Log.e("NotificationDismissedReceiver ZZZ", "2");
-            Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_INTENT_ID));
+            Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));
 
             MediaPlayer mediaPlayer = KIFFMediaPlayer.getInstance(context, alarm.getSound().getUri());
 

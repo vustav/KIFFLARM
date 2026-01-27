@@ -12,7 +12,6 @@ import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.receivers.AlarmReceiver;
 import com.kiefer.kifflarm.sound.Sound;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,9 +29,7 @@ public class Alarm implements Comparable<Alarm>{
 
     protected int id;
     private Sound sound;
-
-    private int color;
-    public static String ALRM_INTENT_ID = "alrm_intent_id";
+    public static String ALRM_ID_TAG = "alrm_intent_id";
 
     /** ÄNDRA TILLBAKS OM DET INTE FUKKAR **/
     // alarmManager.setAlarmClock -> alarmManager.setExactAndAllowWhileIdle
@@ -77,8 +74,6 @@ public class Alarm implements Comparable<Alarm>{
         }
 
         id = (int) date.getTime();
-
-        color = Utils.getRandomColor();
     }
 
     public void activate(boolean active){
@@ -86,13 +81,13 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public void saveAndSchedule(){
-        Log.e("Alarm ZZZ", "saveAndSchedule");
+        //Log.e("Alarm ZZZ", "saveAndSchedule");
         save();
         updateSchedule();
     }
 
     public void updateSchedule(){
-        Log.e("Alarm ZZZ", "updateSchedule");
+        //Log.e("Alarm ZZZ", "updateSchedule");
         if(active) {
             scheduleAlarm();
         }
@@ -105,14 +100,11 @@ public class Alarm implements Comparable<Alarm>{
         Log.e("Alarm ZZZ", "schedule "+hour+":"+minute);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra(ALRM_INTENT_ID, Integer.toString(id));
+        intent.putExtra(ALRM_ID_TAG, Integer.toString(id));
 
         int flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, flag);
-
         AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(getTimeInMS(), pendingIntent);
-
         alarmManager.setAlarmClock(info, pendingIntent);
     }
 
@@ -208,10 +200,6 @@ public class Alarm implements Comparable<Alarm>{
 
     public boolean isSnooze() {
         return isSnooze;
-    }
-
-    public int getColor(){
-        return color;
     }
 
     /** SET **/

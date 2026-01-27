@@ -118,16 +118,6 @@ public class SetAlarmPopup extends Popup {
         snoozeGradientTopColor = Utils.getRandomColor();
         snoozeLayout.setBackground(Utils.getGradientDrawable(snoozeGradientTopColor, Utils.getRandomColor(), Utils.VERTICAL));
 
-        /*
-        SwitchMaterial toggle = popupView.findViewById(R.id.setAlarmPopupToggle);
-        toggle.setChecked(alarm.isActive());
-        toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            //alarm.activate(isChecked, false); //this is done when ok-btn is presed
-            Utils.performHapticFeedback(toggle);
-        });
-
-         */
-
         soundBtn = popupView.findViewById(R.id.setAlarmPopupSoundBtn);
         soundBtn.setOnClickListener(v -> {
             new SoundPopup(kifflarm, this);
