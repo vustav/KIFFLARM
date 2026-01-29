@@ -31,6 +31,14 @@
             android:launchMode="singleTask"
             android:exported="false"/>
 
+        <!-- Trigger onResume -->
+        <activity
+            android:name=".alarm.TriggerOnResumeActivity"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:exported="false"/>
+
         <!-- MAIN -->
         <activity
             android:name=".KIFFLARM"

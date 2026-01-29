@@ -41,7 +41,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Log.e("AlarmsAdapter ZZZ", "onBind");
+        //Log.e("AlarmsAdapter ZZZ", "onBind");
 
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
@@ -101,7 +101,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     public void activateVH(ViewHolder viewHolder, boolean on){
-        Log.e("AlarmsAdapter ZZZ", "activate: "+on);
+        //Log.e("AlarmsAdapter ZZZ", "activate: "+on);
 
         if(on) {
             viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOn, null));

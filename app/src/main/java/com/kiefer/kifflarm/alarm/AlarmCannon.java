@@ -6,9 +6,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.ActivityCompat;
@@ -26,18 +29,22 @@ import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 public class AlarmCannon {
     private Context context;
 
+    private Alarm alarm;
+    private MediaPlayer mediaPlayer;
+    private Vibrator vibrator;
+
     public static String NOTIFICATION_ID_TAG = "nidt";
 
     public AlarmCannon(Context context, Intent intent){
         this.context = context;
 
-        Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));
+        alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));
 
         String channelId = alarm.getIdAsString() + "c";
         int notificationId = alarm.getId();
 
-        MediaPlayer mediaPlayer = KIFFMediaPlayer.getInstance(context, alarm.getSound().getUri());
-        Vibrator vibrator = KIFFVibrator.getInstance(context);
+        mediaPlayer = KIFFMediaPlayer.getInstance(context, alarm.getSound().getUri());
+        vibrator = KIFFVibrator.getInstance(context);
 
         AlarmUtils.startVibrating(vibrator);
         AlarmUtils.playRingtone(mediaPlayer);
@@ -83,6 +90,28 @@ public class AlarmCannon {
             return;
         }
         NotificationManagerCompat.from(context).notify(notificationId, builder.build());
+
+        //a timer that turns off the alarm after a set time
+        int duration = 50000; //50 secs
+        new CountDownTimer(duration, duration) {
+            public void onTick(long millisUntilFinished) {
+                //
+            }
+            public void onFinish() {
+                NotificationManagerCompat.from(context).cancel(notificationId);
+                AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
+
+                try {
+                    //Activity will be started before notification is clicked if the phone was sleeping (no idea why)
+                    if (AlarmActivity.isActive) {
+                        AlarmActivity.killActivity();
+                    }
+                }
+                catch (Exception e){
+                    Log.e("AlarmCannon ZZZ", "timer");
+                }
+            }
+        }.start();
     }
 
     private void createNotificationChannel(String id, String description) {

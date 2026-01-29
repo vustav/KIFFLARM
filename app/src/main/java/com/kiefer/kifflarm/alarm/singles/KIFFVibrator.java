@@ -20,7 +20,7 @@ public class KIFFVibrator {
     }
 
     public static void destroy() {
-        Log.e("KIFFVibrator ZZZ", "destroy");
+        //Log.e("KIFFVibrator ZZZ", "destroy");
         if (vibrator != null) {
             vibrator.cancel();
             vibrator = null;

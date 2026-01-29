@@ -24,10 +24,10 @@ import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 
 public class AlarmActivity extends AppCompatActivity {
     public static boolean isActive = false, kill = false;
-    //private Alarm alarm;
-    //private Vibrator vibrator;
+    private Alarm alarm;
+    private Vibrator vibrator;
     private ValueAnimator tvBgAnimation, tvTxtAnimation;
-    //private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +40,15 @@ public class AlarmActivity extends AppCompatActivity {
         try {
             Intent intent = getIntent();
 
-            Alarm alarm = FileManager.getAlarm(this, intent.getStringExtra(Alarm.ALRM_ID_TAG));
+            alarm = FileManager.getAlarm(this, intent.getStringExtra(Alarm.ALRM_ID_TAG));
 
-            MediaPlayer mediaPlayer = KIFFMediaPlayer.getInstance(this, alarm.getSound().getUri());
+            mediaPlayer = KIFFMediaPlayer.getInstance(this, alarm.getSound().getUri());
 
             RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
             TextView bgTVtv = layout.findViewById(R.id.alarmActivityBgTv);
             Utils.createNiceBg(layout, bgTVtv, 65);
 
-            Vibrator vibrator = KIFFVibrator.getInstance(this);
+            vibrator = KIFFVibrator.getInstance(this);
 
             TextView timeTv = layout.findViewById(R.id.alarmActivityTimeTV);
             timeTv.setText(alarm.getTimeAsString());
@@ -59,7 +59,7 @@ public class AlarmActivity extends AppCompatActivity {
             offBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    killAlarm(alarm, vibrator, mediaPlayer);
+                    killAlarm();
 
                     NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
                 }
@@ -74,7 +74,7 @@ public class AlarmActivity extends AppCompatActivity {
                     newAlarm.setTime(alarm.getHour(), alarm.getMinute() + alarm.getSnoozeTime());
                     newAlarm.activate(true);
                     newAlarm.saveAndSchedule();
-                    killAlarm(alarm, vibrator, mediaPlayer);
+                    killAlarm();
 
                     NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
                 }
@@ -95,7 +95,8 @@ public class AlarmActivity extends AppCompatActivity {
         and we kill the activity here
          */
         if(kill){
-            finish();
+            killAlarm();
+            //finish();
         }
     }
 
@@ -121,7 +122,7 @@ public class AlarmActivity extends AppCompatActivity {
         tvTxtAnimation.start();
     }
 
-    private void killAlarm(Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer){
+    private void killAlarm(){
         AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
         KIFFMediaPlayer.destroy();
         KIFFVibrator.destroy();
@@ -144,6 +145,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         try {
             KIFFMediaPlayer.destroy();
+            KIFFVibrator.destroy();
         }catch (IllegalStateException ese){
             ese.printStackTrace();
         } catch (Exception e) {

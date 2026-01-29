@@ -117,7 +117,6 @@ public class VolumePopup extends Popup{
                         float perc = ((float) duration - (float) millisUntilFinished)/(float) duration;
                         seekBar.setProgress(newVolPerc * perc);
                     }
-
                     public void onFinish() {
                         seekBar.setProgress(newVolPerc);
                         audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newVolume, 0);

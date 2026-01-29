@@ -136,8 +136,7 @@
                 android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
                 android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"
                 android:id="@+id/alarmsVHToggleButtonIndicator"
-                android:layout_marginTop="@dimen/marginSmall"
-                android:layout_marginStart="@dimen/marginSmall"/>
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
 
         <!--

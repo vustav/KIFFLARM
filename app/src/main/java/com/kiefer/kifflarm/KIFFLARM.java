@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -76,6 +77,7 @@ public class KIFFLARM extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        Log.e("KIFFLARM ZZZ", "onResume");
 
         /*
         if an alarm goes off when the main Activity is running nothing in it it gets updated .This
@@ -134,9 +136,6 @@ public class KIFFLARM extends AppCompatActivity {
                 volumeWarned = true;
             }
         }
-    }
-
-    private void raiseVolume(){
     }
 
     @Override
