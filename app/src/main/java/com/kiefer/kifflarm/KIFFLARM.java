@@ -43,7 +43,7 @@ public class KIFFLARM extends AppCompatActivity {
     private AlarmsAdapter alarmsAdapter;
     private ArrayList<Alarm> alarms;
 
-    private final boolean SHOW_TRIGGER = false;
+    private final boolean SHOW_TRIGGER = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +200,7 @@ public class KIFFLARM extends AppCompatActivity {
                 public void onClick(View v) {
                     //TRIGGER ALARM
                     Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
-                    intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(getAlarms().get(0).getId()));
+                    intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(alarms.get(0).getId()));
 
                     new AlarmCannon(KIFFLARM.this, intent);
 
@@ -246,10 +246,6 @@ public class KIFFLARM extends AppCompatActivity {
         Utils.sortAlarms(alarms);
     }
 
-    public void removeAlarm(int index){
-        alarms.remove(index).removeAlarm();
-    }
-
     /** GET **/
     public AlarmsAdapter getAlarmsAdapter() {
         return alarmsAdapter;
@@ -264,6 +260,18 @@ public class KIFFLARM extends AppCompatActivity {
 
     public ArrayList<Alarm> getAlarms(){
         return alarms;
+    }
+
+    public int getAlarmsSize(){
+        return alarms.size();
+    }
+
+    public Alarm getAlarm(int index){
+        return alarms.get(index);
+    }
+
+    public void removeAlarm(int index){
+        alarms.remove(index).removeAlarm();
     }
 
     /** DESTRUCTION **/

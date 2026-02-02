@@ -45,7 +45,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
-        Alarm alarm = kifflarm.getAlarms().get(viewHolder.getAdapterPosition());
+        Alarm alarm = kifflarm.getAlarm(viewHolder.getAdapterPosition());
 
         if(!alarm.isSnooze()){
             viewHolder.snoozeIndicatorTV.setVisibility(View.INVISIBLE);
@@ -58,24 +58,20 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         viewHolder.mainTV.setBackground(Utils.getRandomGradientDrawable());
 
         activateVH(viewHolder, alarm.isActive());
-        //viewHolder.toggleCheck = 0;
-
-        //no need to edit a snooze
-        if(!alarm.isSnooze()) {
             viewHolder.toggleBtn.setVisibility(View.VISIBLE);
             viewHolder.toggleBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    alarm.activate(!alarm.isActive());
-                    alarm.saveAndSchedule();
-                    activateVH(viewHolder, alarm.isActive());
+                    if(!alarm.isSnooze()) {
+                        alarm.activate(!alarm.isActive());
+                        alarm.saveAndSchedule();
+                        activateVH(viewHolder, alarm.isActive());
+                    } else{
+                        Utils.performHapticFeedback(v);
+                        removeAlarm(viewHolder.getAdapterPosition());
+                    }
                 }
             });
-        }
-        else{
-            //viewHolder.toggle.setVisibility(View.INVISIBLE);
-            viewHolder.toggleBtn.setVisibility(View.INVISIBLE);
-        }
 
         //no need to edit a snooze
         if(!alarm.isSnooze()) {
@@ -127,12 +123,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return kifflarm.getAlarms().size();
+        return kifflarm.getAlarmsSize();
     }
 
     /** POPUPS **/
     public void openAlarmDialog(AlarmsAdapter alarmsAdapter, int index, boolean newAlarm){
-        openAlarmDialog(alarmsAdapter, kifflarm.getAlarms().get(index), newAlarm);
+        openAlarmDialog(alarmsAdapter, kifflarm.getAlarm(index), newAlarm);
     }
 
     public void openAlarmDialog(AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){

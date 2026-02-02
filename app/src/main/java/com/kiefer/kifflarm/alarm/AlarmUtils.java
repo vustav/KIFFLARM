@@ -39,6 +39,12 @@ public class AlarmUtils {
         alarm.activate(false);
         alarm.saveAndSchedule();
         vibrator.cancel();
-        mediaPlayer.stop();
+
+        try {
+            mediaPlayer.stop();
+        }
+        catch (IllegalStateException ise){
+            Log.e("AlarmUtils ZZZ", "alarmOff, "+ise);
+        }
     }
 }

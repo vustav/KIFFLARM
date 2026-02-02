@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/soundVHTV"
-                android:textSize="@dimen/soundVHTxtSize"
+                android:textSize="@dimen/defaultTextSize"
                 android:textStyle="italic"
                 android:singleLine="true"
                 android:textColor="@color/defaultTxtColor"

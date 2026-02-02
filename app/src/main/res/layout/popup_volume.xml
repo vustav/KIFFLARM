@@ -45,16 +45,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/defaultTvTextSize"
+                android:textSize="@dimen/defaultTextSize"
                 android:textStyle="italic"
                 android:fontFamily="@font/default_font"
                 android:text="@string/volume_warning"
                 android:id="@+id/volumePopupMainTV"/>
 
         </FrameLayout>
-
-
     </RelativeLayout>
+
     <!-- BTNS -->
     <LinearLayout
         android:layout_width="wrap_content"
@@ -74,6 +73,7 @@
                 android:text="CANCEL"
                 android:id="@+id/volumePopupCancelBtn"
                 android:textStyle="italic"
+                android:textSize="@dimen/defaultBtnTextSize"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"
 
@@ -90,6 +90,7 @@
                 android:text="RAISE IT"
                 android:id="@+id/volumePopupRaiseBtn"
                 android:textStyle="italic"
+                android:textSize="@dimen/defaultBtnTextSize"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"
 

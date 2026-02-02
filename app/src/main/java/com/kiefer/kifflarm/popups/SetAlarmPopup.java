@@ -127,28 +127,22 @@ public class SetAlarmPopup extends Popup {
         //okBtn
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
-            //Log.e("SeAlarmtPopup ZZZ", "ok 0");
             alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
             alarm.setSnoozeTime(Integer.parseInt(String.valueOf(snoozeTV.getText())));
 
             alarm.activate(true);
             alarm.saveAndSchedule();
 
-            //Log.e("SeAlarmtPopup ZZZ", "ok 1");
-
             if(newAlarm) {
                 alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(kifflarm.getAlarms(), alarm));
-            }
-            else{
+            } else{
                 Utils.sortAlarms(kifflarm.getAlarms());
 
-                //using this since a sort can push everything around
+                //using this since removing and adding doesn't look smooth at all
                 alarmsAdapter.notifyDataSetChangedLocal();
             }
-            //Log.e("SeAlarmtPopup ZZZ", "ok 2");
 
             dismiss();
-            //Log.e("SeAlarmtPopup ZZZ", "ok 4");
         });
 
         //cancelBtn
@@ -172,14 +166,6 @@ public class SetAlarmPopup extends Popup {
             snoozeTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
             snoozeLayout.setBackgroundColor(Color.TRANSPARENT);
 
-            /*
-            timeLabel.setTextColor(selectedTxtColor);
-            timeLabel.setBackgroundColor(Utils.getContrastColor(selectedTxtColor));
-            snoozeLabel.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
-            snoozeLabel.setBackgroundColor(snoozeGradientTopColor);
-
-             */
-
             if(clockView != null) {
                 clockView.updateTimeUnit();
             }
@@ -195,14 +181,6 @@ public class SetAlarmPopup extends Popup {
             snoozeTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
             snoozeLayout.setBackgroundColor(Color.TRANSPARENT);
 
-            /*
-            timeLabel.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
-            timeLabel.setBackgroundColor(timeGradientTopColor);
-            snoozeLabel.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
-            snoozeLabel.setBackgroundColor(snoozeGradientTopColor);
-
-             */
-
             if(clockView != null) {
                 clockView.updateTimeUnit();
             }
@@ -217,14 +195,6 @@ public class SetAlarmPopup extends Popup {
             hourLayout.setBackgroundColor(Color.TRANSPARENT);
             minuteTV.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
             minuteLayout.setBackgroundColor(Color.TRANSPARENT);
-
-            /*
-            timeLabel.setTextColor(kifflarm.getResources().getColor(R.color.defaultTxtColor, null));
-            timeLabel.setBackgroundColor(timeGradientTopColor);
-            snoozeLabel.setTextColor(selectedTxtColor);
-            snoozeLabel.setBackgroundColor(Utils.getContrastColor(selectedTxtColor));
-
-             */
 
             if(clockView != null) {
                 clockView.updateTimeUnit();

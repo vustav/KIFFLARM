@@ -313,7 +313,8 @@
                 android:layout_centerHorizontal="true"
                 android:textStyle="italic"
                 android:fontFamily="@font/default_font"
-                android:background="@drawable/custom_btn"/>
+                android:background="@drawable/custom_btn"
+                android:textSize="@dimen/defaultBtnTextSize"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -335,6 +336,7 @@
                     android:textStyle="italic"
                     android:fontFamily="@font/default_font"
                     android:background="@drawable/custom_btn"
+                    android:textSize="@dimen/defaultBtnTextSize"
 
                     android:layout_marginEnd="@dimen/marginSmall"
                     android:layout_centerHorizontal="true"/>
@@ -351,6 +353,7 @@
                     android:textStyle="italic"
                     android:fontFamily="@font/default_font"
                     android:background="@drawable/custom_btn"
+                    android:textSize="@dimen/defaultBtnTextSize"
 
                     android:layout_centerHorizontal="true"/>
             </RelativeLayout>

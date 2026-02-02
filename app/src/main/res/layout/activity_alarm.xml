@@ -70,6 +70,7 @@
                 android:id="@+id/alarmActivitySnoozeBtn"
                 android:text="SNOOZE"
                 android:textStyle="italic"
+                android:textSize="@dimen/defaultTextSize"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"/>
         </RelativeLayout>
@@ -88,6 +89,7 @@
                 android:id="@+id/alarmActivityOffBtn"
                 android:text="TURN OFF"
                 android:textStyle="italic"
+                android:textSize="@dimen/defaultTextSize"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"/>
         </RelativeLayout>
