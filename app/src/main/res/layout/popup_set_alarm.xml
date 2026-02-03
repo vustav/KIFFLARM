@@ -312,6 +312,7 @@
                 android:singleLine="true"
                 android:layout_centerHorizontal="true"
                 android:textStyle="italic"
+                android:textColor="@color/defaultBtnTxtColor"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"
                 android:textSize="@dimen/defaultBtnTextSize"/>
@@ -335,6 +336,7 @@
                     android:id="@+id/setTimeCancelBtn"
                     android:textStyle="italic"
                     android:fontFamily="@font/default_font"
+                    android:textColor="@color/defaultBtnTxtColor"
                     android:background="@drawable/custom_btn"
                     android:textSize="@dimen/defaultBtnTextSize"
 
@@ -352,6 +354,7 @@
                     android:id="@+id/setTimeOKBtn"
                     android:textStyle="italic"
                     android:fontFamily="@font/default_font"
+                    android:textColor="@color/defaultBtnTxtColor"
                     android:background="@drawable/custom_btn"
                     android:textSize="@dimen/defaultBtnTextSize"
 

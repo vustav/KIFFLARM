@@ -51,7 +51,7 @@ public class VolumePopup extends Popup{
         //bg
         RelativeLayout bg = popupView.findViewById(R.id.volumePopupBg);
         TextView bgTv = popupView.findViewById(R.id.volumePopupBgTV);
-        Utils.createNiceBg(bg, bgTv, 45);
+        Utils.createNiceBg(bg, bgTv, 50);
 
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);
@@ -60,8 +60,8 @@ public class VolumePopup extends Popup{
         FrameLayout textContainer = popupView.findViewById(R.id.volumePopupTextLayout);
         TextView mainTV = popupView.findViewById(R.id.volumePopupMainTV);
         int color = Utils.getRandomColor();
-        textContainer.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
-        mainTV.setTextColor(Utils.getContrastColor(color));
+        //textContainer.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
+        //mainTV.setTextColor(Utils.getContrastColor(color));
 
         //get volumes
         AudioManager audioManager = (AudioManager) kifflarm.getSystemService(Context.AUDIO_SERVICE);

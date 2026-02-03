@@ -75,7 +75,7 @@
 
         <!--
         <receiver
-            android:name="com.example.kifflarm.alarm.receiver.AlarmReceiver"
+            android:name="com.kiefer.kifflarm.alarm.receiver.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

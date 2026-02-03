@@ -46,7 +46,7 @@ public class AlarmActivity extends AppCompatActivity {
 
             RelativeLayout layout = findViewById(R.id.alarmActivityLayout);
             TextView bgTVtv = layout.findViewById(R.id.alarmActivityBgTv);
-            Utils.createNiceBg(layout, bgTVtv, 65);
+            Utils.createNiceBg(layout, bgTVtv, 100);
 
             vibrator = KIFFVibrator.getInstance(this);
 

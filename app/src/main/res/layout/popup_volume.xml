@@ -38,6 +38,7 @@
             android:layout_marginEnd="@dimen/marginMedium"
             android:layout_marginTop="@dimen/marginLarge"
             android:padding="@dimen/marginSmall"
+            android:background="@color/volumeWarningBg"
 
             android:layout_toStartOf="@id/volumePopupSeekContainer"
             android:layout_centerVertical="true">
@@ -49,6 +50,7 @@
                 android:textStyle="italic"
                 android:fontFamily="@font/default_font"
                 android:text="@string/volume_warning"
+                android:textColor="@color/volumeWarningTxt"
                 android:id="@+id/volumePopupMainTV"/>
 
         </FrameLayout>
@@ -74,6 +76,7 @@
                 android:id="@+id/volumePopupCancelBtn"
                 android:textStyle="italic"
                 android:textSize="@dimen/defaultBtnTextSize"
+                android:textColor="@color/defaultBtnTxtColor"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"
 
@@ -91,6 +94,7 @@
                 android:id="@+id/volumePopupRaiseBtn"
                 android:textStyle="italic"
                 android:textSize="@dimen/defaultBtnTextSize"
+                android:textColor="@color/defaultBtnTxtColor"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"
 

@@ -43,7 +43,7 @@ public class KIFFLARM extends AppCompatActivity {
     private AlarmsAdapter alarmsAdapter;
     private ArrayList<Alarm> alarms;
 
-    private final boolean SHOW_TRIGGER = true;
+    private final boolean SHOW_TRIGGER = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +102,9 @@ public class KIFFLARM extends AppCompatActivity {
     }
 
     public void askPermission(){
+        Log.e("KIFFLARM ZZZ", "askPermission");
         // Should we show an explanation?
-        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+        //if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
 
             // Explain to the user why we need this permission
             new AlertDialog.Builder(this)
@@ -120,7 +121,7 @@ public class KIFFLARM extends AppCompatActivity {
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-        }
+        //}
     }
 
     boolean volumeWarned = false; //without this you get two popups. Probably something with getViewTreeObserver
@@ -162,7 +163,7 @@ public class KIFFLARM extends AppCompatActivity {
         layout = findViewById(R.id.main);
 
         TextView bgTVtv = layout.findViewById(R.id.mainBgTV);
-        Utils.createNiceBg(layout, bgTVtv, 65);
+        Utils.createNiceBg(layout, bgTVtv, 100);
 
         RecyclerView recyclerView = layout.findViewById(R.id.alarmsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -193,6 +194,7 @@ public class KIFFLARM extends AppCompatActivity {
         ImageView addIcon = layout.findViewById(R.id.addAlarmIcon);
         addIcon.setImageDrawable(new DrawablePlus());
 
+        /*
         Button shortAlarmBtn = layout.findViewById(R.id.createShortAlarmBtn);
         if(SHOW_TRIGGER) {
             shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
@@ -203,22 +205,13 @@ public class KIFFLARM extends AppCompatActivity {
                     intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(alarms.get(0).getId()));
 
                     new AlarmCannon(KIFFLARM.this, intent);
-
-                    //ACTIVE CHECK
-                /*
-                Log.e("KIFFLARM ZZZ","----------------------------");
-                for(Alarm a : alarms){
-                    Log.e("KIFFLARM ZZZ","alarm "+alarms.indexOf(a)+", active: "+a.isActive());
-                }
-                Log.e("KIFFLARM ZZZ","----------------------------");
-
-                 */
                 }
             });
         }
         else{
             shortAlarmBtn.setVisibility(View.INVISIBLE);
         }
+        */
     }
 
     /** ALARMS **/

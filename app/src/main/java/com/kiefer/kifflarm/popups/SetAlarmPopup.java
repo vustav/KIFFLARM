@@ -57,7 +57,7 @@ public class SetAlarmPopup extends Popup {
         //bg
         RelativeLayout bg = popupView.findViewById(R.id.popupSetAlarmBg);
         TextView bgTv = popupView.findViewById(R.id.setAlarmPopupBgTV);
-        Utils.createNiceBg(bg, bgTv, 35);
+        Utils.createNiceBg(bg, bgTv, 70);
 
         //set up hour TV
         hourLayout = popupView.findViewById(R.id.setAlarmPopupHourLayout);

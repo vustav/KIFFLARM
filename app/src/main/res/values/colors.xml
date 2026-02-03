@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#FFFFFF00</color>
     <color name="defaultTxtColor">#000000</color>
+    <color name="defaultBtnTxtColor">#FFFFFF</color>
     <color name="shadowColor">#383838</color>
 
     <!-- ALARMS VIEW HOLDER -->
@@ -17,5 +18,9 @@
     <color name="indicatorOff">#FF2B00</color>
     <color name="indicatorOn">#3DF826</color>
 
+    <!-- -->
+
     <!-- VOLUME POPUP -->
+    <color name="volumeWarningBg">#FF2B00</color>
+    <color name="volumeWarningTxt">#FFEB3B</color>
 </resources>
