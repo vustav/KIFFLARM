@@ -26,7 +26,7 @@
     <dimen name="alarmsVHheight">55dp</dimen>
     <dimen name="alarmsVHToggleWidth">50dp</dimen>
     <dimen name="alarmsVHPaddingEnd">10dp</dimen>
-    <dimen name="alarmsVHToggleBtnIndicatorSize">15dp</dimen>
+    <dimen name="alarmsVHToggleBtnIndicatorSize">10dp</dimen>
     <dimen name="smallBtnHeight">30dp</dimen>
     <dimen name="midBtnHeight">35dp</dimen>
 

@@ -57,11 +57,13 @@ public class VolumePopup extends Popup{
         popupWindow.setAnimationStyle(R.style.popup_animation);
 
         //set up the txt
+        /*
         FrameLayout textContainer = popupView.findViewById(R.id.volumePopupTextLayout);
         TextView mainTV = popupView.findViewById(R.id.volumePopupMainTV);
         int color = Utils.getRandomColor();
-        //textContainer.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
-        //mainTV.setTextColor(Utils.getContrastColor(color));
+        textContainer.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
+        mainTV.setTextColor(Utils.getContrastColor(color));
+         */
 
         //get volumes
         AudioManager audioManager = (AudioManager) kifflarm.getSystemService(Context.AUDIO_SERVICE);
