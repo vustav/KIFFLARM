@@ -63,23 +63,22 @@
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-    <!--
-        <RelativeLayout
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="@dimen/marginLarge"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="100dp">
+
+        <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="@dimen/marginLarge"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:paddingBottom="100dp">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/btnheight"
-                android:id="@+id/createShortAlarmBtn"
-                android:background="@drawable/custom_btn">
-            </Button>
-        </RelativeLayout>
-    -->
+            android:layout_height="@dimen/btnheight"
+            android:id="@+id/createShortAlarmBtn"
+            android:background="@drawable/custom_btn">
+        </Button>
+    </RelativeLayout>
 </RelativeLayout>

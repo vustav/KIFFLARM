@@ -16,7 +16,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.kiefer.kifflarm.FileManager;
+import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
@@ -54,7 +54,7 @@ public class AlarmActivity extends AppCompatActivity {
             timeTv.setText(alarm.getTimeAsString());
             animateTV(timeTv);
 
-            int notificationID = Integer.parseInt(intent.getStringExtra(AlarmCannon.NOTIFICATION_ID_TAG));
+            int notificationID = Integer.parseInt(intent.getStringExtra(AlarmCannonNotification.NOTIFICATION_ID_TAG));
             Button offBtn = layout.findViewById(R.id.alarmActivityOffBtn);
             offBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

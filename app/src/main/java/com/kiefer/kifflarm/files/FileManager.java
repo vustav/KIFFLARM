@@ -1,4 +1,4 @@
-package com.kiefer.kifflarm;
+package com.kiefer.kifflarm.files;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,19 +15,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class FileManager {
-    private Context context;
-    String internalPath, externalPath;
+    String internalPath;
 
     public FileManager(Context context){
-        //internalPath = Objects.requireNonNull(context.getExternalFilesDir(null)).getAbsolutePath() + "/alarms";
 
         File internalPathFile = new File(Objects.requireNonNull(context.getExternalFilesDir(null)).getAbsolutePath() + "/alarms");
         if (!internalPathFile.exists()) {
             internalPathFile.mkdirs();
         }
         internalPath = internalPathFile.getAbsolutePath();
-        //Log.e("FileManager ZZZ", "internal storage: "+internalPath);
-        //internalPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
     public void write(Object o, String name){
@@ -41,23 +37,9 @@ public class FileManager {
         }
         catch (IOException ioe){
             ioe.printStackTrace();
-/*
-                    String message = errorMessage + ioe.getMessage();
-                    Toast toast = Toast.makeText(context,
-                            message, Toast.LENGTH_SHORT);
-                    toast.show();
-
- */
         }
         catch (Exception e){
             e.printStackTrace();
-            /*
-                    String message = errorMessage + e.getMessage();
-                    Toast toast = Toast.makeText(context,
-                            message, Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            */
         }
     }
 
@@ -72,41 +54,25 @@ public class FileManager {
         catch (IOException ioe){
             ioe.printStackTrace();
 
-            /*
-                    String message = errorMessage + ioe.getMessage();
-                    Toast toast = Toast.makeText(context,
-                            message, Toast.LENGTH_SHORT);
-                    toast.show();
-
-             */
-
         }
         catch (Exception e){
             e.printStackTrace();
-
-            /*
-                String message = "ERROR LOADING";
-                Toast toast = Toast.makeText(context,
-                        message, Toast.LENGTH_SHORT);
-                toast.show();
-
-             */
         }
 
         return null;
     }
 
-    public ArrayList<ArrayList<String>> getParamsArray(){
+    public ArrayList<ArrayList<Param>> getParamsArray(){
         File[] filesInDirectory = getFiles(internalPath);
 
-        ArrayList<ArrayList<String>> paramsArray = new ArrayList<>();
+        ArrayList<ArrayList<Param>> paramsArray = new ArrayList<>();
 
         if(filesInDirectory != null) {
             for (File file : filesInDirectory) {
                 Object o = read(file.getAbsolutePath());
 
                 try {
-                    ArrayList<String> params = (ArrayList<String>) o;
+                    ArrayList<Param> params = (ArrayList<Param>) o;
                     paramsArray.add(params);
                 } catch (Exception e) {
                     Log.e("FileManager ZZZ", "getParamsArray, "+e);
@@ -131,29 +97,14 @@ public class FileManager {
 
 
     public static Alarm getAlarm(Context context, String id){
-        //Alarm alarm = null;
         FileManager fileManager = new FileManager(context);
 
         try {
-            for(ArrayList<String> params : fileManager.getParamsArray()){
-                for(String p : params){
-
-                if (p.length() > Alarm.ALARM_ID_TAG.length() && p.substring(0, Alarm.ALARM_ID_TAG.length()).equals(Alarm.ALARM_ID_TAG)) {
-                    if(p.substring(Alarm.ALARM_ID_TAG.length()).equals(id)){
-                        return new Alarm(context, params);
-
-                        //alarm.cancelAlarm(0); //the alarm object is just to get data, so make sure it's not scheduled
-                    }
-                }
-
-                 /*
-
-
+            for(ArrayList<Param> params : fileManager.getParamsArray()){
+                for(Param p : params){
                     if (p.key.equals(Alarm.ALARM_ID_TAG) && p.value.equals(id)) {
                         return new Alarm(context, params);
                     }
-
-                  */
                 }
             }
         }

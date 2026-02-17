@@ -26,10 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmActivity;
-import com.kiefer.kifflarm.alarm.AlarmCannon;
+import com.kiefer.kifflarm.alarm.AlarmCannonActivity;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
+import com.kiefer.kifflarm.files.FileManager;
+import com.kiefer.kifflarm.files.Param;
 import com.kiefer.kifflarm.popups.VolumePopup;
 import com.kiefer.kifflarm.sound.SoundManager;
 import com.kiefer.kifflarm.utils.Utils;
@@ -194,7 +196,7 @@ public class KIFFLARM extends AppCompatActivity {
         ImageView addIcon = layout.findViewById(R.id.addAlarmIcon);
         addIcon.setImageDrawable(new DrawablePlus());
 
-        /*
+
         Button shortAlarmBtn = layout.findViewById(R.id.createShortAlarmBtn);
         if(SHOW_TRIGGER) {
             shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
@@ -204,14 +206,14 @@ public class KIFFLARM extends AppCompatActivity {
                     Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
                     intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(alarms.get(0).getId()));
 
-                    new AlarmCannon(KIFFLARM.this, intent);
+                    new AlarmCannonActivity(KIFFLARM.this, intent);
                 }
             });
         }
         else{
             shortAlarmBtn.setVisibility(View.INVISIBLE);
         }
-        */
+
     }
 
     /** ALARMS **/
@@ -221,10 +223,10 @@ public class KIFFLARM extends AppCompatActivity {
         //try {
 
         //recreate saved alarms if there are any
-        ArrayList<ArrayList<String>> paramsArray = fileManager.getParamsArray();
+        ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArray();
         //ArrayList<ArrayList<Alarm.Param>> paramsArray = new ArrayList<>();
         if(!paramsArray.isEmpty()){
-            for(ArrayList<String> params : paramsArray){
+            for(ArrayList<Param> params : paramsArray){
                 alarms.add(new Alarm(this, params));
             }
         }
@@ -253,6 +255,9 @@ public class KIFFLARM extends AppCompatActivity {
 
     public ArrayList<Alarm> getAlarms(){
         return alarms;
+    }
+    public void sortAlarms(){
+        Utils.sortAlarms(getAlarms());
     }
 
     public int getAlarmsSize(){

@@ -7,8 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.util.Log;
 
-import com.kiefer.kifflarm.FileManager;
-import com.kiefer.kifflarm.KIFFLARM;
+import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmActivity;
 import com.kiefer.kifflarm.alarm.AlarmUtils;

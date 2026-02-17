@@ -3,10 +3,10 @@ package com.kiefer.kifflarm.alarm.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
-import com.kiefer.kifflarm.FileManager;
+import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.alarm.Alarm;
+import com.kiefer.kifflarm.files.Param;
 
 import java.util.ArrayList;
 
@@ -17,10 +17,10 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
             FileManager fileManager = new FileManager(context);
 
-            ArrayList<ArrayList<String>> paramsArray = fileManager.getParamsArray();
+            ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArray();
 
             if(!paramsArray.isEmpty()){
-                for(ArrayList<String> params : paramsArray){
+                for(ArrayList<Param> params : paramsArray){
                     Alarm alarm = new Alarm(context, params);
                     alarm.updateSchedule();
                 }

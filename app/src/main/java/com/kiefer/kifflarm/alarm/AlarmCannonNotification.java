@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -18,7 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.kiefer.kifflarm.FileManager;
+import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
@@ -26,7 +25,7 @@ import com.kiefer.kifflarm.alarm.receivers.NotificationDismissedReceiver;
 import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 
 //unnecessary class only used to test alarms
-public class AlarmCannon {
+public class AlarmCannonNotification {
     private Context context;
 
     private Alarm alarm;
@@ -35,7 +34,7 @@ public class AlarmCannon {
 
     public static String NOTIFICATION_ID_TAG = "nidt";
 
-    public AlarmCannon(Context context, Intent intent){
+    public AlarmCannonNotification(Context context, Intent intent){
         this.context = context;
 
         alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));

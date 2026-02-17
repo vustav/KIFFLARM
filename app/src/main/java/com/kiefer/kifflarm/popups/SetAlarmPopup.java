@@ -136,7 +136,7 @@ public class SetAlarmPopup extends Popup {
             if(newAlarm) {
                 alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(kifflarm.getAlarms(), alarm));
             } else{
-                Utils.sortAlarms(kifflarm.getAlarms());
+                kifflarm.sortAlarms();
 
                 //using this since removing and adding doesn't look smooth at all
                 alarmsAdapter.notifyDataSetChangedLocal();
