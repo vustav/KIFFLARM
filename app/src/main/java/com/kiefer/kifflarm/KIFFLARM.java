@@ -44,7 +44,6 @@ public class KIFFLARM extends AppCompatActivity {
     private RelativeLayout layout;
     private AlarmsAdapter alarmsAdapter;
     private ArrayList<Alarm> alarms;
-
     private final boolean SHOW_TRIGGER = false;
 
     @Override
@@ -91,6 +90,13 @@ public class KIFFLARM extends AppCompatActivity {
 
         if(getAlarmsAdapter() != null){
             getAlarmsAdapter().onResume();
+        }
+
+        if(ongoingAlarm != null){
+            Log.e("KIFFLARM ZZZ", "ongoing: "+ongoingAlarm.getId());
+        }
+        else{
+            Log.e("KIFFLARM ZZZ", "NO ongoing");
         }
     }
 
@@ -220,23 +226,13 @@ public class KIFFLARM extends AppCompatActivity {
     public void loadAlarms(){
         alarms = new ArrayList<>();
 
-        //try {
-
         //recreate saved alarms if there are any
         ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArray();
-        //ArrayList<ArrayList<Alarm.Param>> paramsArray = new ArrayList<>();
         if(!paramsArray.isEmpty()){
             for(ArrayList<Param> params : paramsArray){
                 alarms.add(new Alarm(this, params));
             }
         }
-            /*
-        }
-        catch (Exception e){
-            Log.e("KIFFLARM ZZZ", "loadAlarms, "+e);
-        }
-
-             */
 
         Utils.sortAlarms(alarms);
     }
@@ -270,6 +266,15 @@ public class KIFFLARM extends AppCompatActivity {
 
     public void removeAlarm(int index){
         alarms.remove(index).removeAlarm();
+    }
+
+    /** ONGOING ALARM **/
+    private static Alarm ongoingAlarm;
+    public static void setOngoingAlarm(Alarm alarm){
+        ongoingAlarm = alarm;
+    }
+    public static void resetOngoingAlarm(){
+        ongoingAlarm = null;
     }
 
     /** DESTRUCTION **/

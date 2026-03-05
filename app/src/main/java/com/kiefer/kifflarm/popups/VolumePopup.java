@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,8 +44,6 @@ public class VolumePopup extends Popup{
         Point size = new Point();
         display.getSize(size);
 
-        //popupWindow.setWidth(size.x-size.x/2);
-        //popupWindow.setHeight(size.y/3);
         popupWindow.setWidth((int) kifflarm.getResources().getDimension(R.dimen.volumePopupWidth));
         popupWindow.setHeight((int) kifflarm.getResources().getDimension(R.dimen.volumePopupHeight));
 
@@ -55,15 +54,6 @@ public class VolumePopup extends Popup{
 
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);
-
-        //set up the txt
-        /*
-        FrameLayout textContainer = popupView.findViewById(R.id.volumePopupTextLayout);
-        TextView mainTV = popupView.findViewById(R.id.volumePopupMainTV);
-        int color = Utils.getRandomColor();
-        textContainer.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
-        mainTV.setTextColor(Utils.getContrastColor(color));
-         */
 
         //get volumes
         AudioManager audioManager = (AudioManager) kifflarm.getSystemService(Context.AUDIO_SERVICE);
@@ -89,6 +79,7 @@ public class VolumePopup extends Popup{
 
                         int newVolume = (int)((float)maxVolume * seekBar.getProgress());
                         audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newVolume, 0);
+                        //Log.e("VolumePopup ZZZ", "getVol: " + audioManager.getStreamVolume(AudioManager.STREAM_ALARM));
                         break;
                     case MotionEvent.ACTION_UP:
                         seekBar.onTouchEvent(event);

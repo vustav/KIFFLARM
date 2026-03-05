@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -17,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.Utils;
@@ -38,6 +40,7 @@ public class AlarmCannonNotification {
         this.context = context;
 
         alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));
+        KIFFLARM.setOngoingAlarm(alarm); //this is for the main app to know if an alarm is running when it starts
 
         String channelId = alarm.getIdAsString() + "c";
         int notificationId = alarm.getId();
@@ -92,11 +95,38 @@ public class AlarmCannonNotification {
 
         //a timer that turns off the alarm after a set time
         int duration = 50000; //50 secs
-        new CountDownTimer(duration, duration) {
+        int rampTime = 10000;
+        int tick = 1000;
+        float multiplier = 0;
+
+        //create a nice ramping volume
+        //start by getting current volume
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        int startVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+        Log.e("Cannon ZZZ", "startVol: "+startVolume);
+
+        //lower the volume to start the ramp
+        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
+        //Log.e("Cannon ZZZ", "rampBottpm: "+audioManager.getStreamVolume(AudioManager.STREAM_ALARM));
+        new CountDownTimer(duration, tick) {
             public void onTick(long millisUntilFinished) {
-                //
+                //multiplier = 1 -
+                //float perc = 1f - ((float)millisUntilFinished/(float)duration);
+                //float perc = 1f - ((float)rampTime/((float)rampTime / (float)duration-(float)millisUntilFinished));
+                //raise it by a little every tick during rampTime
+                if(duration - millisUntilFinished < rampTime){
+                    int newVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM) + startVolume / (rampTime/tick);
+                    //int newVolume = (int)((float)audioManager.getStreamVolume(AudioManager.STREAM_ALARM) * perc);
+                    //Log.e("Cannon ZZZ", "perc: " + perc);
+                    Log.e("Cannon ZZZ", "newVol: " + newVolume);
+                    if(newVolume <= startVolume) {
+                        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newVolume, 0);
+                        Log.e("Cannon ZZZ", "getVol: " + audioManager.getStreamVolume(AudioManager.STREAM_ALARM));
+                    }
+                }
             }
             public void onFinish() {
+                audioManager.setStreamVolume(AudioManager.STREAM_ALARM, startVolume, 0); //should already be back to start but just in case
                 NotificationManagerCompat.from(context).cancel(notificationId);
                 AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
 

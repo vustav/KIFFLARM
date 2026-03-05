@@ -16,6 +16,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.Utils;
@@ -136,6 +137,8 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
+        KIFFLARM.resetOngoingAlarm();
+
         isActive = false;
 
         tvTxtAnimation.end();
