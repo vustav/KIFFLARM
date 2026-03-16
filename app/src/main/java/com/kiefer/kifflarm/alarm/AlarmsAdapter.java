@@ -62,12 +62,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             viewHolder.toggleBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Utils.performHapticFeedback(v);
                     if(!alarm.isSnooze()) {
                         alarm.activate(!alarm.isActive());
                         alarm.saveAndSchedule();
                         activateVH(viewHolder, alarm.isActive());
                     } else{
-                        Utils.performHapticFeedback(v);
                         removeAlarm(viewHolder.getAdapterPosition());
                     }
                 }

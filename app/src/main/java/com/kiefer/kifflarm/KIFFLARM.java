@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmActivity;
 import com.kiefer.kifflarm.alarm.AlarmCannonActivity;
+import com.kiefer.kifflarm.alarm.AlarmCannonNotification;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
@@ -212,7 +213,8 @@ public class KIFFLARM extends AppCompatActivity {
                     Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
                     intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(alarms.get(0).getId()));
 
-                    new AlarmCannonActivity(KIFFLARM.this, intent);
+                    //new AlarmCannonActivity(KIFFLARM.this, intent);
+                    new AlarmCannonNotification(KIFFLARM.this, intent);
                 }
             });
         }

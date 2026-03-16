@@ -89,6 +89,7 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        Log.e("AlarmActivity ZZZ", "onResume, kil: "+kill);
 
         /*
         This is the result of a weird behaviour where AlarmActivity starts before the notification is tapped
@@ -127,6 +128,7 @@ public class AlarmActivity extends AppCompatActivity {
         AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
         KIFFMediaPlayer.destroy();
         KIFFVibrator.destroy();
+        AlarmCannonNotification.stopTimer();
         finish();
 
         if(alarm.isSnooze()){
@@ -140,6 +142,7 @@ public class AlarmActivity extends AppCompatActivity {
         KIFFLARM.resetOngoingAlarm();
 
         isActive = false;
+        kill = false;
 
         tvTxtAnimation.end();
         tvTxtAnimation = null;
