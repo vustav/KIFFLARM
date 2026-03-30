@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".KIFFLARM">
 
+    <!-- BG TV -->
     <TextView
         android:id="@+id/mainBgTV"
         android:layout_width="wrap_content"
@@ -15,12 +16,94 @@
         android:textStyle="italic"
         android:fontFamily="@font/default_font"/>
 
+    <!-- PROFILES -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/alarmsVHheight"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="@dimen/marginMedium"
+        android:layout_marginRight="@dimen/marginMedium"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/marginMedium"
+        android:paddingEnd="@dimen/marginMedium"
+
+        android:layout_marginBottom="@dimen/marginMedium">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/shadowColor"
+            android:alpha=".5"
+
+            android:layout_marginStart="@dimen/shadowOffset"
+            android:layout_marginTop="@dimen/shadowOffset"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/profilesBg"
+            android:padding="5dp"
+            android:background="#C88181"
+
+            android:layout_marginEnd="@dimen/shadowOffset"
+            android:layout_marginBottom="@dimen/shadowOffset">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/profilesLabel">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/profilesTxtSize"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:text="PRO"
+                    android:background="#000000"
+                    android:textColor="#FFFFFF"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/profilesTxtSize"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:text="FIL"
+                    android:background="#000000"
+                    android:textColor="#FFFFFF"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/profilesTxtSize"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:text="ES"
+                    android:background="#000000"
+                    android:textColor="#FFFFFF"/>
+
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btnheight"
+                android:background="@drawable/custom_btn"
+                android:layout_marginStart="@dimen/marginSmall"
+
+                android:layout_toEndOf="@id/profilesLabel"/>
+        </RelativeLayout>
+    </FrameLayout>
+
+    <!-- ALARMS RECYCLERVIEW -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingTop="50dp"
+        android:paddingTop="115dp"
         android:paddingBottom="50dp"/>
 
     <RelativeLayout

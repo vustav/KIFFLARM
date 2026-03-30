@@ -16,6 +16,7 @@
     <dimen name="delBtnTextSize">15sp</dimen>
     <dimen name="alarmActivityTextSize">100sp</dimen>
     <dimen name="snoozeTvTextSize">30sp</dimen>
+    <dimen name="profilesTxtSize">13sp</dimen>
 
     <!-- MAIN LAYOUT -->
     <dimen name="addBtnSize">55dp</dimen>

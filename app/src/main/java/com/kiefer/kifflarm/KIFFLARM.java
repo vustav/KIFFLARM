@@ -171,6 +171,9 @@ public class KIFFLARM extends AppCompatActivity {
 
         layout = findViewById(R.id.main);
 
+        RelativeLayout profilesBg = layout.findViewById(R.id.profilesBg);
+        profilesBg.setBackground(Utils.getRandomGradientDrawable());
+
         TextView bgTVtv = layout.findViewById(R.id.mainBgTV);
         Utils.createNiceBg(layout, bgTVtv, 100);
 
