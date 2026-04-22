@@ -43,13 +43,12 @@ public class SoundPopup extends Popup {
         Display display = kifflarm.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+        popupWindow.setWidth(size.x-size.x/5);
 
         //bg
         RelativeLayout bg = popupView.findViewById(R.id.soundPopupBg);
         TextView bgTv = popupView.findViewById(R.id.soundPopupBgTV);
         Utils.createNiceBg(bg, bgTv, 70);
-
-        popupWindow.setWidth(size.x-size.x/5);
 
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);

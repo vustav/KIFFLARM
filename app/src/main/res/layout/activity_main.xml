@@ -16,6 +16,15 @@
         android:textStyle="italic"
         android:fontFamily="@font/default_font"/>
 
+    <!-- ALARMS RECYCLERVIEW -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/alarmsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="115dp"
+        android:paddingBottom="50dp"/>
+
     <!-- PROFILES -->
     <FrameLayout
         android:layout_width="match_parent"
@@ -83,28 +92,15 @@
                     android:text="ES"
                     android:background="#000000"
                     android:textColor="#FFFFFF"/>
-
-
             </LinearLayout>
 
-            <Button
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="@dimen/btnheight"
                 android:layout_height="@dimen/btnheight"
-                android:background="@drawable/custom_btn"
-                android:layout_marginStart="@dimen/marginSmall"
-
+                android:id="@+id/profilesMenuBtn"
                 android:layout_toEndOf="@id/profilesLabel"/>
         </RelativeLayout>
     </FrameLayout>
-
-    <!-- ALARMS RECYCLERVIEW -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/alarmsRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="115dp"
-        android:paddingBottom="50dp"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

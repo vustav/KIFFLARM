@@ -40,9 +40,9 @@ public class VolumePopup extends Popup{
         popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         //set a margin on the window since we want to max its size
-        Display display = this.kifflarm.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
+        //Display display = this.kifflarm.getWindowManager().getDefaultDisplay();
+        //Point size = new Point();
+        //display.getSize(size);
 
         popupWindow.setWidth((int) kifflarm.getResources().getDimension(R.dimen.volumePopupWidth));
         popupWindow.setHeight((int) kifflarm.getResources().getDimension(R.dimen.volumePopupHeight));

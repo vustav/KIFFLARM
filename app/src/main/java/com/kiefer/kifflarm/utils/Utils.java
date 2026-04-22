@@ -213,6 +213,14 @@ public class Utils {
         return timeString;
     }
 
+    public static String shortenString(String title, int thresh){
+        //int thresh = 10;
+        if(title.length() > thresh) {
+            return title.substring(0, thresh) + "...";
+        }
+        return title;
+    }
+
     /** NMBRS **/
     public static int getRandomOffset(int max){
         Random r  = new Random();

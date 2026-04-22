@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,22 +27,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmActivity;
-import com.kiefer.kifflarm.alarm.AlarmCannonActivity;
 import com.kiefer.kifflarm.alarm.AlarmCannonNotification;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.files.Param;
+import com.kiefer.kifflarm.profiles.ProfilesPopup;
 import com.kiefer.kifflarm.popups.VolumePopup;
+import com.kiefer.kifflarm.profiles.ProfilesManager;
+import com.kiefer.kifflarm.profiles.ProfilesPopup;
 import com.kiefer.kifflarm.sound.SoundManager;
 import com.kiefer.kifflarm.utils.Utils;
+import com.kiefer.kifflarm.views.CoolSpinnerButton;
 
 import java.util.ArrayList;
 
 public class KIFFLARM extends AppCompatActivity {
     private SoundManager soundManager;
     private FileManager fileManager;
+    private ProfilesManager profilesManager;
     private RelativeLayout layout;
     private AlarmsAdapter alarmsAdapter;
     private ArrayList<Alarm> alarms;
@@ -59,6 +64,7 @@ public class KIFFLARM extends AppCompatActivity {
             return insets;
         });
          */
+        profilesManager = new ProfilesManager();
 
         setupLayout();
 
@@ -174,9 +180,28 @@ public class KIFFLARM extends AppCompatActivity {
         RelativeLayout profilesBg = layout.findViewById(R.id.profilesBg);
         profilesBg.setBackground(Utils.getRandomGradientDrawable());
 
+        //NICE BG
         TextView bgTVtv = layout.findViewById(R.id.mainBgTV);
         Utils.createNiceBg(layout, bgTVtv, 100);
 
+        //PROFILES
+        CoolSpinnerButton profilesSpinnerBtn = new CoolSpinnerButton(this);
+        profilesSpinnerBtn.setSelection("");
+        //profilesSpinnerBtn.setSelection(tab.getFont().getName());
+        //profilesSpinnerBtn.setTypeface(tab.getFont().getTypeFace());
+        //profilesSpinnerBtn.setTextSize(TextUtils.getDefaultTextSize(kiffnotes, tab.getFont()));
+        profilesSpinnerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ProfilesPopup(KIFFLARM.this);
+                Log.e("KIFFLARM ZZZ", "KIFFLARMppppp");
+            }
+        });
+
+        FrameLayout fontContainer = layout.findViewById(R.id.profilesMenuBtn);
+        fontContainer.addView(profilesSpinnerBtn);
+
+        //ALARMS RECYCLER
         RecyclerView recyclerView = layout.findViewById(R.id.alarmsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -187,6 +212,7 @@ public class KIFFLARM extends AppCompatActivity {
         ItemTouchHelper helper = new ItemTouchHelper(touchHelper);
         helper.attachToRecyclerView(recyclerView);
 
+        //ADD
         RelativeLayout addBtn = layout.findViewById(R.id.addAlarmBg);
         addBtn.setBackground(Utils.getRandomGradientDrawable());
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +232,7 @@ public class KIFFLARM extends AppCompatActivity {
         ImageView addIcon = layout.findViewById(R.id.addAlarmIcon);
         addIcon.setImageDrawable(new DrawablePlus());
 
-
+        //TEST ALARM
         Button shortAlarmBtn = layout.findViewById(R.id.createShortAlarmBtn);
         if(SHOW_TRIGGER) {
             shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
