@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="29dp"
+        android:id="@+id/quickProfilesVHIV"/>
+
+    <TextView
+        android:id="@+id/quickProfilesVHTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/defaultTxtColor"
+        android:textSize="@dimen/profilesVHTxtSize"
+        android:textStyle="italic"
+        android:fontFamily="@font/default_font"
+        android:paddingStart="2dp"
+        android:paddingTop="1dp"
+
+        android:layout_below="@id/quickProfilesVHIV"/>
+
+</RelativeLayout>

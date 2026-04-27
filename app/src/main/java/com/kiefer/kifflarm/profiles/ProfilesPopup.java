@@ -1,25 +1,16 @@
 package com.kiefer.kifflarm.profiles;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
-import android.media.AudioManager;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,15 +19,10 @@ import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
-import com.kiefer.kifflarm.views.CSeekBar;
-
-import java.util.Locale;
 
 public class ProfilesPopup extends Popup {
-    public ProfilesPopup(KIFFLARM kifflarm){
+    public ProfilesPopup(KIFFLARM kifflarm, ProfilesManager profilesManager){
         super(kifflarm);
-        Log.e("ZZZ", " ProfilesPOPUO ppppp");
-
 
         //inflate the View
         popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_profiles, null);
@@ -52,10 +38,7 @@ public class ProfilesPopup extends Popup {
         Point size = new Point();
         display.getSize(size);
         popupWindow.setWidth(size.x-size.x/5);
-        //popupWindow.setHeight(height);
-
-        //popupWindow.setWidth((int) kifflarm.getResources().getDimension(R.dimen.volumePopupWidth));
-        //popupWindow.setHeight((int) kifflarm.getResources().getDimension(R.dimen.volumePopupHeight));
+        popupWindow.setHeight(size.y - size.y/5);
 
         //bg
         RelativeLayout bg = popupView.findViewById(R.id.profilesPopupBg);
@@ -65,9 +48,14 @@ public class ProfilesPopup extends Popup {
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);
 
-        //content
+        //set up the recyclerView
+        RecyclerView recyclerView = popupView.findViewById(R.id.profilesPopupRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
-        //ADD
+        ProfilesPopupAdapter profilesAdapter = new ProfilesPopupAdapter(kifflarm, recyclerView, profilesManager);
+        recyclerView.setAdapter(profilesAdapter);
+
+        //ADD PROFILE
         RelativeLayout addBtn = popupView.findViewById(R.id.addProfileBg);
         addBtn.setBackground(Utils.getRandomGradientDrawable());
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -89,5 +77,12 @@ public class ProfilesPopup extends Popup {
         addIcon.setImageDrawable(new DrawablePlus());
 
         showAtLocation(popupWindow);
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                //
+            }
+        });
     }
 }

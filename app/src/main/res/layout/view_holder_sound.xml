@@ -48,13 +48,11 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="@dimen/btnheight"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:id="@+id/soundVHPlayLayout"
-            android:layout_centerHorizontal="true"
-
-            android:layout_marginEnd="@dimen/marginMedium">
+            android:layout_centerHorizontal="true">
 
             <!-- without this FrameLayout the button always covers the ImageView -->
             <FrameLayout

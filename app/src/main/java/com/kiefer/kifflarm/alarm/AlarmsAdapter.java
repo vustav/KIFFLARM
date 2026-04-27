@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -65,7 +66,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                     Utils.performHapticFeedback(v);
                     if(!alarm.isSnooze()) {
                         alarm.activate(!alarm.isActive());
-                        alarm.saveAndSchedule();
+                        //alarm.saveAndSchedule();
                         activateVH(viewHolder, alarm.isActive());
                     } else{
                         removeAlarm(viewHolder.getAdapterPosition());
@@ -88,7 +89,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                 removeAlarm(viewHolder.getAdapterPosition());
             }
         });
-        viewHolder.delTV.setBackground(Utils.getRandomGradientDrawable());
+        //viewHolder.delTV.setBackground(Utils.getRandomGradientDrawable());
     }
 
     public void removeAlarm(int i){
@@ -103,17 +104,20 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOn, null));
             viewHolder.toggleIndicator.setAlpha(1);
             viewHolder.delBtn.setAlpha(1);
-            viewHolder.delTV.setAlpha(1);
+            //viewHolder.delTV.setAlpha(1);
+            viewHolder.delIV.setImageAlpha(255);
             viewHolder.mainBtn.setAlpha(1);
             viewHolder.mainTV.setAlpha(1);
             viewHolder.toggleBtn.setAlpha(1);
         }
         else{
             float alpha = .5f;
+            int alphaInt = (int)(255f * alpha);
             viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOff, null));
             viewHolder.toggleIndicator.setAlpha(alpha);
             viewHolder.delBtn.setAlpha(alpha);
-            viewHolder.delTV.setAlpha(alpha);
+            //viewHolder.delTV.setAlpha(alpha);
+            viewHolder.delIV.setImageAlpha(alphaInt);
             viewHolder.mainBtn.setAlpha(alpha);
             viewHolder.mainTV.setAlpha(alpha);
             viewHolder.toggleBtn.setAlpha(alpha);
@@ -150,12 +154,14 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     /** VIEWHOLDEr **/
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout bg;
-        private final TextView mainTV, delTV, snoozeIndicatorTV;
+        private final TextView mainTV, snoozeIndicatorTV;
+        //private final TextView delTV;
         private final Button mainBtn, delBtn;
         //private final SwitchMaterial toggle;
         private final Button toggleBtn;
         private final FrameLayout toggleIndicator;
         //private int toggleCheck = 0; //seems to be needed to not trigger the toggle in onBindViewHolder
+        private ImageView delIV;
 
         public ViewHolder(View view) {
             super(view);
@@ -166,10 +172,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             delBtn = view.findViewById(R.id.alarmVHRemoveButton);
             //toggle = view.findViewById(R.id.alarmsVHToggle);
             toggleBtn = view.findViewById(R.id.alarmVHToggleButton);
-            delTV = view.findViewById(R.id.alarmVHRemoveTextView);
+            //delTV = view.findViewById(R.id.alarmVHRemoveTextView);
             snoozeIndicatorTV = view.findViewById(R.id.alarmVHSnoozeIndicatorTV);
             toggleIndicator = view.findViewById(R.id.alarmsVHToggleButtonIndicator);
             //checkBox = view.findViewById(R.id.alarmsVHCheck);
+            delIV = view.findViewById(R.id.alarmVHRemoveIV);
         }
     }
 }

@@ -103,6 +103,14 @@
                         android:background="@drawable/custom_btn"/>
                 </FrameLayout>
 
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="6dp"
+                    android:id="@+id/alarmVHRemoveIV"
+                    android:src="@drawable/icon_trash0"/>
+                <!--
                 <TextView
                     android:id="@+id/alarmVHRemoveTextView"
                     android:layout_width="wrap_content"
@@ -113,6 +121,7 @@
                     android:textStyle="italic"
                     android:textSize="@dimen/delBtnTextSize"
                     android:text=" - "/>
+                    -->
             </RelativeLayout>
 
             <!-- TOGGLE -->

@@ -44,6 +44,7 @@ public class SoundPopup extends Popup {
         Point size = new Point();
         display.getSize(size);
         popupWindow.setWidth(size.x-size.x/5);
+        popupWindow.setHeight(size.y - size.y/5);
 
         //bg
         RelativeLayout bg = popupView.findViewById(R.id.soundPopupBg);

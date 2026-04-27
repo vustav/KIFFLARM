@@ -13,6 +13,7 @@ import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.alarm.Alarm;
 
 import java.util.ArrayList;
@@ -233,5 +234,32 @@ public class Utils {
     public static int getRandomPositiveOffset(int min, int max){
         Random r  = new Random();
         return r.nextInt(max-min+1)+min;
+    }
+
+    /** ICON **/
+    public static int getRandomNoteIconId(){
+        Random r = new Random();
+        Integer[] list = getIcons();
+        return list[r.nextInt(list.length)];
+    }
+
+    //only 12 in the popup
+    public static Integer[] getIcons(){
+        return new Integer[]{
+                R.drawable.icon_note0,
+                R.drawable.icon_note1,
+                R.drawable.icon_note5,
+                R.drawable.icon_note7,
+                //R.drawable.icon_note8,
+                R.drawable.icon_note10,
+                R.drawable.icon_note11,
+                R.drawable.icon_note12,
+                R.drawable.icon_note13,
+                R.drawable.icon_note14,
+                R.drawable.icon_note16,
+                R.drawable.icon_note17,
+                //R.drawable.icon_note18,
+                R.drawable.icon_note19
+        };
     }
 }

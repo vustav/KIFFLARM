@@ -127,22 +127,27 @@ public class SetAlarmPopup extends Popup {
         //okBtn
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
-            alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
-            alarm.setSnoozeTime(Integer.parseInt(String.valueOf(snoozeTV.getText())));
+            if(!alarmAlreadyExists()) {
+                alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
+                alarm.setSnoozeTime(Integer.parseInt(String.valueOf(snoozeTV.getText())));
 
-            alarm.activate(true);
-            alarm.saveAndSchedule();
+                alarm.activate(true);
+                //alarm.saveAndSchedule();
 
-            if(newAlarm) {
-                alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(kifflarm.getAlarms(), alarm));
-            } else{
-                kifflarm.sortAlarms();
+                if (newAlarm) {
+                    alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(kifflarm.getAlarms(), alarm));
+                } else {
+                    kifflarm.sortAlarms();
 
-                //using this since removing and adding doesn't look smooth at all
-                alarmsAdapter.notifyDataSetChangedLocal();
+                    //using this since removing and adding doesn't look smooth at all
+                    alarmsAdapter.notifyDataSetChangedLocal();
+                }
+
+                dismiss();
             }
-
-            dismiss();
+            else{
+                //prompt
+            }
         });
 
         //cancelBtn
@@ -152,6 +157,10 @@ public class SetAlarmPopup extends Popup {
         });
 
         showAtLocation(popupWindow);
+    }
+
+    private boolean alarmAlreadyExists(){
+        return false;
     }
 
     private void selectClockValue(int unit){

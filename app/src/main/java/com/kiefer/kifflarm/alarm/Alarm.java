@@ -74,13 +74,23 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public void activate(boolean active){
-        this.active = active;
+        //snoozes will be canceled here. Can't decide if that's good or bad.
+        //if(!alarmAlreadyExists()) {
+            this.active = active;
+            saveAndSchedule();
+        //}
+        //else{
+            //prompt
+        //}
     }
 
-    public void saveAndSchedule(){
-        //Log.e("Alarm ZZZ", "saveAndSchedule");
+    private void saveAndSchedule(){
         save();
         updateSchedule();
+    }
+
+    private boolean alarmAlreadyExists(){
+        return false;
     }
 
     public void updateSchedule(){

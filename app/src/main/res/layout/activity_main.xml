@@ -57,6 +57,7 @@
             android:layout_marginEnd="@dimen/shadowOffset"
             android:layout_marginBottom="@dimen/shadowOffset">
 
+            <!-- LABEL -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,7 +67,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/profilesTxtSize"
+                    android:textSize="@dimen/profilesLabelTxtSize"
                     android:textStyle="italic"
                     android:fontFamily="@font/default_font"
                     android:text="PRO"
@@ -76,7 +77,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/profilesTxtSize"
+                    android:textSize="@dimen/profilesLabelTxtSize"
                     android:textStyle="italic"
                     android:fontFamily="@font/default_font"
                     android:text="FIL"
@@ -86,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/profilesTxtSize"
+                    android:textSize="@dimen/profilesLabelTxtSize"
                     android:textStyle="italic"
                     android:fontFamily="@font/default_font"
                     android:text="ES"
@@ -94,14 +95,67 @@
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
 
+            <!-- MENU -->
+            <!--
             <FrameLayout
                 android:layout_width="@dimen/btnheight"
                 android:layout_height="@dimen/btnheight"
                 android:id="@+id/profilesMenuBtn"
-                android:layout_toEndOf="@id/profilesLabel"/>
+                android:layout_toEndOf="@id/profilesLabel"
+                android:layout_marginStart="@dimen/marginSmall"/>
+                -->
+
+            <!-- MENU BTN -->
+            <!-- DELETE -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/profilesVHDeleteLayout"
+                android:layout_marginStart="@dimen/marginSmall"
+                android:layout_toEndOf="@id/profilesLabel">
+
+                <!-- without this FrameLayout the button always covers the ImageView -->
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+                    <Button
+                        android:layout_width="@dimen/btnheight"
+                        android:layout_height="@dimen/btnheight"
+                        android:id="@+id/profilesMenuBtn"
+                        android:background="@drawable/custom_btn"/>
+                </FrameLayout>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="9dp"
+                    android:src="@drawable/icon_note7"/>
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:id="@+id/profilesDivider"
+                android:layout_marginStart="@dimen/marginSmall"
+
+                android:layout_toEndOf="@id/profilesVHDeleteLayout"/>
+
+            <!-- RECYCLER -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/quickProfilesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/marginSmall"
+
+                android:layout_toEndOf="@id/profilesDivider"/>
         </RelativeLayout>
     </FrameLayout>
 
+    <!-- ADD -->
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -143,6 +197,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <!-- ADD SHORT -->
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

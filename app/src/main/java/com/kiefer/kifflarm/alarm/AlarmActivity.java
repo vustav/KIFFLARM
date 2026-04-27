@@ -74,7 +74,7 @@ public class AlarmActivity extends AppCompatActivity {
                     newAlarm.setIsSnooze(true);
                     newAlarm.setTime(alarm.getHour(), alarm.getMinute() + alarm.getSnoozeTime());
                     newAlarm.activate(true);
-                    newAlarm.saveAndSchedule();
+                    //newAlarm.saveAndSchedule();
                     killAlarm();
 
                     NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
