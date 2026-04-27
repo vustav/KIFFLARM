@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
+import com.kiefer.kifflarm.alarm.AlarmManager;
 import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
@@ -30,7 +31,7 @@ public class SetAlarmPopup extends Popup {
     private int color;
     public static int CLOCK_VALUE, HOUR = 0, MINUTE = 1, SNOOZE = 2;
 
-    public SetAlarmPopup(KIFFLARM kifflarm, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
+    public SetAlarmPopup(KIFFLARM kifflarm, AlarmManager alarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
 
         this.alarm = alarm;
@@ -135,9 +136,9 @@ public class SetAlarmPopup extends Popup {
                 //alarm.saveAndSchedule();
 
                 if (newAlarm) {
-                    alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(kifflarm.getAlarms(), alarm));
+                    alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(alarmManager.getAlarms(), alarm));
                 } else {
-                    kifflarm.sortAlarms();
+                    alarmManager.sortAlarms();
 
                     //using this since removing and adding doesn't look smooth at all
                     alarmsAdapter.notifyDataSetChangedLocal();

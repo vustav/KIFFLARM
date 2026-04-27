@@ -1,11 +1,15 @@
 package com.kiefer.kifflarm.profiles;
 
+import com.kiefer.kifflarm.KIFFLARM;
+
 import java.util.ArrayList;
 
 public class ProfilesManager {
+    private KIFFLARM kifflarm;
     private ArrayList<Profile> profiles;
 
-    public ProfilesManager(){
+    public ProfilesManager(KIFFLARM kifflarm){
+        this.kifflarm = kifflarm;
         setupProfiles();
     }
 
@@ -13,7 +17,7 @@ public class ProfilesManager {
         profiles = new ArrayList();
 
         for(int i = 0; i<5; i++){
-            profiles.add(new Profile());
+            profiles.add(new Profile(kifflarm));
         }
     }
 

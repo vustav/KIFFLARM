@@ -16,16 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
+import com.kiefer.kifflarm.alarm.AlarmManager;
+import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
 
-public class ProfilesPopup extends Popup {
-    public ProfilesPopup(KIFFLARM kifflarm, ProfilesManager profilesManager){
+public class NewProfilePopup extends Popup {
+    public NewProfilePopup(KIFFLARM kifflarm, ProfilesManager profilesManager){
         super(kifflarm);
 
+        Profile profile = new Profile(kifflarm);
+
         //inflate the View
-        popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_profiles, null);
+        popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_new_profile, null);
 
         //create the popupWindow
         int width = RelativeLayout.LayoutParams.WRAP_CONTENT;
@@ -41,32 +45,33 @@ public class ProfilesPopup extends Popup {
         popupWindow.setHeight(size.y - size.y/5);
 
         //bg
-        RelativeLayout bg = popupView.findViewById(R.id.profilesPopupBg);
-        TextView bgTv = popupView.findViewById(R.id.profilesPopupBgTV);
+        RelativeLayout bg = popupView.findViewById(R.id.newProfilePopupBg);
+        TextView bgTv = popupView.findViewById(R.id.newProfilePopupBgTV);
         Utils.createNiceBg(bg, bgTv, 70);
 
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);
 
         //set up the recyclerView
-        RecyclerView recyclerView = popupView.findViewById(R.id.profilesPopupRecyclerView);
+
+        RecyclerView recyclerView = popupView.findViewById(R.id.newProfilePopupRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
-        ProfilesPopupAdapter profilesAdapter = new ProfilesPopupAdapter(kifflarm, recyclerView, profilesManager);
-        recyclerView.setAdapter(profilesAdapter);
+        NewProfileAlarmsAdapter alarmsAdapter = new NewProfileAlarmsAdapter(kifflarm, profile.getAlarmManager());
+        recyclerView.setAdapter(alarmsAdapter);
 
-        //ADD PROFILE
-        RelativeLayout addBtn = popupView.findViewById(R.id.addProfileBg);
+        //ADD ALARM
+        RelativeLayout addBtn = popupView.findViewById(R.id.addAlarmBg);
         addBtn.setBackground(Utils.getRandomGradientDrawable());
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.performHapticFeedback(addBtn);
-                new NewProfilePopup(kifflarm, profilesManager);
+
             }
         });
 
-        ImageView addIcon = popupView.findViewById(R.id.addProfileIcon);
+        ImageView addIcon = popupView.findViewById(R.id.addAlarmIcon);
         addIcon.setImageDrawable(new DrawablePlus());
 
         showAtLocation(popupWindow);

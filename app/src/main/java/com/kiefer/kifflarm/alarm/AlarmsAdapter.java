@@ -20,9 +20,11 @@ import com.kiefer.kifflarm.popups.SetAlarmPopup;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
     private KIFFLARM kifflarm;
+    private AlarmManager alarmManager;
 
-    public AlarmsAdapter(KIFFLARM kifflarm) {
+    public AlarmsAdapter(KIFFLARM kifflarm, AlarmManager alarmManager) {
         this.kifflarm = kifflarm;
+        this.alarmManager = alarmManager;
     }
 
     public void onResume(){
@@ -46,7 +48,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
-        Alarm alarm = kifflarm.getAlarm(viewHolder.getAdapterPosition());
+        //Alarm alarm = kifflarm.getAlarm(viewHolder.getAdapterPosition());
+        Alarm alarm = alarmManager.getAlarm(viewHolder.getAdapterPosition());
 
         if(!alarm.isSnooze()){
             viewHolder.snoozeIndicatorTV.setVisibility(View.INVISIBLE);
@@ -93,7 +96,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     public void removeAlarm(int i){
-        kifflarm.removeAlarm(i);
+        alarmManager.removeAlarm(i);
         notifyItemRemoved(i);
     }
 
@@ -127,16 +130,16 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return kifflarm.getAlarmsSize();
+        return alarmManager.getAlarmsSize();
     }
 
     /** POPUPS **/
     public void openAlarmDialog(AlarmsAdapter alarmsAdapter, int index, boolean newAlarm){
-        openAlarmDialog(alarmsAdapter, kifflarm.getAlarm(index), newAlarm);
+        openAlarmDialog(alarmsAdapter, alarmManager.getAlarm(index), newAlarm);
     }
 
     public void openAlarmDialog(AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
-        new SetAlarmPopup(kifflarm, alarmsAdapter, alarm, newAlarm);
+        new SetAlarmPopup(kifflarm, alarmManager, alarmsAdapter, alarm, newAlarm);
     }
 
     public void openNewAlarmDialog(AlarmsAdapter alarmsAdapter){

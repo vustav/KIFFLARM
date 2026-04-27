@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmActivity;
 import com.kiefer.kifflarm.alarm.AlarmCannonNotification;
+import com.kiefer.kifflarm.alarm.AlarmManager;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
@@ -48,9 +49,10 @@ public class KIFFLARM extends AppCompatActivity {
     private FileManager fileManager;
     private ProfilesManager profilesManager;
     private RelativeLayout layout;
+    private AlarmManager alarmManager;
     private AlarmsAdapter alarmsAdapter;
     private QuickProfilesAdapter quickProfilesAdapter;
-    private ArrayList<Alarm> alarms;
+    //private ArrayList<Alarm> alarms;
     private final boolean SHOW_TRIGGER = false;
 
     @Override
@@ -65,7 +67,8 @@ public class KIFFLARM extends AppCompatActivity {
             return insets;
         });
          */
-        profilesManager = new ProfilesManager();
+        profilesManager = new ProfilesManager(this);
+        alarmManager = new AlarmManager(this);
 
         setupLayout();
 
@@ -94,7 +97,8 @@ public class KIFFLARM extends AppCompatActivity {
         own it can only save the change, not update it directly, so the get it we need to reload alarms
         and update the adapter
          */
-        loadAlarms(); //load here instead of onCreate since turning an alarm off in AlarmActivity does not update alarms here, they are saved there and needs to be reloaded here
+        //loadAlarms(); //load here instead of onCreate since turning an alarm off in AlarmActivity does not update alarms here, they are saved there and needs to be reloaded here
+        alarmManager.loadAlarms(fileManager.getParamsArray());
 
         if(getAlarmsAdapter() != null){
             getAlarmsAdapter().onResume();
@@ -225,7 +229,7 @@ public class KIFFLARM extends AppCompatActivity {
         RecyclerView alarmsRecyclerView = layout.findViewById(R.id.alarmsRecyclerView);
         alarmsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        alarmsAdapter = new AlarmsAdapter(this);
+        alarmsAdapter = new AlarmsAdapter(this, alarmManager);
         alarmsRecyclerView.setAdapter(alarmsAdapter);
 
         AlarmsTouchHelper touchHelper = new AlarmsTouchHelper(alarmsAdapter);
@@ -260,7 +264,7 @@ public class KIFFLARM extends AppCompatActivity {
                 public void onClick(View v) {
                     //TRIGGER ALARM
                     Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
-                    intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(alarms.get(0).getId()));
+                    intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(alarmManager.getAlarms().get(0).getId()));
 
                     //new AlarmCannonActivity(KIFFLARM.this, intent);
                     new AlarmCannonNotification(KIFFLARM.this, intent);
@@ -275,6 +279,7 @@ public class KIFFLARM extends AppCompatActivity {
 
     /** ALARMS **/
     public void loadAlarms(){
+        /*
         alarms = new ArrayList<>();
 
         //recreate saved alarms if there are any
@@ -286,9 +291,15 @@ public class KIFFLARM extends AppCompatActivity {
         }
 
         Utils.sortAlarms(alarms);
+
+         */
+
     }
 
     /** GET **/
+    public FileManager getFileManager() {
+        return fileManager;
+    }
     public QuickProfilesAdapter getQuickProfilesAdapter() {
         return quickProfilesAdapter;
     }
@@ -301,25 +312,6 @@ public class KIFFLARM extends AppCompatActivity {
 
     public RelativeLayout getLayout(){
         return layout;
-    }
-
-    public ArrayList<Alarm> getAlarms(){
-        return alarms;
-    }
-    public void sortAlarms(){
-        Utils.sortAlarms(getAlarms());
-    }
-
-    public int getAlarmsSize(){
-        return alarms.size();
-    }
-
-    public Alarm getAlarm(int index){
-        return alarms.get(index);
-    }
-
-    public void removeAlarm(int index){
-        alarms.remove(index).removeAlarm();
     }
 
     /** ONGOING ALARM **/
