@@ -1,8 +1,7 @@
-package com.kiefer.kifflarm.popups;
+package com.kiefer.kifflarm.alarm;
 
 import android.graphics.Color;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -11,13 +10,11 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.alarm.AlarmManager;
+import com.kiefer.kifflarm.popups.Popup;
+import com.kiefer.kifflarm.sound.SoundPopup;
 import com.kiefer.kifflarm.utils.Utils;
-import com.kiefer.kifflarm.alarm.Alarm;
-import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.views.Clock;
 import com.kiefer.kifflarm.views.ClockView;
 
@@ -133,10 +130,9 @@ public class SetAlarmPopup extends Popup {
                 alarm.setSnoozeTime(Integer.parseInt(String.valueOf(snoozeTV.getText())));
 
                 alarm.activate(true);
-                //alarm.saveAndSchedule();
 
                 if (newAlarm) {
-                    alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(alarmManager.getAlarms(), alarm));
+                    alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(alarmManager.getAlarms(), alarm), alarm);
                 } else {
                     alarmManager.sortAlarms();
 

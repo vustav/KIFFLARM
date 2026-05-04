@@ -1,6 +1,5 @@
 package com.kiefer.kifflarm.alarm;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.Utils;
-import com.kiefer.kifflarm.popups.SetAlarmPopup;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
-    private KIFFLARM kifflarm;
-    private AlarmManager alarmManager;
+    protected KIFFLARM kifflarm;
+    protected AlarmManager alarmManager;
 
     public AlarmsAdapter(KIFFLARM kifflarm, AlarmManager alarmManager) {
         this.kifflarm = kifflarm;
@@ -79,7 +77,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         //no need to edit a snooze
         if(!alarm.isSnooze()) {
-            viewHolder.mainBtn.setOnClickListener(v -> openAlarmDialog(this, viewHolder.getAdapterPosition(), false));
+            viewHolder.mainBtn.setOnClickListener(v -> openAlarmDialog(this, viewHolder.getAdapterPosition()));
         }
         else{
             viewHolder.mainBtn.setOnClickListener(null);
@@ -134,23 +132,21 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     /** POPUPS **/
-    public void openAlarmDialog(AlarmsAdapter alarmsAdapter, int index, boolean newAlarm){
-        openAlarmDialog(alarmsAdapter, alarmManager.getAlarm(index), newAlarm);
-    }
-
-    public void openAlarmDialog(AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
-        new SetAlarmPopup(kifflarm, alarmManager, alarmsAdapter, alarm, newAlarm);
+    public void openAlarmDialog(AlarmsAdapter alarmsAdapter, int index){
+        new SetAlarmPopup(kifflarm, alarmManager, alarmsAdapter, alarmManager.getAlarm(index), false);
     }
 
     public void openNewAlarmDialog(AlarmsAdapter alarmsAdapter){
-        openAlarmDialog(alarmsAdapter, new Alarm(kifflarm, kifflarm.getSoundManager().getRandomSound()), true);
+        new SetAlarmPopup(kifflarm, alarmManager, alarmsAdapter, new Alarm(kifflarm, kifflarm.getSoundManager().getRandomSound(), alarmManager.getFolder()), true);
     }
 
+    /** ADAPTER **/
     public void notifyDataSetChangedLocal(){
         super.notifyDataSetChanged();
     }
 
-    public void notifyItemInsertedLocal(int index){
+    //Param alarm is used by subclass AlarmsAdapterProfiles, fix this.
+    public void notifyItemInsertedLocal(int index, Alarm alarm){
         super.notifyItemInserted(index);
     }
 

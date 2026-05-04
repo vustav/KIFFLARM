@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/newProfilePopupBg">
+
+    <TextView
+        android:id="@+id/newProfilePopupBgTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/timeTxtSize"
+        android:textStyle="italic"
+        android:fontFamily="@font/default_font"/>
+
+    <!-- RV -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newProfilePopupRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="120dp"
+        android:paddingBottom="50dp"/>
+
+    <!-- PARAMS -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginMedium"
+        android:layout_marginLeft="@dimen/marginMedium"
+        android:layout_marginRight="@dimen/marginMedium"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/marginMedium"
+        android:paddingEnd="@dimen/marginMedium"
+
+        android:layout_marginBottom="@dimen/marginMedium">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/shadowColor"
+            android:alpha=".5"
+
+            android:layout_marginStart="@dimen/shadowOffset"
+            android:layout_marginTop="@dimen/shadowOffset"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/profilesBg"
+            android:padding="5dp"
+
+            android:layout_marginEnd="@dimen/shadowOffset"
+            android:layout_marginBottom="@dimen/shadowOffset">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <!-- SHORT LABEL -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileNameTV"
+                    android:textSize="@dimen/defaultBtnTextSize"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:text="NAME"
+                    android:layout_marginTop="13dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/btnHeight"
+                    android:id="@+id/profileNameET"
+                    android:background="#FFFFFF"
+                    android:textSize="@dimen/defaultBtnTextSize"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:paddingStart="@dimen/marginSmall"
+                    android:maxLines="1"
+                    android:inputType="textMultiLine"
+
+                    android:layout_marginStart="@dimen/marginSmall"
+
+                    android:layout_toEndOf="@id/profileNameTV"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginSmall">
+
+                    <!-- SHORT LABEL -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileShortLabelTV"
+                        android:textSize="@dimen/defaultBtnTextSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"
+                        android:text="SHRT LBL"
+                        android:layout_marginTop="13dp"/>
+
+                    <EditText
+                        android:layout_width="@dimen/btnHeight"
+                        android:layout_height="@dimen/btnHeight"
+                        android:id="@+id/profileShortLabelET"
+                        android:background="#FFFFFF"
+                        android:textSize="@dimen/defaultBtnTextSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"
+                        android:maxLength="2"
+                        android:paddingStart="@dimen/marginSmall"
+
+                        android:layout_marginStart="@dimen/marginSmall"
+                        android:layout_toEndOf="@id/profileShortLabelTV"/>
+
+                    <!-- QUICK BTN -->
+                    <RelativeLayout
+                        android:layout_width="@dimen/btnHeight"
+                        android:layout_height="@dimen/btnHeight"
+                        android:id="@+id/profileQuickLayout"
+
+                        android:layout_marginStart="@dimen/marginSmall"
+                        android:layout_toStartOf="@id/profileIconLayout">
+
+                        <!-- without this FrameLayout the button always covers the ImageView -->
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true">
+
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/profileQuickBtn"
+                                android:background="@drawable/custom_btn"/>
+                        </FrameLayout>
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:id="@+id/profileQuickBtnIcon"
+                            android:src="@drawable/icon_desk0"
+
+                            android:layout_centerInParent="true"/>
+
+                        <FrameLayout
+                            android:layout_width="@dimen/profilesVHAddIndicatorSize"
+                            android:layout_height="@dimen/profilesVHAddIndicatorSize"
+                            android:id="@+id/profileQuickIndicator"
+
+                            android:layout_marginStart="@dimen/profilesVHAddIndicatorSize"
+                            android:layout_marginTop="@dimen/profilesVHAddIndicatorSize"/>
+                    </RelativeLayout>
+
+                    <!-- ICON BTN -->
+                    <RelativeLayout
+                        android:layout_width="@dimen/btnHeight"
+                        android:layout_height="@dimen/btnHeight"
+                        android:id="@+id/profileIconLayout"
+                        android:layout_marginEnd="@dimen/marginSmall"
+                        android:layout_marginStart="@dimen/marginSmall"
+
+                        android:layout_alignParentEnd="true">
+
+                        <!-- without this FrameLayout the button always covers the ImageView -->
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true">
+
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/profileIconBtn"
+                                android:background="@drawable/custom_btn"/>
+                        </FrameLayout>
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:id="@+id/profileIconBtnIcon"
+                            android:layout_marginStart="8dp"
+
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+    <!-- add btn -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="@dimen/marginLarge"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:paddingBottom="100dp">
+
+        <RelativeLayout
+            android:layout_width="@dimen/addBtnSize"
+            android:layout_height="@dimen/addBtnSize">
+
+            <!-- SHADOW -->
+            <FrameLayout
+                android:layout_width="@dimen/addBgSize"
+                android:layout_height="@dimen/addBgSize"
+                android:background="@color/shadowColor"
+                android:alpha=".5"
+
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"/>
+
+            <RelativeLayout
+                android:layout_width="@dimen/addBgSize"
+                android:layout_height="@dimen/addBgSize"
+                android:id="@+id/addAlarmBg"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
+
+                <ImageView
+                    android:id="@+id/addAlarmIcon"
+                    android:layout_width="@dimen/addBtnIconSize"
+                    android:layout_height="@dimen/addBtnIconSize"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+    <!-- CANCEL/OK -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/marginLarge">
+
+        <!-- CANCEL -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btnHeight"
+                android:text="CANCEL"
+                android:id="@+id/newProfileCancelBtn"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:textColor="@color/defaultBtnTxtColor"
+                android:background="@drawable/custom_btn"
+                android:textSize="@dimen/defaultBtnTextSize"
+
+                android:layout_marginEnd="@dimen/marginSmall"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <!-- OK -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btnHeight"
+                android:text="OK"
+                android:id="@+id/newProfileOKBtn"
+                android:textStyle="italic"
+                android:fontFamily="@font/default_font"
+                android:textColor="@color/defaultBtnTxtColor"
+                android:background="@drawable/custom_btn"
+                android:textSize="@dimen/defaultBtnTextSize"
+
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -6,4 +6,8 @@
 
     <!-- VOLUME POPUP -->
     <string name="volume_warning">"YOUR ALARM VOLUME IS VERY LOW.</string>
+
+    <!-- FILES -->
+    <string name="custom_alarms_folder">"alarms</string>
+    <string name="profiles_folder">"profiles</string>
 </resources>

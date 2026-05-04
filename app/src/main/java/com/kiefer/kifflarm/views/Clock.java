@@ -1,13 +1,12 @@
 package com.kiefer.kifflarm.views;
 
-import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.popups.SetAlarmPopup;
+import com.kiefer.kifflarm.alarm.SetAlarmPopup;
 
 public class Clock extends RelativeLayout {
     private ClockView clockView;

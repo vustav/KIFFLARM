@@ -1,4 +1,4 @@
-package com.kiefer.kifflarm.popups;
+package com.kiefer.kifflarm.sound;
 
 import android.graphics.Point;
 import android.media.AudioAttributes;
@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
+import com.kiefer.kifflarm.alarm.SetAlarmPopup;
+import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
-import com.kiefer.kifflarm.sound.Sound;
-import com.kiefer.kifflarm.sound.SoundManager;
 
 public class SoundPopup extends Popup {
     private SoundManager soundManager;

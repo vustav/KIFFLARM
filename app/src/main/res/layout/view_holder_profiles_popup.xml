@@ -116,36 +116,5 @@
                 android:layout_marginStart="@dimen/profilesVHAddIndicatorSize"
                 android:layout_marginTop="13dp"/>
         </RelativeLayout>
-
-        <!-- EDIT -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/profilesVHEditLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_toStartOf="@id/profilesVHAddLayout"
-            android:layout_marginEnd="@dimen/marginSmall">
-
-            <!-- without this FrameLayout the button always covers the ImageView -->
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true">
-
-                <Button
-                    android:layout_width="@dimen/soundVHBtnHeight"
-                    android:layout_height="@dimen/soundVHBtnHeight"
-                    android:id="@+id/profilesVHEditBtn"
-                    android:background="@drawable/custom_btn"/>
-            </FrameLayout>
-
-            <ImageView
-                android:layout_width="@dimen/soundVHBtnIcon"
-                android:layout_height="@dimen/soundVHBtnIcon"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="9dp"
-                android:id="@+id/profilesVHDeEditBtnIcon"
-                android:src="@drawable/icon_edit0"/>
-        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

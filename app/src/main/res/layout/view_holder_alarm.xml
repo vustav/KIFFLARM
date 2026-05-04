@@ -48,7 +48,7 @@
 
                     <Button
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/btnheight"
+                        android:layout_height="@dimen/btnHeight"
                         android:id="@+id/alarmVHMainButton"
                         android:background="@drawable/custom_btn"/>
                 </FrameLayout>

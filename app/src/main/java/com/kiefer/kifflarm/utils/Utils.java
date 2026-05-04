@@ -40,7 +40,7 @@ public class Utils {
             return position;
         }
         catch (Exception e){
-            //sometimes crashes. I Think it is when alarms with the same time as the first are added.
+            //sometimes crashes. mYBE when alarms with the same time as the first are added.
             Log.e("Utils ZZZ", "insertAlarm");
             alarms.add(newAlarm);
             sortAlarms(alarms);

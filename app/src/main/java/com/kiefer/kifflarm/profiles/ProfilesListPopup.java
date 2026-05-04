@@ -1,9 +1,6 @@
 package com.kiefer.kifflarm.profiles;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,20 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.alarm.AlarmManager;
-import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
 
-public class NewProfilePopup extends Popup {
-    public NewProfilePopup(KIFFLARM kifflarm, ProfilesManager profilesManager){
+public class ProfilesListPopup extends Popup {
+    private ProfilesPopupAdapter profilesPopupAdapter;
+    private ProfilesManager profilesManager;
+    public ProfilesListPopup(KIFFLARM kifflarm, ProfilesManager profilesManager){
         super(kifflarm);
 
-        Profile profile = new Profile(kifflarm);
+        this.profilesManager = profilesManager;
 
         //inflate the View
-        popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_new_profile, null);
+        popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_profiles, null);
 
         //create the popupWindow
         int width = RelativeLayout.LayoutParams.WRAP_CONTENT;
@@ -45,33 +42,32 @@ public class NewProfilePopup extends Popup {
         popupWindow.setHeight(size.y - size.y/5);
 
         //bg
-        RelativeLayout bg = popupView.findViewById(R.id.newProfilePopupBg);
-        TextView bgTv = popupView.findViewById(R.id.newProfilePopupBgTV);
+        RelativeLayout bg = popupView.findViewById(R.id.profilesPopupBg);
+        TextView bgTv = popupView.findViewById(R.id.profilesPopupBgTV);
         Utils.createNiceBg(bg, bgTv, 70);
 
         //add a nice animation
         popupWindow.setAnimationStyle(R.style.popup_animation);
 
         //set up the recyclerView
-
-        RecyclerView recyclerView = popupView.findViewById(R.id.newProfilePopupRecyclerView);
+        RecyclerView recyclerView = popupView.findViewById(R.id.profilesPopupRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
-        NewProfileAlarmsAdapter alarmsAdapter = new NewProfileAlarmsAdapter(kifflarm, profile.getAlarmManager());
-        recyclerView.setAdapter(alarmsAdapter);
+        profilesPopupAdapter = new ProfilesPopupAdapter(kifflarm, this, recyclerView, profilesManager);
+        recyclerView.setAdapter(profilesPopupAdapter);
 
-        //ADD ALARM
-        RelativeLayout addBtn = popupView.findViewById(R.id.addAlarmBg);
+        //ADD PROFILE
+        RelativeLayout addBtn = popupView.findViewById(R.id.addProfileBg);
         addBtn.setBackground(Utils.getRandomGradientDrawable());
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.performHapticFeedback(addBtn);
-
+                new EditProfilePopup(kifflarm, profilesManager, ProfilesListPopup.this, new Profile(kifflarm), true);
             }
         });
 
-        ImageView addIcon = popupView.findViewById(R.id.addAlarmIcon);
+        ImageView addIcon = popupView.findViewById(R.id.addProfileIcon);
         addIcon.setImageDrawable(new DrawablePlus());
 
         showAtLocation(popupWindow);
@@ -82,5 +78,17 @@ public class NewProfilePopup extends Popup {
                 //
             }
         });
+    }
+
+    /** GET **/
+
+    /** SET **/
+
+    /** ADAPTER **/
+    public void insertLastInAdapter(){
+        profilesPopupAdapter.notifyItemInserted(profilesPopupAdapter.getItemCount());
+    }
+    public void notifyAdapter(){
+        profilesPopupAdapter.notifyDataSetChanged();
     }
 }

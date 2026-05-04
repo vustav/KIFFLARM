@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.files.Param;
@@ -17,7 +18,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
             FileManager fileManager = new FileManager(context);
 
-            ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArray();
+            ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArrayFromFolder(context.getResources().getString(R.string.custom_alarms_folder));
 
             if(!paramsArray.isEmpty()){
                 for(ArrayList<Param> params : paramsArray){

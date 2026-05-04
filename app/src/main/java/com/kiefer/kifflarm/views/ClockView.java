@@ -15,7 +15,7 @@ import androidx.core.content.res.ResourcesCompat;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.MathUtils;
 import com.kiefer.kifflarm.utils.Utils;
-import com.kiefer.kifflarm.popups.SetAlarmPopup;
+import com.kiefer.kifflarm.alarm.SetAlarmPopup;
 
 import java.util.ArrayList;
 import java.util.Random;

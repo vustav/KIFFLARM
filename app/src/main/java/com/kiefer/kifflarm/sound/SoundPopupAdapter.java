@@ -1,4 +1,4 @@
-package com.kiefer.kifflarm.popups;
+package com.kiefer.kifflarm.sound;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +11,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.R;
+import com.kiefer.kifflarm.alarm.SetAlarmPopup;
 import com.kiefer.kifflarm.drawables.DrawablePlay;
 import com.kiefer.kifflarm.drawables.DrawableStop;
-import com.kiefer.kifflarm.sound.Sound;
 import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.Alarm;
-import com.kiefer.kifflarm.sound.SoundManager;
 
 public class SoundPopupAdapter extends RecyclerView.Adapter<SoundPopupAdapter.ViewHolder> {
     private final SoundPopup soundPopup;

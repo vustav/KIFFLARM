@@ -20,6 +20,7 @@ public class Alarm implements Comparable<Alarm>{
     private Context context;
     private android.app.AlarmManager alarmManager;
     private FileManager fileManager;
+    private String folder = "";
     protected int hour, minute, snoozeTime = 5;
     protected boolean active;
 
@@ -33,11 +34,12 @@ public class Alarm implements Comparable<Alarm>{
     public static String ALRM_ID_TAG = "alrm_intent_id";
 
     //this is for new alarms. passing sound since alarms has to be created in AlarmActivity and can't have access to other classes (SoundManager in this case)
-    public Alarm(Context context, Sound sound){
+    public Alarm(Context context, Sound sound, String folder){
         this(context);
         this.sound = sound;
         //activate(true, true);
         active = true;
+        this.folder = folder;
     }
 
     //this is for restored alarms
@@ -74,23 +76,13 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public void activate(boolean active){
-        //snoozes will be canceled here. Can't decide if that's good or bad.
-        //if(!alarmAlreadyExists()) {
-            this.active = active;
-            saveAndSchedule();
-        //}
-        //else{
-            //prompt
-        //}
+        this.active = active;
+        saveAndSchedule();
     }
 
     private void saveAndSchedule(){
         save();
         updateSchedule();
-    }
-
-    private boolean alarmAlreadyExists(){
-        return false;
     }
 
     public void updateSchedule(){
@@ -175,12 +167,20 @@ public class Alarm implements Comparable<Alarm>{
         return id;
     }
 
+    public String getFullPath(){
+        return folder + "/" + getIdAsString();
+    }
+
     public String getMessage(){
         return "mememesssssaaaagggeeee";
     }
 
     public Sound getSound(){
         return sound;
+    }
+
+    public String getFolder() {
+        return folder;
     }
 
     public long getTimeInMS(){
@@ -238,11 +238,13 @@ public class Alarm implements Comparable<Alarm>{
 
     /** SAVING **/
     public void save(){
-        fileManager.write(getParams(), getIdAsString());
+        //String path = folder + "/" + getIdAsString();
+        //Log.e("Alarm ZZZ", "save, path: "+path);
+        fileManager.write(getParams(), folder, getIdAsString());
     }
     public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",
             MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri",
-            IS_SNOOZE_TAG = "snooze_on", SNOOZE_TIME_TAG = "snooze_time";
+            IS_SNOOZE_TAG = "snooze_on", SNOOZE_TIME_TAG = "snooze_time", FOLDER_TAG = "folder";
 
     protected ArrayList<Param> getParams(){
         ArrayList<Param> params = new ArrayList<>();
@@ -254,6 +256,7 @@ public class Alarm implements Comparable<Alarm>{
         params.add(new Param(RINGTONE_URI_TAG, getSound().getUri().toString()));
         params.add(new Param(IS_SNOOZE_TAG, Boolean.toString(isSnooze)));
         params.add(new Param(SNOOZE_TIME_TAG, Integer.toString(snoozeTime)));
+        params.add(new Param(FOLDER_TAG, folder));
         return params;
     }
 
@@ -279,6 +282,8 @@ public class Alarm implements Comparable<Alarm>{
                 isSnooze = Boolean.parseBoolean(p.value);
             } else if (p.key.equals(SNOOZE_TIME_TAG)) {
                 snoozeTime = Integer.parseInt(p.value);
+            } else if (p.key.equals(FOLDER_TAG)) {
+                folder = p.value;
             }
         }
 

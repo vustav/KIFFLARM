@@ -17,12 +17,15 @@ import com.kiefer.kifflarm.utils.Utils;
 public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdapter.ViewHolder> {
     //private final ProfilesPopup profilesPopup;
     private final KIFFLARM kifflarm;
+
+    private final ProfilesListPopup profilesListPopup;
     private final ProfilesManager profilesManager;
     private final RecyclerView recyclerView;
 
-    public ProfilesPopupAdapter(KIFFLARM kifflarm, RecyclerView recyclerView, ProfilesManager profilesManager) {
+    public ProfilesPopupAdapter(KIFFLARM kifflarm, ProfilesListPopup profilesListPopup, RecyclerView recyclerView, ProfilesManager profilesManager) {
         this.kifflarm = kifflarm;
         this.recyclerView = recyclerView;
+        this.profilesListPopup = profilesListPopup;
         //this.profilesPopup = profilesPopup;
         this.profilesManager = profilesManager;
     }
@@ -48,10 +51,10 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
         viewHolder.tv.setText(profilesManager.getProfiles().get(viewHolder.getAdapterPosition()).getName());
         viewHolder.tv.setTextColor(Utils.getContrastColor(color));
 
-        viewHolder.tvBg.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+                new EditProfilePopup(kifflarm, profilesManager, profilesListPopup, profilesManager.getProfiles().get(viewHolder.getAdapterPosition()), false);
             }
         });
 
@@ -70,7 +73,6 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
             public void onClick(View v) {
                 int index = viewHolder.getAdapterPosition();
                 Utils.performHapticFeedback(viewHolder.itemView);
-                //note.setOnDesktop(!note.isOnDesktop());
                 profilesManager.setQuick(index, !profilesManager.getQuick(index));
                 updateDesktopIndicator(profilesManager.getQuick(index), viewHolder.quickIndicator);
 
@@ -97,20 +99,19 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
 
     /** VIEWHOLDER **/
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private RelativeLayout bg, tvBg;
+        private RelativeLayout bg, tvLayout;
         private final TextView tv;
-        private final Button deleteBtn, quickBtn, editBtn;
+        private final Button deleteBtn, quickBtn;
         private final FrameLayout quickIndicator;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
             bg = view.findViewById(R.id.profilesVHBG);
-            tvBg = view.findViewById(R.id.profilesVHTVLayout);
+            tvLayout = view.findViewById(R.id.profilesVHTVLayout);
             tv = view.findViewById(R.id.profilesVHTV);
             deleteBtn = view.findViewById(R.id.profilesVHDeleteBtn);
             quickBtn = view.findViewById(R.id.profilesVHAddBtn);
-            editBtn = view.findViewById(R.id.profilesVHEditBtn);
             quickIndicator = view.findViewById(R.id.profilesVHAddIndicator);
         }
 

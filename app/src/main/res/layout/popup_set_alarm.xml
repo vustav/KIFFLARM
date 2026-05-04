@@ -305,7 +305,7 @@
             android:layout_below="@id/clockLayout">
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/btnheight"
+                android:layout_height="@dimen/btnHeight"
                 android:paddingStart="@dimen/marginSmall"
                 android:paddingEnd="@dimen/marginSmall"
                 android:id="@+id/setAlarmPopupSoundBtn"
@@ -318,6 +318,7 @@
                 android:textSize="@dimen/defaultBtnTextSize"/>
         </RelativeLayout>
 
+        <!-- CANCEL/OK -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -326,12 +327,13 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/setAlarmPopupSoundLayout">
 
+            <!-- CANCEL -->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/btnheight"
+                    android:layout_height="@dimen/btnHeight"
                     android:text="CANCEL"
                     android:id="@+id/setTimeCancelBtn"
                     android:textStyle="italic"
@@ -344,12 +346,13 @@
                     android:layout_centerHorizontal="true"/>
             </RelativeLayout>
 
+            <!-- OK -->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/btnheight"
+                    android:layout_height="@dimen/btnHeight"
                     android:text="OK"
                     android:id="@+id/setTimeOKBtn"
                     android:textStyle="italic"

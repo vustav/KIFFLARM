@@ -1,32 +1,25 @@
-package com.kiefer.kifflarm.popups;
+package com.kiefer.kifflarm.sound;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.media.AudioManager;
 import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
+import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.views.CSeekBar;
 
-import java.util.Locale;
-
-public class VolumePopup extends Popup{
+public class VolumePopup extends Popup {
     public VolumePopup(KIFFLARM kifflarm){
         super(kifflarm);
 

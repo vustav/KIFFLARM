@@ -25,8 +25,9 @@ public class ProfilesManager {
         profiles.remove(index);
     }
 
-    public void setQuick(int index, boolean quick){
-        profiles.get(index).setQuick(quick);
+    /** PROFILES **/
+    public void addProfile(Profile profile){
+        profiles.add(profile);
     }
 
     /** GET **/
@@ -46,5 +47,10 @@ public class ProfilesManager {
 
     public boolean getQuick(int index){
         return profiles.get(index).isQuick();
+    }
+
+    /** SET **/
+    public void setQuick(int index, boolean quick){
+        profiles.get(index).setQuick(quick);
     }
 }

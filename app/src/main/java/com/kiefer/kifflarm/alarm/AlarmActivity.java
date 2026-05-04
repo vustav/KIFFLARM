@@ -70,7 +70,7 @@ public class AlarmActivity extends AppCompatActivity {
             snoozeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Alarm newAlarm = new Alarm(AlarmActivity.this, alarm.getSound());
+                    Alarm newAlarm = new Alarm(AlarmActivity.this, alarm.getSound(), alarm.getFolder());
                     newAlarm.setIsSnooze(true);
                     newAlarm.setTime(alarm.getHour(), alarm.getMinute() + alarm.getSnoozeTime());
                     newAlarm.activate(true);

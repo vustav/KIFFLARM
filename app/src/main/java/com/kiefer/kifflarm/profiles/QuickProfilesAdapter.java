@@ -3,10 +3,7 @@ package com.kiefer.kifflarm.profiles;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -14,9 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.utils.Utils;
-
-import java.util.ArrayList;
 
 public class QuickProfilesAdapter extends RecyclerView.Adapter<QuickProfilesAdapter.ViewHolder> {
     private final KIFFLARM kifflarm;
@@ -53,7 +47,7 @@ public class QuickProfilesAdapter extends RecyclerView.Adapter<QuickProfilesAdap
 
         viewHolder.iv.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), profile.getIconId(), null));
 
-        viewHolder.tv.setText(profile.getShort());
+        viewHolder.tv.setText(profile.getShortLabel());
     }
 
     @Override

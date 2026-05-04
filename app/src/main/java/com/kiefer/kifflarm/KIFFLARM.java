@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,16 +32,12 @@ import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.files.FileManager;
-import com.kiefer.kifflarm.files.Param;
-import com.kiefer.kifflarm.profiles.ProfilesPopup;
-import com.kiefer.kifflarm.popups.VolumePopup;
+import com.kiefer.kifflarm.profiles.ProfilesListPopup;
+import com.kiefer.kifflarm.sound.VolumePopup;
 import com.kiefer.kifflarm.profiles.ProfilesManager;
 import com.kiefer.kifflarm.profiles.QuickProfilesAdapter;
 import com.kiefer.kifflarm.sound.SoundManager;
 import com.kiefer.kifflarm.utils.Utils;
-import com.kiefer.kifflarm.views.CoolSpinnerButton;
-
-import java.util.ArrayList;
 
 public class KIFFLARM extends AppCompatActivity {
     private SoundManager soundManager;
@@ -68,7 +63,7 @@ public class KIFFLARM extends AppCompatActivity {
         });
          */
         profilesManager = new ProfilesManager(this);
-        alarmManager = new AlarmManager(this);
+        alarmManager = new AlarmManager(this, getResources().getString(R.string.custom_alarms_folder));
 
         setupLayout();
 
@@ -98,7 +93,7 @@ public class KIFFLARM extends AppCompatActivity {
         and update the adapter
          */
         //loadAlarms(); //load here instead of onCreate since turning an alarm off in AlarmActivity does not update alarms here, they are saved there and needs to be reloaded here
-        alarmManager.loadAlarms(fileManager.getParamsArray());
+        alarmManager.loadAlarms(fileManager);
 
         if(getAlarmsAdapter() != null){
             getAlarmsAdapter().onResume();
@@ -210,7 +205,7 @@ public class KIFFLARM extends AppCompatActivity {
         layout.findViewById(R.id.profilesMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ProfilesPopup(KIFFLARM.this, profilesManager);
+                new ProfilesListPopup(KIFFLARM.this, profilesManager);
                 Log.e("KIFFLARM ZZZ", "KIFFLARMppppp");
             }
         });
