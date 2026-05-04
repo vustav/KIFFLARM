@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
+import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.files.Param;
 import com.kiefer.kifflarm.utils.Utils;
@@ -218,12 +219,9 @@ public class Alarm implements Comparable<Alarm>{
     public void setSnoozeTime(int snooze){
         snoozeTime = snooze;
     }
-
-
     public void setHour(int hour){
         this.hour = hour;
     }
-
     public void setMinute(int minute){
         this.minute = minute;
     }
@@ -240,7 +238,7 @@ public class Alarm implements Comparable<Alarm>{
     public void save(){
         //String path = folder + "/" + getIdAsString();
         //Log.e("Alarm ZZZ", "save, path: "+path);
-        fileManager.write(getParams(), folder, getIdAsString());
+        fileManager.write(getParams(), folder, getIdAsString(), context.getResources().getString(R.string.alarms_extension));
     }
     public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",
             MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri",

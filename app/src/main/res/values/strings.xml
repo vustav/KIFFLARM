@@ -10,4 +10,8 @@
     <!-- FILES -->
     <string name="custom_alarms_folder">"alarms</string>
     <string name="profiles_folder">"profiles</string>
+    <string name="profile_prms">"prms</string>
+
+    <string name="alarms_extension">"kiffa</string>
+    <string name="profile_extension">"kiffp</string>
 </resources>

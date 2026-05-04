@@ -3,6 +3,7 @@ package com.kiefer.kifflarm.files;
 import android.content.Context;
 import android.util.Log;
 
+import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.alarm.Alarm;
 
 import java.io.File;
@@ -35,7 +36,7 @@ public class FileManager {
         internalPath = internalPathFile.getAbsolutePath();
     }
 
-    public void write(Object o, String folder, String name){
+    public void write(Object o, String folder, String name, String extension){
         //String errorMessage = "couldn't save alarm: ";
         Log.e("FileManager ZZZ", "write");
         try {
@@ -44,7 +45,7 @@ public class FileManager {
                 folderFile.mkdirs();
             }
 
-            String fullPath = internalPath + "/" + folder + "/" + name;
+            String fullPath = internalPath + "/" + folder + "/" + name + "."+extension;
 
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fullPath));
             os.writeObject(o);
@@ -79,26 +80,66 @@ public class FileManager {
         return null;
     }
 
-    public ArrayList<ArrayList<Param>> getParamsArrayFromFolder(String folder){
-        File[] filesInDirectory = getFiles(internalPath + "/" + folder);
+    public ArrayList<ArrayList<Param>> getParamsArrayFromFolder(String folder, String extension){
+        String path = internalPath + "/" + folder;
+        File[] filesInDirectory = getFiles(path);
 
         ArrayList<ArrayList<Param>> paramsArray = new ArrayList<>();
 
         if(filesInDirectory != null) {
             for (File file : filesInDirectory) {
-                Object o = read(file.getAbsolutePath());
-
-                try {
-                    ArrayList<Param> params = (ArrayList<Param>) o;
-                    paramsArray.add(params);
-                } catch (Exception e) {
-                    Log.e("FileManager ZZZ", "getParamsArray, "+e);
-                    e.printStackTrace();
+                if(checkExtension(file.getAbsolutePath(), extension)) {
+                    Object o = read(file.getAbsolutePath());
+                    try {
+                        ArrayList<Param> params = (ArrayList<Param>) o;
+                        paramsArray.add(params);
+                    } catch (Exception e) {
+                        Log.e("FileManager ZZZ", "getParamsArray, "+e);
+                        e.printStackTrace();
+                    }
                 }
             }
         }
 
         return paramsArray;
+    }
+
+    public ArrayList<File> getDirectoriesInPath(String folder){
+        File[] filesInDirectory = getFiles(internalPath + "/" + folder);
+
+        ArrayList<File> directoryArray = new ArrayList<>();
+
+        if(filesInDirectory != null) {
+            for (File file : filesInDirectory) {
+                if(file.isDirectory()){
+                    directoryArray.add(file);
+                }
+            }
+        }
+
+        return directoryArray;
+    }
+    /*
+    public ArrayList<Param> getProfileParams(String folder){
+        File[] filesInDirectory = getFiles(internalPath + "/" + folder);
+
+        ArrayList<File> directoryArray = new ArrayList<>();
+
+        if(filesInDirectory != null) {
+            for (File file : filesInDirectory) {
+                if(file.isDirectory()){
+                    directoryArray.add(file);
+                }
+            }
+        }
+
+        return directoryArray;
+    }
+
+     */
+
+    private boolean checkExtension(String name, String extension){
+        return name.endsWith(extension);
     }
 
     public ArrayList<ArrayList<Param>> getAllParamsArrays(){
@@ -138,14 +179,16 @@ public class FileManager {
                     paramsArray.addAll(getAllParamsArraysInner(file.getAbsolutePath()));
                 }
                 else {
-                    Object o = read(file.getAbsolutePath());
+                    if(checkExtension(file.getAbsolutePath(), context.getResources().getString(R.string.alarms_extension))) {
+                        Object o = read(file.getAbsolutePath());
 
-                    try {
-                        ArrayList<Param> params = (ArrayList<Param>) o;
-                        paramsArray.add(params);
-                    } catch (Exception e) {
-                        Log.e("FileManager ZZZ", "getParamsArray, " + e);
-                        e.printStackTrace();
+                        try {
+                            ArrayList<Param> params = (ArrayList<Param>) o;
+                            paramsArray.add(params);
+                        } catch (Exception e) {
+                            Log.e("FileManager ZZZ", "getParamsArray, " + e);
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

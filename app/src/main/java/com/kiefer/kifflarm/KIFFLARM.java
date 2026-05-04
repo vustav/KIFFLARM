@@ -62,13 +62,13 @@ public class KIFFLARM extends AppCompatActivity {
             return insets;
         });
          */
+        fileManager = new FileManager(this);
         profilesManager = new ProfilesManager(this);
         alarmManager = new AlarmManager(this, getResources().getString(R.string.custom_alarms_folder));
 
         setupLayout();
 
         soundManager = new SoundManager(this);
-        fileManager = new FileManager(this);
 
         checkPermissions();
 
@@ -94,6 +94,7 @@ public class KIFFLARM extends AppCompatActivity {
          */
         //loadAlarms(); //load here instead of onCreate since turning an alarm off in AlarmActivity does not update alarms here, they are saved there and needs to be reloaded here
         alarmManager.loadAlarms(fileManager);
+        profilesManager.loadProfiles(fileManager);
 
         if(getAlarmsAdapter() != null){
             getAlarmsAdapter().onResume();

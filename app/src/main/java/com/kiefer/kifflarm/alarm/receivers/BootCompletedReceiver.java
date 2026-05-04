@@ -18,7 +18,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
             FileManager fileManager = new FileManager(context);
 
-            ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArrayFromFolder(context.getResources().getString(R.string.custom_alarms_folder));
+            //ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArrayFromFolder(context.getResources().getString(R.string.custom_alarms_folder));
+            ArrayList<ArrayList<Param>> paramsArray = fileManager.getAllParamsArrays();
 
             if(!paramsArray.isEmpty()){
                 for(ArrayList<Param> params : paramsArray){

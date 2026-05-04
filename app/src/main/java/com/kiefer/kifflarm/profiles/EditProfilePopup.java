@@ -118,6 +118,9 @@ public class EditProfilePopup extends Popup {
                 Utils.performHapticFeedback(popupView);
                 profile.setQuick(!profile.isQuick());
                 updateDesktopIndicator(profile.isQuick(), popupView.findViewById(R.id.profileQuickIndicator));
+
+                profilesListPopup.getProfilesPopupAdapter().notifyDataSetChanged();
+                kifflarm.getQuickProfilesAdapter().notifyDataSetChanged();
             }
         });
         updateDesktopIndicator(profile.isQuick(), popupView.findViewById(R.id.profileQuickIndicator));
@@ -151,6 +154,8 @@ public class EditProfilePopup extends Popup {
         //okBtn
         Button okBtn = popupView.findViewById(R.id.newProfileOKBtn);
         okBtn.setOnClickListener(v -> {
+            profile.save();
+
             if(newProfile) {
                 profilesManager.addProfile(profile);
                 profilesListPopup.insertLastInAdapter();

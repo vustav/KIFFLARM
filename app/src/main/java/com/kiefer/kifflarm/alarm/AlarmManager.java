@@ -1,6 +1,9 @@
 package com.kiefer.kifflarm.alarm;
 
+import android.util.Log;
+
 import com.kiefer.kifflarm.KIFFLARM;
+import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.files.Param;
 import com.kiefer.kifflarm.utils.Utils;
@@ -17,8 +20,11 @@ private ArrayList<Alarm> alarms;
         alarms = new ArrayList<>();
         this.folder = folder;
     }
+
+    //AlarmManager does not trigger load itself since it's done in onResume
     public void loadAlarms(FileManager fileManager){
-        ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArrayFromFolder(folder);
+        Log.e("AlarmManager ZZZ", "Load, folder: "+folder);
+        ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArrayFromFolder(folder, kifflarm.getResources().getString(R.string.alarms_extension));
 
         //recreate saved alarms if there are any
         //ArrayList<ArrayList<Param>> paramsArray = kifflarm.getFileManager().getParamsArray();

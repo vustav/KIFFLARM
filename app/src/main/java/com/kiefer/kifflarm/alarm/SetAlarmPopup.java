@@ -132,7 +132,8 @@ public class SetAlarmPopup extends Popup {
                 alarm.activate(true);
 
                 if (newAlarm) {
-                    alarmsAdapter.notifyItemInsertedLocal(Utils.insertAlarm(alarmManager.getAlarms(), alarm), alarm);
+                    int index = Utils.insertAlarm(alarmManager.getAlarms(), alarm);
+                    alarmsAdapter.notifyItemInsertedLocal(index, alarm);
                 } else {
                     alarmManager.sortAlarms();
 
