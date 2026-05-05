@@ -18,11 +18,11 @@ import com.kiefer.kifflarm.utils.Utils;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
     protected KIFFLARM kifflarm;
-    protected AlarmManager alarmManager;
+    protected Alarmist alarmist;
 
-    public AlarmsAdapter(KIFFLARM kifflarm, AlarmManager alarmManager) {
+    public AlarmsAdapter(KIFFLARM kifflarm, Alarmist alarmist) {
         this.kifflarm = kifflarm;
-        this.alarmManager = alarmManager;
+        this.alarmist = alarmist;
     }
 
     public void onResume(){
@@ -47,7 +47,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         viewHolder.bg.setBackground(Utils.getRandomGradientDrawable());
 
         //Alarm alarm = kifflarm.getAlarm(viewHolder.getAdapterPosition());
-        Alarm alarm = alarmManager.getAlarm(viewHolder.getAdapterPosition());
+        Alarm alarm = alarmist.getAlarm(viewHolder.getAdapterPosition());
 
         if(!alarm.isSnooze()){
             viewHolder.snoozeIndicatorTV.setVisibility(View.INVISIBLE);
@@ -94,7 +94,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     }
 
     public void removeAlarm(int i){
-        alarmManager.removeAlarm(i);
+        alarmist.removeAlarm(i);
         notifyItemRemoved(i);
     }
 
@@ -128,16 +128,16 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return alarmManager.getAlarmsSize();
+        return alarmist.getItemCount();
     }
 
     /** POPUPS **/
     public void openAlarmDialog(AlarmsAdapter alarmsAdapter, int index){
-        new SetAlarmPopup(kifflarm, alarmManager, alarmsAdapter, alarmManager.getAlarm(index), false);
+        new SetAlarmPopup(kifflarm, alarmist, alarmsAdapter, alarmist.getAlarm(index), false);
     }
 
     public void openNewAlarmDialog(AlarmsAdapter alarmsAdapter){
-        new SetAlarmPopup(kifflarm, alarmManager, alarmsAdapter, new Alarm(kifflarm, kifflarm.getSoundManager().getRandomSound(), alarmManager.getFolder()), true);
+        new SetAlarmPopup(kifflarm, alarmist, alarmsAdapter, new Alarm(kifflarm, kifflarm.getSoundManager().getRandomSound(), ((AlarmManager)alarmist).getFolder()), true);
     }
 
     /** ADAPTER **/

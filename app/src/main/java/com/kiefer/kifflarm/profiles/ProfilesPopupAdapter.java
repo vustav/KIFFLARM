@@ -54,7 +54,8 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
         viewHolder.tvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new EditProfilePopup(kifflarm, profilesManager, profilesListPopup, profilesManager.getProfiles().get(viewHolder.getAdapterPosition()), false);
+                //new EditProfilePopup(kifflarm, profilesManager, profilesListPopup, profilesManager.getProfiles().get(viewHolder.getAdapterPosition()), false);
+                profilesManager.activateProfile(viewHolder.getAdapterPosition());
             }
         });
 
@@ -64,6 +65,14 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
             public void onClick(View v) {
                 profilesManager.delete(viewHolder.getAdapterPosition());
                 notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+        });
+
+        //edit
+        viewHolder.editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new EditProfilePopup(kifflarm, profilesManager, profilesListPopup, profilesManager.getProfiles().get(viewHolder.getAdapterPosition()), false);
             }
         });
 
@@ -101,7 +110,7 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout bg, tvLayout;
         private final TextView tv;
-        private final Button deleteBtn, quickBtn;
+        private final Button deleteBtn, quickBtn, editBtn;
         private final FrameLayout quickIndicator;
 
         public ViewHolder(View view) {
@@ -112,6 +121,7 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
             tv = view.findViewById(R.id.profilesVHTV);
             deleteBtn = view.findViewById(R.id.profilesVHDeleteBtn);
             quickBtn = view.findViewById(R.id.profilesVHAddBtn);
+            editBtn = view.findViewById(R.id.profilesVHEditBtn);
             quickIndicator = view.findViewById(R.id.profilesVHAddIndicator);
         }
 

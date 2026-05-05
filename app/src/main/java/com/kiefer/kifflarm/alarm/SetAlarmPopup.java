@@ -28,7 +28,7 @@ public class SetAlarmPopup extends Popup {
     private int color;
     public static int CLOCK_VALUE, HOUR = 0, MINUTE = 1, SNOOZE = 2;
 
-    public SetAlarmPopup(KIFFLARM kifflarm, AlarmManager alarmManager, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
+    public SetAlarmPopup(KIFFLARM kifflarm, Alarmist alarmist, AlarmsAdapter alarmsAdapter, Alarm alarm, boolean newAlarm){
         super(kifflarm);
 
         this.alarm = alarm;
@@ -132,10 +132,10 @@ public class SetAlarmPopup extends Popup {
                 alarm.activate(true);
 
                 if (newAlarm) {
-                    int index = Utils.insertAlarm(alarmManager.getAlarms(), alarm);
+                    int index = Utils.insertAlarm(alarmist.getAlarms(), alarm);
                     alarmsAdapter.notifyItemInsertedLocal(index, alarm);
                 } else {
-                    alarmManager.sortAlarms();
+                    alarmist.sortAlarms();
 
                     //using this since removing and adding doesn't look smooth at all
                     alarmsAdapter.notifyDataSetChangedLocal();

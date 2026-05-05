@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
+import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmManager;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.files.Param;
@@ -18,13 +19,12 @@ import java.util.Random;
 public class Profile {
     private KIFFLARM kifflarm;
 
-    private ProfilesManager profilesManager;
+    //private ProfilesManager profilesManager;
     private AlarmManager alarmManager;
     private FileManager fileManager;
     private String name, shortLabel;
-    private boolean quick;
+    private boolean quick, active;
     private int iconId;
-    private boolean active;
 private String folder;
     private int id;
 
@@ -35,10 +35,12 @@ private String folder;
         folder = profilesManager.getProfilesFolder() + "/" + getId();
         alarmManager = new AlarmManager(kifflarm, getFolder());
         alarmManager.loadAlarms(kifflarm.getFileManager());
+
+        activate(active);
     }
     public Profile(KIFFLARM kifflarm, ProfilesManager profilesManager){
         //Random r = new Random();
-        this.profilesManager = profilesManager;
+        //this.profilesManager = profilesManager;
         this.kifflarm = kifflarm;
         name = "";
         shortLabel = "";
@@ -91,8 +93,34 @@ private String folder;
         }
     }
     /** ALARMS **/
+    public void removeAlarm(int index){
+        alarmManager.removeAlarm(index);
+    }
+
+    public int getItemCount(){
+        return alarmManager.getItemCount();
+    }
+
+    public void sortAlarms(){
+        alarmManager.sortAlarms();
+    }
+
+    /** ACTIVATION **/
+    public void activate(boolean activate){
+        this.active = activate;
+        alarmManager.activateAllAlarms(activate);
+    }
 
     /** GET **/
+    public Alarm getAlarm(int index){
+        return alarmManager.getAlarm(index);
+    }
+    public boolean isActive() {
+        return active;
+    }
+    public ArrayList<Alarm> getAlarms(){
+        return alarmManager.getAlarms();
+    }
     public String getName() {
         return name;
     }

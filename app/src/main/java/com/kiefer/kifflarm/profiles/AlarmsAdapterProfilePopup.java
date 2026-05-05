@@ -1,15 +1,13 @@
 package com.kiefer.kifflarm.profiles;
 
 import com.kiefer.kifflarm.KIFFLARM;
-import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmManager;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
-import com.kiefer.kifflarm.alarm.SetAlarmPopup;
 
-public class AlarmsAdapterProfile extends AlarmsAdapter {
+public class AlarmsAdapterProfilePopup extends AlarmsAdapter {
 
-    public AlarmsAdapterProfile(KIFFLARM kifflarm, AlarmManager alarmManager){
+    public AlarmsAdapterProfilePopup(KIFFLARM kifflarm, AlarmManager alarmManager){
         super(kifflarm, alarmManager);
     }
     @Override

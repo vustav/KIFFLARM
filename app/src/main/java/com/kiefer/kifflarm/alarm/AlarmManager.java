@@ -10,7 +10,7 @@ import com.kiefer.kifflarm.utils.Utils;
 
 import java.util.ArrayList;
 
-public class AlarmManager {
+public class AlarmManager implements Alarmist {
     private KIFFLARM kifflarm;
     private String folder;
 private ArrayList<Alarm> alarms;
@@ -37,6 +37,12 @@ private ArrayList<Alarm> alarms;
         Utils.sortAlarms(alarms);
     }
 
+    public void activateAllAlarms(boolean activate){
+        for(Alarm a : alarms){
+            a.activate(activate);
+        }
+    }
+
     /** GET **/
     public ArrayList<Alarm> getAlarms(){
         return alarms;
@@ -49,7 +55,7 @@ private ArrayList<Alarm> alarms;
         Utils.sortAlarms(getAlarms());
     }
 
-    public int getAlarmsSize(){
+    public int getItemCount(){
         return alarms.size();
     }
 

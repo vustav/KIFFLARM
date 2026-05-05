@@ -45,7 +45,7 @@ public class KIFFLARM extends AppCompatActivity {
     private ProfilesManager profilesManager;
     private RelativeLayout layout;
     private AlarmManager alarmManager;
-    private AlarmsAdapter alarmsAdapter;
+    private AlarmsAdapter alarmsAdapter, profileAlarmsAdapter;
     private QuickProfilesAdapter quickProfilesAdapter;
     //private ArrayList<Alarm> alarms;
     private final boolean SHOW_TRIGGER = false;
@@ -96,8 +96,8 @@ public class KIFFLARM extends AppCompatActivity {
         alarmManager.loadAlarms(fileManager);
         profilesManager.loadProfiles(fileManager);
 
-        if(getAlarmsAdapter() != null){
-            getAlarmsAdapter().onResume();
+        if(alarmsAdapter != null){
+            alarmsAdapter.onResume();
         }
 
         if(ongoingAlarm != null){
@@ -187,22 +187,6 @@ public class KIFFLARM extends AppCompatActivity {
         Utils.createNiceBg(layout, bgTVtv, 100);
 
         //PROFILES
-        /*
-        CoolSpinnerButton profilesSpinnerBtn = new CoolSpinnerButton(this);
-        profilesSpinnerBtn.setSelection("");
-        profilesSpinnerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new ProfilesPopup(KIFFLARM.this, profilesManager);
-                Log.e("KIFFLARM ZZZ", "KIFFLARMppppp");
-            }
-        });
-
-        FrameLayout fontContainer = layout.findViewById(R.id.profilesMenuBtn);
-        fontContainer.addView(profilesSpinnerBtn);
-
-         */
-
         layout.findViewById(R.id.profilesMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -215,13 +199,23 @@ public class KIFFLARM extends AppCompatActivity {
 
         //set up the quick recyclerView
         RecyclerView quickRecyclerView = layout.findViewById(R.id.quickProfilesRecyclerView);
-        //quickRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         quickRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
 
         quickProfilesAdapter = new QuickProfilesAdapter(this, quickRecyclerView, profilesManager);
         quickRecyclerView.setAdapter(quickProfilesAdapter);
 
-        //ALARMS RECYCLER
+        //PROFILE ALARMS RECYCLER
+        RecyclerView profileAlarmsRecyclerView = layout.findViewById(R.id.profileAlarmsRecyclerView);
+        profileAlarmsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        profileAlarmsAdapter = new AlarmsAdapter(this, profilesManager);
+        profileAlarmsRecyclerView.setAdapter(profileAlarmsAdapter);
+
+        //AlarmsTouchHelper touchHelper = new AlarmsTouchHelper(profileAlarmsAdapter);
+        //ItemTouchHelper helper = new ItemTouchHelper(touchHelper);
+        //helper.attachToRecyclerView(profileAlarmsRecyclerView);
+
+        //CUSTOM ALARMS RECYCLER
         RecyclerView alarmsRecyclerView = layout.findViewById(R.id.alarmsRecyclerView);
         alarmsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -270,25 +264,6 @@ public class KIFFLARM extends AppCompatActivity {
         else{
             shortAlarmBtn.setVisibility(View.INVISIBLE);
         }
-
-    }
-
-    /** ALARMS **/
-    public void loadAlarms(){
-        /*
-        alarms = new ArrayList<>();
-
-        //recreate saved alarms if there are any
-        ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArray();
-        if(!paramsArray.isEmpty()){
-            for(ArrayList<Param> params : paramsArray){
-                alarms.add(new Alarm(this, params));
-            }
-        }
-
-        Utils.sortAlarms(alarms);
-
-         */
 
     }
 

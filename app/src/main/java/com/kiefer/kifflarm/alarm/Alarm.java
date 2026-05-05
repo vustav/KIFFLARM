@@ -48,7 +48,9 @@ public class Alarm implements Comparable<Alarm>{
     public Alarm(Context context, ArrayList<Param> params){
         this(context);
         restoreParams(params);
-        //activate(active, false);
+
+        //this shouldn't be needed except for after some system failure
+        activate(active);
     }
 
     //this are shared for both and new alarms. Setting params here if restoration fails. makes the alarm useless of course =((
@@ -169,7 +171,7 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public String getFullPath(){
-        return folder + "/" + getIdAsString();
+        return folder + "/" + getIdAsString()+"."+context.getResources().getString(R.string.alarms_extension);
     }
 
     public String getMessage(){

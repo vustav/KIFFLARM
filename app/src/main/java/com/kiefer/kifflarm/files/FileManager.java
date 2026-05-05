@@ -207,7 +207,6 @@ public class FileManager {
         Log.e("FileManager ZZZ", "deleted: "+file.getAbsolutePath());
     }
 
-
     public static Alarm getAlarm(Context context, String id){
         FileManager fileManager = new FileManager(context);
 

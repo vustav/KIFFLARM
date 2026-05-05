@@ -21,9 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
-import com.kiefer.kifflarm.alarm.Alarm;
-import com.kiefer.kifflarm.alarm.AlarmsAdapter;
-import com.kiefer.kifflarm.alarm.SetAlarmPopup;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
@@ -129,7 +126,7 @@ public class EditProfilePopup extends Popup {
         RecyclerView recyclerView = popupView.findViewById(R.id.newProfilePopupRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(kifflarm));
 
-        AlarmsAdapterProfile alarmsAdapter = new AlarmsAdapterProfile(kifflarm, profile.getAlarmManager());
+        AlarmsAdapterProfilePopup alarmsAdapter = new AlarmsAdapterProfilePopup(kifflarm, profile.getAlarmManager());
         recyclerView.setAdapter(alarmsAdapter);
 
         //ADD ALARM
