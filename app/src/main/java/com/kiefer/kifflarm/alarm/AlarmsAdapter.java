@@ -60,20 +60,20 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         viewHolder.mainTV.setBackground(Utils.getRandomGradientDrawable());
 
         activateVH(viewHolder, alarm.isActive());
-            viewHolder.toggleBtn.setVisibility(View.VISIBLE);
-            viewHolder.toggleBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Utils.performHapticFeedback(v);
-                    if(!alarm.isSnooze()) {
-                        alarm.activate(!alarm.isActive());
-                        //alarm.saveAndSchedule();
-                        activateVH(viewHolder, alarm.isActive());
-                    } else{
-                        removeAlarm(viewHolder.getAdapterPosition());
-                    }
+        viewHolder.toggleBtn.setVisibility(View.VISIBLE);
+        viewHolder.toggleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.performHapticFeedback(v);
+                if(!alarm.isSnooze()) {
+                    alarm.activate(!alarm.isActive());
+                    //alarm.saveAndSchedule();
+                    activateVH(viewHolder, alarm.isActive());
+                } else{
+                    removeAlarm(viewHolder.getAdapterPosition());
                 }
-            });
+            }
+        });
 
         //no need to edit a snooze
         if(!alarm.isSnooze()) {
@@ -152,25 +152,29 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
     /** VIEWHOLDEr **/
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private RelativeLayout bg;
+        public RelativeLayout mainLayout;
+        public RelativeLayout bg;
         private final TextView mainTV, snoozeIndicatorTV;
         //private final TextView delTV;
         private final Button mainBtn, delBtn;
         //private final SwitchMaterial toggle;
         private final Button toggleBtn;
+        public final RelativeLayout toggleBtnLayout, deleteBtnLayout;
         private final FrameLayout toggleIndicator;
         //private int toggleCheck = 0; //seems to be needed to not trigger the toggle in onBindViewHolder
         private ImageView delIV;
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
+            mainLayout = view.findViewById(R.id.alarmsVHMainLayout);
             bg = view.findViewById(R.id.alarmVHBg);
             mainTV = view.findViewById(R.id.alarmVHMainBtnTextView);
             mainBtn = view.findViewById(R.id.alarmVHMainButton);
             delBtn = view.findViewById(R.id.alarmVHRemoveButton);
+            deleteBtnLayout = view.findViewById(R.id.alarmsVHDelBtnLayout);
             //toggle = view.findViewById(R.id.alarmsVHToggle);
             toggleBtn = view.findViewById(R.id.alarmVHToggleButton);
+            toggleBtnLayout = view.findViewById(R.id.alarmsVHToggleBtnLayout);
             //delTV = view.findViewById(R.id.alarmVHRemoveTextView);
             snoozeIndicatorTV = view.findViewById(R.id.alarmVHSnoozeIndicatorTV);
             toggleIndicator = view.findViewById(R.id.alarmsVHToggleButtonIndicator);

@@ -1,9 +1,11 @@
 package com.kiefer.kifflarm.profiles;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -45,6 +47,17 @@ public class QuickProfilesAdapter extends RecyclerView.Adapter<QuickProfilesAdap
         //viewHolder.textView.setTextColor(Utils.getContrastColor(color));
         Profile profile = profilesManager.getQuickProfiles().get(viewHolder.getAdapterPosition());
 
+        viewHolder.bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("QuickProfilesAdapter ZZZ", "kashdkjad");
+                profilesManager.activateQuickProfile(viewHolder.getAdapterPosition());
+                //kifflarm.getQuickProfilesAdapter().notifyDataSetChanged();
+                //kifflarm.getProfileAlarmsAdapter().notifyDataSetChanged();
+                kifflarm.updateProfilesUI();
+            }
+        });
+
         viewHolder.iv.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), profile.getIconId(), null));
 
         viewHolder.tv.setText(profile.getShortLabel());
@@ -57,11 +70,13 @@ public class QuickProfilesAdapter extends RecyclerView.Adapter<QuickProfilesAdap
 
     /** VIEWHOLDER **/
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        RelativeLayout bg;
         ImageView iv;
         TextView tv;
 
         public ViewHolder(View view) {
             super(view);
+            bg = view.findViewById(R.id.quickProfilesVHBG);
             iv = view.findViewById(R.id.quickProfilesVHIV);
             tv = view.findViewById(R.id.quickProfilesVHTV);
         }

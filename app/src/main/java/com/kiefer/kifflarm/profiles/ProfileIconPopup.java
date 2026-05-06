@@ -14,7 +14,7 @@ import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
 
 public class ProfileIconPopup extends Popup {
-    public ProfileIconPopup(final KIFFLARM kifflarm, Profile profile, ImageView imageView){
+    public ProfileIconPopup(final KIFFLARM kifflarm, EditProfilePopup editProfilePopup, Profile profile, ImageView imageView){
         super(kifflarm);
 
         //inflate the View
@@ -55,6 +55,7 @@ public class ProfileIconPopup extends Popup {
                     public void onClick(View view) {
                         imageView.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), icons[finalI], null));
                         profile.setIconId(icons[finalI]);
+                        editProfilePopup.updateUI();
 
                         popupWindow.dismiss();
                     }

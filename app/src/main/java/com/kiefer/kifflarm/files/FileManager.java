@@ -38,7 +38,7 @@ public class FileManager {
 
     public void write(Object o, String folder, String name, String extension){
         //String errorMessage = "couldn't save alarm: ";
-        Log.e("FileManager ZZZ", "write");
+        //Log.e("FileManager ZZZ", "write");
         try {
             File folderFile = new File(Objects.requireNonNull(context.getExternalFilesDir(null)).getAbsolutePath() + "/" + folder);
             if (!folderFile.exists()) {
@@ -201,10 +201,24 @@ public class FileManager {
         return directory.listFiles();
     }
 
-    public void delete(Alarm alarm){
-        File file = new File(internalPath + "/" + alarm.getFullPath());
-        file.delete();
-        Log.e("FileManager ZZZ", "deleted: "+file.getAbsolutePath());
+    public void delete(Saveable saveable){
+        File file = new File(internalPath + "/" + saveable.getFullPath());
+        if(file.isDirectory()){
+            deleteDirectory(file);
+        }
+        else {
+            file.delete();
+        }
+        //Log.e("FileManager ZZZ", "deleted: "+file.getAbsolutePath());
+    }
+    private boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        return directoryToBeDeleted.delete();
     }
 
     public static Alarm getAlarm(Context context, String id){

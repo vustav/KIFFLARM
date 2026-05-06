@@ -47,14 +47,45 @@
                 android:layout_marginStart="@dimen/marginMedium"/>
         </RelativeLayout>
 
+        <!-- TOGGLE -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profilesVHToggleLayout"
+            android:layout_marginEnd="@dimen/marginSmall"
+
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true">
+
+            <!-- without this FrameLayout the button always covers the TextView -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="@dimen/smallBtnHeight"
+                    android:layout_height="@dimen/smallBtnHeight"
+                    android:id="@+id/profilesVHToggleButton"
+                    android:background="@drawable/custom_btn"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
+                android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"
+                android:id="@+id/profilesVHToggleButtonIndicator"
+
+                android:layout_marginTop="@dimen/marginSmall"
+                android:layout_marginStart="@dimen/marginSmall"/>
+        </RelativeLayout>
+
         <!-- DELETE -->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
             android:id="@+id/profilesVHDeleteLayout"
             android:layout_centerHorizontal="true"
-            android:layout_marginEnd="@dimen/marginSmall">
+            android:layout_marginEnd="@dimen/marginSmall"
+            android:layout_toStartOf="@id/profilesVHToggleLayout">
 
             <!-- without this FrameLayout the button always covers the ImageView -->
             <FrameLayout

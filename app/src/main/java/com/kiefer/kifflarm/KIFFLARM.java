@@ -32,7 +32,10 @@ import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.files.FileManager;
-import com.kiefer.kifflarm.profiles.ProfilesListPopup;
+import com.kiefer.kifflarm.profiles.AlarmsAdapterProfileMain;
+import com.kiefer.kifflarm.profiles.Profile;
+import com.kiefer.kifflarm.profiles.ProfilesPopup;
+import com.kiefer.kifflarm.profiles.QuickProfilesTouchHelper;
 import com.kiefer.kifflarm.sound.VolumePopup;
 import com.kiefer.kifflarm.profiles.ProfilesManager;
 import com.kiefer.kifflarm.profiles.QuickProfilesAdapter;
@@ -45,8 +48,12 @@ public class KIFFLARM extends AppCompatActivity {
     private ProfilesManager profilesManager;
     private RelativeLayout layout;
     private AlarmManager alarmManager;
-    private AlarmsAdapter alarmsAdapter, profileAlarmsAdapter;
+    private AlarmsAdapter alarmsAdapter;
+    private AlarmsAdapterProfileMain profileAlarmsAdapter;
     private QuickProfilesAdapter quickProfilesAdapter;
+    private RelativeLayout profileLblLayout;
+    private TextView profileLblTV;
+    private Button profileLblDelBtn;
     //private ArrayList<Alarm> alarms;
     private final boolean SHOW_TRIGGER = false;
 
@@ -65,10 +72,9 @@ public class KIFFLARM extends AppCompatActivity {
         fileManager = new FileManager(this);
         profilesManager = new ProfilesManager(this);
         alarmManager = new AlarmManager(this, getResources().getString(R.string.custom_alarms_folder));
+        soundManager = new SoundManager(this);
 
         setupLayout();
-
-        soundManager = new SoundManager(this);
 
         checkPermissions();
 
@@ -172,7 +178,6 @@ public class KIFFLARM extends AppCompatActivity {
     }
 
     /** LAYOUT **/
-
     private void setupLayout(){
         //layout = (RelativeLayout) kifflarm.getLayoutInflater().inflate(R.layout.layout_main_view, null);
 
@@ -190,7 +195,7 @@ public class KIFFLARM extends AppCompatActivity {
         layout.findViewById(R.id.profilesMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ProfilesListPopup(KIFFLARM.this, profilesManager);
+                new ProfilesPopup(KIFFLARM.this, profilesManager);
                 Log.e("KIFFLARM ZZZ", "KIFFLARMppppp");
             }
         });
@@ -204,12 +209,41 @@ public class KIFFLARM extends AppCompatActivity {
         quickProfilesAdapter = new QuickProfilesAdapter(this, quickRecyclerView, profilesManager);
         quickRecyclerView.setAdapter(quickProfilesAdapter);
 
+        QuickProfilesTouchHelper quickTouchHelper = new QuickProfilesTouchHelper(quickProfilesAdapter, profilesManager);
+        ItemTouchHelper quickHelper = new ItemTouchHelper(quickTouchHelper);
+        quickHelper.attachToRecyclerView(quickRecyclerView);
+
         //PROFILE ALARMS RECYCLER
         RecyclerView profileAlarmsRecyclerView = layout.findViewById(R.id.profileAlarmsRecyclerView);
         profileAlarmsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        profileAlarmsAdapter = new AlarmsAdapter(this, profilesManager);
+        profileAlarmsAdapter = new AlarmsAdapterProfileMain(this, profilesManager);
         profileAlarmsRecyclerView.setAdapter(profileAlarmsAdapter);
+
+        //PROFILE LBL
+        profileLblLayout = layout.findViewById(R.id.profilesLblLayout);
+        profileLblTV = layout.findViewById(R.id.profileLblTV);
+        profileLblDelBtn = layout.findViewById(R.id.profileLblDelBtn);
+        profileLblDelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("KIFFLARM ZZZ", "deactivate");
+                profilesManager.deactivateAllProfiles();
+                updateProfilesUI();
+            }
+        });
+
+        //updateProfilesUI(); //no use doing this update here since profiles are loaded in onResume, whicj hasn't happened yet
+
+        /*
+        if(profilesManager.getActiveProfile() != null){
+            setProfileLbl(profilesManager.getActiveProfile());
+        }
+        else{
+           enableProfileLbl(false);
+        }
+
+         */
 
         //AlarmsTouchHelper touchHelper = new AlarmsTouchHelper(profileAlarmsAdapter);
         //ItemTouchHelper helper = new ItemTouchHelper(touchHelper);
@@ -264,19 +298,55 @@ public class KIFFLARM extends AppCompatActivity {
         else{
             shortAlarmBtn.setVisibility(View.INVISIBLE);
         }
+    }
 
+    public void updateProfilesUI(){
+        Log.e("KIFFLARM ZZZ", "updateUI, profilesManager == null: "+(profilesManager == null));
+        quickProfilesAdapter.notifyDataSetChanged();
+        profileAlarmsAdapter.notifyDataSetChanged();
+
+        if(profilesManager.getActiveProfile() != null){
+            enableProfileLbl(true);
+            setProfileLbl(profilesManager.getActiveProfile());
+        }
+        else{
+            enableProfileLbl(false);
+        }
+    }
+    public void setProfileLbl(Profile profile){
+        profileLblTV.setText(profile.getName());
+
+    }
+    public void enableProfileLbl(boolean enable){
+        if(enable){
+            profileLblLayout.setVisibility(View.VISIBLE);
+        }
+        else{
+            profileLblLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
     /** GET **/
     public FileManager getFileManager() {
         return fileManager;
     }
+/*
     public QuickProfilesAdapter getQuickProfilesAdapter() {
         return quickProfilesAdapter;
     }
+
+ */
+
     public AlarmsAdapter getAlarmsAdapter() {
         return alarmsAdapter;
     }
+
+    public AlarmsAdapter getProfileAlarmsAdapter() {
+        return profileAlarmsAdapter;
+    }
+
+
+
     public SoundManager getSoundManager() {
         return soundManager;
     }

@@ -29,7 +29,7 @@
     <!-- PROFILES -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="@dimen/marginMedium"
         android:layout_marginRight="@dimen/marginMedium"
@@ -67,7 +67,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/alarmsVHheight">
+                    android:layout_height="@dimen/btnHeight">
                     <!-- LABEL -->
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -165,14 +165,67 @@
                         android:layout_toEndOf="@id/profilesDivider"/>
                 </RelativeLayout>
 
-                <!-- PROFILES ALARMS RECYCLERVIEW -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/profileAlarmsRecyclerView"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/marginSmall"
-                    android:paddingBottom="@dimen/marginSmall"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- LBL -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profilesLblLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/defaultTxtColor"
+                            android:textSize="@dimen/defaultTextSize"
+                            android:textStyle="italic"
+                            android:fontFamily="@font/default_font"
+                            android:paddingStart="15dp"
+                            android:paddingTop="1dp"
+                            android:id="@+id/profileLblTV"
+                            android:text="DHHDHDHHDHDHDHDHHDHD"
+                            android:layout_centerVertical="true" />
+
+                        <!-- DEL BTN -->
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/marginSmall"
+                            android:layout_marginEnd="@dimen/marginSmall"
+
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true">
+
+                            <!-- without this FrameLayout the button always covers the TextView -->
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <Button
+                                    android:layout_width="@dimen/smallBtnHeight"
+                                    android:layout_height="@dimen/smallBtnHeight"
+                                    android:id="@+id/profileLblDelBtn"
+                                    android:background="@drawable/custom_btn"/>
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
+                                android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"/>
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <!-- PROFILES ALARMS RECYCLERVIEW -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/profileAlarmsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:paddingTop="@dimen/marginSmall"
+                        android:paddingBottom="@dimen/marginSmall"/>
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
     </FrameLayout>

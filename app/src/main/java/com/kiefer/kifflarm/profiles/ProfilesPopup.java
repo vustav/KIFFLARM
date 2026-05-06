@@ -8,6 +8,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,13 +18,13 @@ import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
 
-public class ProfilesListPopup extends Popup {
+public class ProfilesPopup extends Popup {
     private ProfilesPopupAdapter profilesPopupAdapter;
-    private ProfilesManager profilesManager;
-    public ProfilesListPopup(KIFFLARM kifflarm, ProfilesManager profilesManager){
+    //private ProfilesManager profilesManager;
+    public ProfilesPopup(KIFFLARM kifflarm, ProfilesManager profilesManager){
         super(kifflarm);
 
-        this.profilesManager = profilesManager;
+        //this.profilesManager = profilesManager;
 
         //inflate the View
         popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_profiles, null);
@@ -56,6 +57,10 @@ public class ProfilesListPopup extends Popup {
         profilesPopupAdapter = new ProfilesPopupAdapter(kifflarm, this, recyclerView, profilesManager);
         recyclerView.setAdapter(profilesPopupAdapter);
 
+        ProfilesTouchHelper touchHelper = new ProfilesTouchHelper(profilesPopupAdapter, profilesManager);
+        ItemTouchHelper helper = new ItemTouchHelper(touchHelper);
+        helper.attachToRecyclerView(recyclerView);
+
         //ADD PROFILE
         RelativeLayout addBtn = popupView.findViewById(R.id.addProfileBg);
         addBtn.setBackground(Utils.getRandomGradientDrawable());
@@ -63,7 +68,7 @@ public class ProfilesListPopup extends Popup {
             @Override
             public void onClick(View v) {
                 Utils.performHapticFeedback(addBtn);
-                new EditProfilePopup(kifflarm, profilesManager, ProfilesListPopup.this, new Profile(kifflarm, profilesManager), true);
+                new EditProfilePopup(kifflarm, profilesManager, ProfilesPopup.this, new Profile(kifflarm, profilesManager), true);
             }
         });
 
@@ -75,7 +80,7 @@ public class ProfilesListPopup extends Popup {
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                //
+                kifflarm.updateProfilesUI();
             }
         });
     }

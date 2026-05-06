@@ -1,35 +1,32 @@
 package com.kiefer.kifflarm.profiles;
 
-import android.net.Uri;
-
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmManager;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.files.Param;
-import com.kiefer.kifflarm.sound.Sound;
+import com.kiefer.kifflarm.files.Saveable;
 import com.kiefer.kifflarm.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
-public class Profile {
+public class Profile implements Saveable {
     private KIFFLARM kifflarm;
-
-    //private ProfilesManager profilesManager;
+    private ProfilesManager profilesManager;
     private AlarmManager alarmManager;
     private FileManager fileManager;
     private String name, shortLabel;
     private boolean quick, active;
     private int iconId;
-private String folder;
-    private int id;
+    private String folder;
+    private int id, index, quickIndex;
 
     public Profile(KIFFLARM kifflarm, ProfilesManager profilesManager, ArrayList<Param> params){
         this(kifflarm, profilesManager);
+        this.profilesManager = profilesManager;
         restoreParams(params);
 
         folder = profilesManager.getProfilesFolder() + "/" + getId();
@@ -59,7 +56,9 @@ private String folder;
     }
 
     /** FILES **/
-    public static final String PRF_ID_TAG = "id", PRF_NAME_TAG = "name", PRF_SHORT_TAG = "shortName", PRF_ACTIVE_TAG = "active", PRD_QUICK_TAG = "quick", PRF_ICON_ID_TAG = "icon_id";
+    public static final String PRF_ID_TAG = "id", PRF_NAME_TAG = "name", PRF_SHORT_TAG = "shortName",
+            PRF_ACTIVE_TAG = "active", PRF_QUICK_TAG = "quick", PRF_ICON_ID_TAG = "icon_id",
+            PRF_QUICK_INDEX = "quick_index", PRF_INDEX = "index";
 
     protected ArrayList<Param> getParams(){
         ArrayList<Param> params = new ArrayList<>();
@@ -67,8 +66,14 @@ private String folder;
         params.add(new Param(PRF_NAME_TAG, name));
         params.add(new Param(PRF_SHORT_TAG, shortLabel));
         params.add(new Param(PRF_ACTIVE_TAG, Boolean.toString(active)));
-        params.add(new Param(PRD_QUICK_TAG, Boolean.toString(quick)));
+        params.add(new Param(PRF_QUICK_TAG, Boolean.toString(quick)));
         params.add(new Param(PRF_ICON_ID_TAG, Integer.toString(iconId)));
+
+        //profilesManager is null on creation for some reason
+        if(profilesManager != null) {
+            params.add(new Param(PRF_QUICK_INDEX, Integer.toString(profilesManager.getQuickIndex(this))));
+            params.add(new Param(PRF_INDEX, Integer.toString(profilesManager.getProfileIndex(this))));
+        }
         return params;
     }
     public void save(){
@@ -85,12 +90,29 @@ private String folder;
                 shortLabel = p.value;
             } else if (p.key.equals(PRF_ACTIVE_TAG)) {
                 active = Boolean.parseBoolean(p.value);
-            } else if (p.key.equals(PRD_QUICK_TAG)) {
+            } else if (p.key.equals(PRF_QUICK_TAG)) {
                 quick = Boolean.parseBoolean(p.value);
             } else if (p.key.equals(PRF_ICON_ID_TAG)) {
                 iconId = Integer.parseInt(p.value);
+            } else if (p.key.equals(PRF_QUICK_INDEX)) {
+                quickIndex = Integer.parseInt(p.value);
+            } else if (p.key.equals(PRF_INDEX)) {
+                index = Integer.parseInt(p.value);
             }
         }
+    }
+
+    public void deleteProfile(){
+        alarmManager.activateAllAlarms(false);
+        fileManager.delete(this);
+    }
+
+    public String getFullPath(){
+        return folder;
+    }
+
+    public String getIdAsString(){
+        return Integer.toString(id);
     }
     /** ALARMS **/
     public void removeAlarm(int index){
@@ -109,6 +131,7 @@ private String folder;
     public void activate(boolean activate){
         this.active = activate;
         alarmManager.activateAllAlarms(activate);
+        save();
     }
 
     /** GET **/
@@ -146,20 +169,35 @@ private String folder;
         return alarmManager;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public int getQuickIndex() {
+        return quickIndex;
+    }
+
     /** SET **/
     public void setQuick(boolean quick) {
         this.quick = quick;
+        save();
+    }
+    public void setQuickIndex(int i) {
+        this.quickIndex = i;
     }
 
     public void setIconId(int iconId) {
         this.iconId = iconId;
+        save();
     }
 
     public void setShortLabel(String shortLabel) {
         this.shortLabel = shortLabel;
+        save();
     }
 
     public void setName(String name) {
         this.name = name;
+        save();
     }
 }

@@ -1,5 +1,7 @@
 package com.kiefer.kifflarm.profiles;
 
+import android.util.Log;
+
 import com.kiefer.kifflarm.alarm.Alarmist;
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
@@ -9,6 +11,7 @@ import com.kiefer.kifflarm.files.Param;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ProfilesManager implements Alarmist {
     private final KIFFLARM kifflarm;
@@ -39,24 +42,87 @@ public class ProfilesManager implements Alarmist {
                 }
             }
         }
+        for(Profile p : profiles){
+            Log.e("ProfilesManager ZZZ", p.getName()+", "+p.getIndex());
+        }
+        Log.e("ProfilesManager ZZZ", "------------------");
+        sortProfiles();
+        for(Profile p : profiles){
+            Log.e("ProfilesManager ZZZ", p.getName()+", "+p.getIndex());
+        }
 
-        activateProfile(1);
+        //activateProfile(1);
+        Profile activeProfile = getActiveProfile();
+        if(activeProfile != null){
+            activateProfile(activeProfile, true);
+        }
+
+        //since profiles are loaded in onResume we need to do this update here, in KIFFLARM.setupLayout
+        //no profiles exist yet
+        kifflarm.updateProfilesUI();
     }
 
     public void delete(int index){
-        profiles.remove(index);
+        profiles.remove(index).deleteProfile();
     }
 
     /** PROFILES **/
+
+    public void moveProfile(int from, int to){
+        Profile p = profiles.remove(from);
+        profiles.add(to, p);
+        Log.e("ZZZ", "move");
+
+        //kanske save to from räcker?
+        saveProfiles();
+    }
+
+    /*
+    QuickProfiles is never saved, getQuickProfiles loops through all profiles and returns a new array
+    every time it's called, so we can't just move profiles in an array. It's not saved anywhere, and
+    that's why we do it like this.
+     */
+    public void moveQuickProfile(int from, int to){
+        ArrayList<Profile> quickProfiles = getQuickProfiles();
+        Profile p = quickProfiles.remove(from);
+        quickProfiles.add(to, p);
+        for(int i = 0; i<quickProfiles.size(); i++){
+            quickProfiles.get(i).setQuickIndex(i);
+        }
+        saveProfiles();
+    }
+    public void saveProfiles(){
+        for(Profile p : profiles){
+            p.save();
+        }
+    }
     public void addProfile(Profile profile){
         profiles.add(profile);
     }
 
-    public void activateProfile(int index){
+    public void activateProfile(int index, boolean activate){
+        activateProfile(profiles.get(index), activate);
+    }
+
+    public void activateProfile(Profile profile, boolean activate){
+        deactivateAllProfiles();
+        if(activate) {
+            profile.activate(true);
+        }
+        //kifflarm.updateProfilesUI();
+    }
+
+    public void deactivateAllProfiles(){
         for(Profile p : profiles){
             p.activate(false);
         }
-        profiles.get(index).activate(true);
+    }
+
+    public void activateQuickProfile(int index){
+        Profile profile = getQuickProfiles().get(index);
+        activateProfile(profile, !profile.isActive());
+
+        //kifflarm.getQuickProfilesAdapter().notifyDataSetChanged();
     }
 
     public Profile getActiveProfile(){
@@ -68,9 +134,34 @@ public class ProfilesManager implements Alarmist {
         return null;
     }
 
-    public ArrayList<Alarm> getActiveAlarms(){
-            return getActiveProfile().getAlarms();
+    /*
+   QuickProfiles is never saved, getQuickProfiles loops through all profiles and returns a new array
+   every time it's called. The order is always the same as in profiles array. QuickIndexes are saved
+   in moveQuickProfile, and here we sort before returning.
+    */
+    public ArrayList<Profile> getQuickProfiles(){
+        ArrayList<Profile> quickProfiles = new ArrayList<>();
+        for(Profile p : profiles){
+            if(p.isQuick()){
+                quickProfiles.add(p);
+            }
+        }
+        sortQuickProfiles(quickProfiles);
+        return quickProfiles;
     }
+
+    public ArrayList<Alarm> getActiveAlarms(){
+        return getActiveProfile().getAlarms();
+    }
+
+    public int getProfileIndex(Profile p){
+        return profiles.indexOf(p);
+    }
+
+    public int getQuickIndex(Profile p){
+        return getQuickProfiles().indexOf(p);
+    }
+
 
     /** ALARMIST **/
     public Alarm getAlarm(int index){
@@ -99,17 +190,7 @@ public class ProfilesManager implements Alarmist {
         return profiles;
     }
 
-    public ArrayList<Profile> getQuickProfiles() {
-        ArrayList<Profile> notesOnDesktop = new ArrayList<>();
-        for (Profile p : profiles) {
-            if (p.isQuick()) {
-                notesOnDesktop.add(p);
-            }
-        }
-        return notesOnDesktop;
-    }
-
-    public boolean getQuick(int index){
+    public boolean isQuick(int index){
         return profiles.get(index).isQuick();
     }
 
@@ -120,5 +201,35 @@ public class ProfilesManager implements Alarmist {
     /** SET **/
     public void setQuick(int index, boolean quick){
         profiles.get(index).setQuick(quick);
+    }
+
+    /** SORT **/
+    //index is saved and sort is only done on loading. For quick it's done every getQuickProfiles is called
+    // since they're not stored anywhere
+    private void sortProfiles(){
+        profiles.sort(getComparatorIndex());
+    }
+    private Comparator<Profile> getComparatorIndex(){
+        return new Comparator<Profile>() {
+            public int compare(Profile n1, Profile n2) {
+                int index1 = n1.getIndex();
+                int index2 = n2.getIndex();
+                return index1- index2;
+            }
+        };
+    }
+
+    //profiles in argument here since we'd get an infinite loop if we used getQuickProfiles
+    private void sortQuickProfiles(ArrayList<Profile> profiles){
+        profiles.sort(getComparatorQuickIndex());
+    }
+    public static Comparator<Profile> getComparatorQuickIndex(){
+        return new Comparator<Profile>() {
+            public int compare(Profile n1, Profile n2) {
+                int quick1 = n1.getQuickIndex();
+                int quick2 = n2.getQuickIndex();
+                return quick1 - quick2;
+            }
+        };
     }
 }

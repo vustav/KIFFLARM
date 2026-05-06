@@ -1,7 +1,5 @@
 package com.kiefer.kifflarm.alarm;
 
-import android.util.Log;
-
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.files.FileManager;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 public class AlarmManager implements Alarmist {
     private KIFFLARM kifflarm;
     private String folder;
-private ArrayList<Alarm> alarms;
+    private ArrayList<Alarm> alarms;
 
     public AlarmManager(KIFFLARM kifflarm, String folder){
         this.kifflarm = kifflarm;
@@ -23,7 +21,7 @@ private ArrayList<Alarm> alarms;
 
     //AlarmManager does not trigger load itself since it's done in onResume
     public void loadAlarms(FileManager fileManager){
-        Log.e("AlarmManager ZZZ", "Load, folder: "+folder);
+        //Log.e("AlarmManager ZZZ", "Load, folder: "+folder);
         ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArrayFromFolder(folder, kifflarm.getResources().getString(R.string.alarms_extension));
 
         //recreate saved alarms if there are any
@@ -54,7 +52,6 @@ private ArrayList<Alarm> alarms;
     public void sortAlarms(){
         Utils.sortAlarms(getAlarms());
     }
-
     public int getItemCount(){
         return alarms.size();
     }
@@ -64,6 +61,6 @@ private ArrayList<Alarm> alarms;
     }
 
     public void removeAlarm(int index){
-        alarms.remove(index).removeAlarm();
+        alarms.remove(index).deleteAlarm();
     }
 }

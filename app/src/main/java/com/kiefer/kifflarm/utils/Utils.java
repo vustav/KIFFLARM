@@ -262,4 +262,7 @@ public class Utils {
                 R.drawable.icon_note19
         };
     }
+
+    /** COMPARE **/
+
 }

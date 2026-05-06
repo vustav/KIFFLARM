@@ -10,6 +10,7 @@ import android.util.Log;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.files.Param;
+import com.kiefer.kifflarm.files.Saveable;
 import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.receivers.AlarmReceiver;
 import com.kiefer.kifflarm.sound.Sound;
@@ -17,7 +18,7 @@ import com.kiefer.kifflarm.sound.Sound;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-public class Alarm implements Comparable<Alarm>{
+public class Alarm implements Comparable<Alarm>, Saveable {
     private Context context;
     private android.app.AlarmManager alarmManager;
     private FileManager fileManager;
@@ -99,7 +100,7 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     private void scheduleAlarm(){
-        Log.e("Alarm ZZZ", "schedule "+hour+":"+minute);
+        //Log.e("Alarm ZZZ", "schedule "+hour+":"+minute);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALRM_ID_TAG, Integer.toString(id));
@@ -111,7 +112,7 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     private void cancelAlarm(){
-        Log.e("Alarm ZZZ", "cancel "+hour+":"+minute);
+        //Log.e("Alarm ZZZ", "cancel "+hour+":"+minute);
 
         alarmManager.cancel(
                 PendingIntent.getBroadcast(
@@ -123,7 +124,7 @@ public class Alarm implements Comparable<Alarm>{
         );
     }
 
-    public void removeAlarm(){
+    public void deleteAlarm(){
         cancelAlarm();
         fileManager.delete(this);
     }

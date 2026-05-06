@@ -7,7 +7,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Display;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -27,9 +26,19 @@ import com.kiefer.kifflarm.utils.Utils;
 
 public class EditProfilePopup extends Popup {
     private Profile profile;
-    public EditProfilePopup(KIFFLARM kifflarm, ProfilesManager profilesManager, ProfilesListPopup profilesListPopup, Profile profile, boolean newProfile){
+    private ProfilesPopup profilesPopup;
+    public EditProfilePopup(KIFFLARM kifflarm, ProfilesManager profilesManager, ProfilesPopup profilesPopup, Profile profile, boolean newProfile){
         super(kifflarm);
         this.profile = profile;
+        this.profilesPopup = profilesPopup;
+
+        if(newProfile) {
+            profilesManager.addProfile(profile);
+            profilesPopup.insertLastInAdapter();
+        }
+
+        //Log.e("EditProfilePopup ZZZ", "quick: "+profile.isQuick());
+        //Log.e("EditProfilePopup ZZZ", "active: "+profile.isActive());
 
         //inflate the View
         popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_edit_profile, null);
@@ -67,7 +76,6 @@ public class EditProfilePopup extends Popup {
         nameEt.setText(profile.getName());
         nameEt.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                //
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -76,6 +84,7 @@ public class EditProfilePopup extends Popup {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 profile.setName(s.toString());
+                updateUI();
             }
         });
 
@@ -87,7 +96,7 @@ public class EditProfilePopup extends Popup {
         shortLblEt.setText(profile.getShortLabel());
         shortLblEt.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                //
+                updateUI();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -96,6 +105,7 @@ public class EditProfilePopup extends Popup {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 profile.setShortLabel(s.toString());
+                updateUI();
             }
         });
 
@@ -103,7 +113,7 @@ public class EditProfilePopup extends Popup {
         popupView.findViewById(R.id.profileIconBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ProfileIconPopup(kifflarm, profile, popupView.findViewById(R.id.profileIconBtnIcon));
+                new ProfileIconPopup(kifflarm, EditProfilePopup.this, profile, popupView.findViewById(R.id.profileIconBtnIcon));
             }
         });
         popupView.findViewById(R.id.profileIconBtnIcon).setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), profile.getIconId(), null));
@@ -115,9 +125,7 @@ public class EditProfilePopup extends Popup {
                 Utils.performHapticFeedback(popupView);
                 profile.setQuick(!profile.isQuick());
                 updateDesktopIndicator(profile.isQuick(), popupView.findViewById(R.id.profileQuickIndicator));
-
-                profilesListPopup.getProfilesPopupAdapter().notifyDataSetChanged();
-                kifflarm.getQuickProfilesAdapter().notifyDataSetChanged();
+                updateUI();
             }
         });
         updateDesktopIndicator(profile.isQuick(), popupView.findViewById(R.id.profileQuickIndicator));
@@ -148,6 +156,7 @@ public class EditProfilePopup extends Popup {
         ImageView addIcon = popupView.findViewById(R.id.addAlarmIcon);
         addIcon.setImageDrawable(new DrawablePlus());
 
+        /*
         //okBtn
         Button okBtn = popupView.findViewById(R.id.newProfileOKBtn);
         okBtn.setOnClickListener(v -> {
@@ -162,7 +171,7 @@ public class EditProfilePopup extends Popup {
             }
 
             //this is if it's added to quick from here. Can't do it on button click since it isn't added to peofilemanager yet if it's a new profile. Could be better.
-            kifflarm.getQuickProfilesAdapter().notifyDataSetChanged();
+            kifflarm.updateProfilesUI();
             dismiss();
         });
 
@@ -172,14 +181,35 @@ public class EditProfilePopup extends Popup {
             dismiss();
         });
 
+         */
+
         showAtLocation(popupWindow);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                //
+                profilesPopup.getProfilesPopupAdapter().notifyDataSetChanged();
+                //profilesPopup.up
+                /*
+                profile.save();
+
+                if(newProfile) {
+                    profilesManager.addProfile(profile);
+                    profilesListPopup.insertLastInAdapter();
+                }
+                else{
+                    profilesListPopup.notifyAdapter();
+                }
+                kifflarm.updateProfilesUI();
+
+                 */
             }
         });
+    }
+
+    public void updateUI(){
+        //profilesPopup.getProfilesPopupAdapter().notifyDataSetChanged();
+        //kifflarm.updateProfilesUI();
     }
 
     private void updateDesktopIndicator(boolean on, FrameLayout indicator){

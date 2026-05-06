@@ -6,6 +6,7 @@
     android:gravity="center_vertical"
     android:paddingStart="@dimen/marginMedium"
     android:paddingEnd="@dimen/marginMedium"
+    android:id="@+id/alarmsVHMainLayout"
 
     android:layout_marginBottom="@dimen/marginMedium">
 
@@ -87,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/alarmsVHDelBtnLayout"
                 android:layout_marginStart="@dimen/marginSmall"
+                android:layout_marginEnd="@dimen/marginSmall"
 
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/alarmsVHToggleBtnLayout">
@@ -129,7 +131,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/alarmsVHToggleBtnLayout"
-                android:layout_marginStart="@dimen/marginSmall"
                 android:layout_marginEnd="@dimen/marginSmall"
 
                 android:layout_centerVertical="true"

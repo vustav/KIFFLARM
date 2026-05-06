@@ -132,7 +132,7 @@ public class AlarmActivity extends AppCompatActivity {
         finish();
 
         if(alarm.isSnooze()){
-            alarm.removeAlarm();
+            alarm.deleteAlarm();
         }
     }
 

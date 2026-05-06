@@ -122,6 +122,7 @@ public class SetAlarmPopup extends Popup {
         });
         setSoundBtnTxt(alarm.getSound().getName());
 
+        /*
         //okBtn
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
@@ -152,6 +153,30 @@ public class SetAlarmPopup extends Popup {
         Button cancelBtn = popupView.findViewById(R.id.setTimeCancelBtn);
         cancelBtn.setOnClickListener(v -> {
             dismiss();
+        });
+
+         */
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
+                alarm.setSnoozeTime(Integer.parseInt(String.valueOf(snoozeTV.getText())));
+
+                alarm.activate(true);
+
+                if (newAlarm) {
+                    int index = Utils.insertAlarm(alarmist.getAlarms(), alarm);
+                    alarmsAdapter.notifyItemInsertedLocal(index, alarm);
+                } else {
+                    alarmist.sortAlarms();
+
+                    //using this since removing and adding doesn't look smooth at all
+                    alarmsAdapter.notifyDataSetChangedLocal();
+                }
+
+                dismiss();
+            }
         });
 
         showAtLocation(popupWindow);
