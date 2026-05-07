@@ -37,7 +37,7 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.view_holder_profiles_popup, viewGroup, false);
+                .inflate(R.layout.view_holder_profiles, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -60,7 +60,8 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
         viewHolder.tvLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activateProfile(viewHolder, profile);
+                //activateProfile(viewHolder, profile);
+                new EditProfilePopup(kifflarm, profilesManager, profilesPopup, profilesManager.getProfiles().get(viewHolder.getAdapterPosition()), false);
             }
         });
 
@@ -83,12 +84,15 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
         });
 
         //edit
+        /*
         viewHolder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new EditProfilePopup(kifflarm, profilesManager, profilesPopup, profilesManager.getProfiles().get(viewHolder.getAdapterPosition()), false);
             }
         });
+
+         */
 
         //quick
         viewHolder.quickBtn.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +167,8 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
         private RelativeLayout bg, tvLayout;
         private final TextView tv;
         private final ImageView iv;
-        private final Button deleteBtn, quickBtn, editBtn, toggleBtn;
+        private final Button deleteBtn, quickBtn, toggleBtn;
+        //private final Button editBtn;
         private final FrameLayout quickIndicator, toggleIndicator;
 
         public ViewHolder(View view) {
@@ -174,9 +179,9 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
             tv = view.findViewById(R.id.profilesVHTV);
             iv = view.findViewById(R.id.profilesVHIV);
             deleteBtn = view.findViewById(R.id.profilesVHDeleteBtn);
-            quickBtn = view.findViewById(R.id.profilesVHAddBtn);
-            editBtn = view.findViewById(R.id.profilesVHEditBtn);
-            quickIndicator = view.findViewById(R.id.profilesVHAddIndicator);
+            quickBtn = view.findViewById(R.id.profilesVHAddQuickBtn);
+            //editBtn = view.findViewById(R.id.profilesVHEditBtn);
+            quickIndicator = view.findViewById(R.id.profilesVHAddQuickIndicator);
             toggleBtn = view.findViewById(R.id.profilesVHToggleButton);
             toggleIndicator = view.findViewById(R.id.profilesVHToggleButtonIndicator);
         }

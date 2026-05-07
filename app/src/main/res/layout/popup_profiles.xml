@@ -29,7 +29,7 @@
         android:layout_marginBottom="@dimen/marginLarge"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:paddingBottom="100dp">
+        android:paddingBottom="50dp">
 
         <RelativeLayout
             android:layout_width="@dimen/addBtnSize"

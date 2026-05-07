@@ -54,7 +54,7 @@ public class EditProfilePopup extends Popup {
         Point size = new Point();
         display.getSize(size);
         popupWindow.setWidth(size.x-size.x/5);
-        popupWindow.setHeight(size.y - size.y/4);
+        popupWindow.setHeight(size.y - (int)((float)size.y/3.5f));
 
         //bg
         RelativeLayout bg = popupView.findViewById(R.id.newProfilePopupBg);

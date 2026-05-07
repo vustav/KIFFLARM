@@ -32,7 +32,9 @@ import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
 import com.kiefer.kifflarm.drawables.DrawablePlus;
 import com.kiefer.kifflarm.files.FileManager;
+import com.kiefer.kifflarm.files.Param;
 import com.kiefer.kifflarm.profiles.AlarmsAdapterProfileMain;
+import com.kiefer.kifflarm.profiles.EditProfilePopup;
 import com.kiefer.kifflarm.profiles.Profile;
 import com.kiefer.kifflarm.profiles.ProfilesPopup;
 import com.kiefer.kifflarm.profiles.QuickProfilesTouchHelper;
@@ -41,6 +43,8 @@ import com.kiefer.kifflarm.profiles.ProfilesManager;
 import com.kiefer.kifflarm.profiles.QuickProfilesAdapter;
 import com.kiefer.kifflarm.sound.SoundManager;
 import com.kiefer.kifflarm.utils.Utils;
+
+import java.util.ArrayList;
 
 public class KIFFLARM extends AppCompatActivity {
     private SoundManager soundManager;
@@ -306,12 +310,32 @@ public class KIFFLARM extends AppCompatActivity {
             shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    /*
                     //TRIGGER ALARM
                     Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
                     intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(alarmManager.getAlarms().get(0).getId()));
 
                     //new AlarmCannonActivity(KIFFLARM.this, intent);
                     new AlarmCannonNotification(KIFFLARM.this, intent);
+
+                     */
+
+                    /*
+                    //LIST ALL SAVED ALARMS
+                    ArrayList<ArrayList<Param>> params = fileManager.getAllParamsArrays();
+                    for(ArrayList<Param> ap : params){
+                        for(Param p : ap){
+                            if(p.key.equals(Alarm.HOUR_TAG)){
+                                Log.e("KIFFLARM ZZZ", "minute: "+p.value);
+                            }
+                            if(p.key.equals(Alarm.MINUTE_TAG)){
+                                Log.e("KIFFLARM ZZZ", "minute: "+p.value);
+                                Log.e("KIFFLARM ZZZ", "----------------------");
+                            }
+                        }
+                    }
+
+                     */
                 }
             });
         }
@@ -335,6 +359,15 @@ public class KIFFLARM extends AppCompatActivity {
     }
     public void setProfileLbl(Profile profile){
         profileLblTV.setText(profile.getName());
+        /*
+        profileLblTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new EditProfilePopup(this, profilesManager, profilesPopup, profilesManager.getProfiles().get(viewHolder.getAdapterPosition()), false);
+            }
+        });
+
+         */
     }
     public void enableProfileLbl(boolean enable){
         if(enable){

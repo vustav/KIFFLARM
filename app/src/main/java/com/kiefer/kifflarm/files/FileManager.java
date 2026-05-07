@@ -195,7 +195,6 @@ public class FileManager {
         }
         return paramsArray;
     }
-
     public File[] getFiles(String path){
         File directory = new File(path);
         return directory.listFiles();

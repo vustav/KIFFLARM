@@ -61,32 +61,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <!-- LABEL -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileNameTV"
-                    android:textSize="@dimen/defaultBtnTextSize"
-                    android:textStyle="italic"
-                    android:fontFamily="@font/default_font"
-                    android:text="NAME"
-                    android:layout_marginTop="13dp"/>
+                    <!-- LABEL -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileNameTV"
+                        android:textSize="@dimen/defaultBtnTextSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"
+                        android:text="NAME"
+                        android:layout_marginTop="13dp"/>
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/btnHeight"
-                    android:id="@+id/profileNameET"
-                    android:background="#FFFFFF"
-                    android:textSize="@dimen/defaultBtnTextSize"
-                    android:textStyle="italic"
-                    android:fontFamily="@font/default_font"
-                    android:paddingStart="@dimen/marginSmall"
-                    android:singleLine="true"
-                    android:textColor="@color/defaultTxtColor"
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/btnHeight"
+                        android:id="@+id/profileNameET"
+                        android:background="#FFFFFF"
+                        android:textSize="@dimen/defaultBtnTextSize"
+                        android:textStyle="italic"
+                        android:fontFamily="@font/default_font"
+                        android:paddingStart="@dimen/marginSmall"
+                        android:singleLine="true"
+                        android:textColor="@color/defaultTxtColor"
 
-                    android:layout_marginStart="@dimen/marginSmall"
+                        android:layout_marginStart="@dimen/marginSmall"
 
-                    android:layout_toEndOf="@id/profileNameTV"/>
+                        android:layout_toEndOf="@id/profileNameTV"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -102,7 +102,7 @@
                         android:textSize="@dimen/defaultBtnTextSize"
                         android:textStyle="italic"
                         android:fontFamily="@font/default_font"
-                        android:text="SHRT LBL"
+                        android:text="SHRT"
                         android:layout_marginTop="13dp"/>
 
                     <EditText
@@ -204,7 +204,7 @@
         android:layout_marginBottom="@dimen/marginLarge"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:paddingBottom="100dp">
+        android:paddingBottom="50dp">
 
         <RelativeLayout
             android:layout_width="@dimen/addBtnSize"
@@ -237,6 +237,7 @@
         </RelativeLayout>
     </RelativeLayout>
     <!-- CANCEL/OK -->
+    <!--
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -245,9 +246,6 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/marginLarge">
-
-        <!-- CANCEL -->
-        <!--
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -265,26 +263,23 @@
                 android:layout_marginEnd="@dimen/marginSmall"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
-        -->
 
-        <!-- OK -->
-        <!--
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/btnHeight"
-                android:text="OK"
-                android:id="@+id/newProfileOKBtn"
-                android:textStyle="italic"
-                android:fontFamily="@font/default_font"
-                android:textColor="@color/defaultBtnTxtColor"
-                android:background="@drawable/custom_btn"
-                android:textSize="@dimen/defaultBtnTextSize"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/btnHeight"
+                    android:text="OK"
+                    android:id="@+id/newProfileOKBtn"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:textColor="@color/defaultBtnTxtColor"
+                    android:background="@drawable/custom_btn"
+                    android:textSize="@dimen/defaultBtnTextSize"
 
-                android:layout_centerHorizontal="true"/>
-        </RelativeLayout>
-        -->
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
     </LinearLayout>
+        -->
 </RelativeLayout>
