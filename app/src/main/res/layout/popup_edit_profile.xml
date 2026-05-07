@@ -82,6 +82,7 @@
                     android:fontFamily="@font/default_font"
                     android:paddingStart="@dimen/marginSmall"
                     android:singleLine="true"
+                    android:textColor="@color/defaultTxtColor"
 
                     android:layout_marginStart="@dimen/marginSmall"
 
@@ -114,6 +115,7 @@
                         android:fontFamily="@font/default_font"
                         android:maxLength="2"
                         android:paddingStart="@dimen/marginSmall"
+                        android:textColor="@color/defaultTxtColor"
 
                         android:layout_marginStart="@dimen/marginSmall"
                         android:layout_toEndOf="@id/profileShortLabelTV"/>

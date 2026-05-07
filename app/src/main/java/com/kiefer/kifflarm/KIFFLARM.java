@@ -51,7 +51,7 @@ public class KIFFLARM extends AppCompatActivity {
     private AlarmsAdapter alarmsAdapter;
     private AlarmsAdapterProfileMain profileAlarmsAdapter;
     private QuickProfilesAdapter quickProfilesAdapter;
-    private RelativeLayout profileLblLayout;
+    private RelativeLayout profileLblLayoutOuter, profileLblLayoutInner;
     private TextView profileLblTV;
     //private ArrayList<Alarm> alarms;
     private final boolean SHOW_TRIGGER = false;
@@ -234,7 +234,8 @@ public class KIFFLARM extends AppCompatActivity {
         profileAlarmsRecyclerView.setAdapter(profileAlarmsAdapter);
 
         //ACTIVE PROFILE LBL
-        profileLblLayout = layout.findViewById(R.id.profilesLblLayout);
+        profileLblLayoutInner = layout.findViewById(R.id.profilesLblLayoutInner);
+        profileLblLayoutOuter = layout.findViewById(R.id.profilesLblLayoutOuter);
         profileLblTV = layout.findViewById(R.id.profileLblTV);
         profileLblTV.setTextColor(Utils.getContrastColor(profilesBgColor1));
         Button profileLblDelBtn = layout.findViewById(R.id.profileLblDelBtn);
@@ -334,14 +335,19 @@ public class KIFFLARM extends AppCompatActivity {
     }
     public void setProfileLbl(Profile profile){
         profileLblTV.setText(profile.getName());
-
     }
     public void enableProfileLbl(boolean enable){
         if(enable){
-            profileLblLayout.setVisibility(View.VISIBLE);
+            //profileLblLayoutOuter.setVisibility(View.VISIBLE);
+            if(profileLblLayoutInner.getParent() == null) {
+                profileLblLayoutOuter.addView(profileLblLayoutInner);
+            }
         }
         else{
-            profileLblLayout.setVisibility(View.INVISIBLE);
+            //profileLblLayoutOuter.setVisibility(View.INVISIBLE);
+            if(profileLblLayoutInner.getParent() != null) {
+                profileLblLayoutOuter.removeView(profileLblLayoutInner);
+            }
         }
     }
 

@@ -38,7 +38,7 @@
         android:paddingEnd="@dimen/marginMedium"
         android:id="@+id/profilesLayout"
 
-        android:layout_marginBottom="@dimen/marginMedium">
+        android:layout_marginBottom="@dimen/marginSmall">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -171,8 +171,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
                     <!-- PROFILES ALARMS RECYCLERVIEW -->
                     <androidx.recyclerview.widget.RecyclerView
@@ -180,70 +179,77 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
-                        android:paddingTop="40dp"
-                        android:paddingBottom="@dimen/marginSmall"/>
+                        android:paddingBottom="@dimen/marginSmall"
+                        android:layout_below="@id/profilesLblLayoutOuter"/>
 
                     <!-- LBL -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/profilesLblLayout"
+                        android:id="@+id/profilesLblLayoutOuter"
                         android:paddingStart="@dimen/marginMedium"
                         android:paddingEnd="@dimen/marginMedium">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/defaultTextSize"
-                            android:textStyle="italic"
-                            android:fontFamily="@font/default_font"
-                            android:paddingTop="1dp"
-                            android:id="@+id/profileLblTV"
-                            android:layout_marginTop="8dp"
-                            android:singleLine="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_toStartOf="@id/profileLblDelBtnLayout"/>
-
-                        <!-- DEL BTN -->
                         <RelativeLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/marginSmall"
-                            android:layout_marginEnd="@dimen/marginSmall"
-                            android:id="@+id/profileLblDelBtnLayout"
+                            android:id="@+id/profilesLblLayoutInner"
+                            android:layout_marginBottom="@dimen/marginMedium">
 
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentEnd="true">
-
-                            <!-- without this FrameLayout the button always covers the TextView -->
-                            <FrameLayout
+                            <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/defaultTextSize"
+                                android:textStyle="italic"
+                                android:fontFamily="@font/default_font"
+                                android:paddingTop="1dp"
+                                android:id="@+id/profileLblTV"
+                                android:layout_marginTop="8dp"
+                                android:singleLine="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_toStartOf="@id/profileLblDelBtnLayout"/>
 
-                                <Button
-                                    android:layout_width="@dimen/smallBtnHeight"
-                                    android:layout_height="@dimen/smallBtnHeight"
-                                    android:id="@+id/profileLblDelBtn"
-                                    android:background="@drawable/custom_btn"/>
-                            </FrameLayout>
-
+                            <!-- DEL BTN -->
                             <RelativeLayout
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_centerInParent="true"
-                                android:background="@color/indicatorOff"
-                                android:id="@+id/profileLblDelBtnBg">
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/marginSmall"
+                                android:layout_marginEnd="@dimen/marginSmall"
+                                android:id="@+id/profileLblDelBtnLayout"
 
-                                <TextView
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentEnd="true">
+
+                                <!-- without this FrameLayout the button always covers the TextView -->
+                                <FrameLayout
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="@dimen/defaultTextSize"
-                                    android:textStyle="italic"
-                                    android:fontFamily="@font/default_font"
-                                    android:text="-"
+                                    android:layout_height="wrap_content">
+
+                                    <Button
+                                        android:layout_width="@dimen/smallBtnHeight"
+                                        android:layout_height="@dimen/smallBtnHeight"
+                                        android:id="@+id/profileLblDelBtn"
+                                        android:background="@drawable/custom_btn"/>
+                                </FrameLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
                                     android:layout_centerInParent="true"
-                                    android:layout_marginTop="-7dp"
-                                    android:id="@+id/profileLblDelBtnTV"/>
+                                    android:background="@color/indicatorOff"
+                                    android:id="@+id/profileLblDelBtnBg">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="@dimen/defaultTextSize"
+                                        android:textStyle="italic"
+                                        android:fontFamily="@font/default_font"
+                                        android:text="-"
+                                        android:layout_centerInParent="true"
+                                        android:layout_marginTop="-7dp"
+                                        android:id="@+id/profileLblDelBtnTV"/>
+                                </RelativeLayout>
                             </RelativeLayout>
                         </RelativeLayout>
                     </RelativeLayout>

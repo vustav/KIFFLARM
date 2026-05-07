@@ -21,15 +21,12 @@ public class ProfilesManager implements Alarmist {
     public ProfilesManager(KIFFLARM kifflarm){
         this.kifflarm = kifflarm;
         profilesFolder = kifflarm.getResources().getString(R.string.profiles_folder);
-        setupProfiles();
-    }
-
-    private void setupProfiles(){
         profiles = new ArrayList();
     }
 
     //ProfilesManager does not trigger load itself since it's done in onResume
     public void loadProfiles(FileManager fileManager){
+        profiles = new ArrayList<>();
         ArrayList<File> profileFolders = fileManager.getDirectoriesInPath(profilesFolder);
 
         for(File f : profileFolders){
@@ -42,14 +39,14 @@ public class ProfilesManager implements Alarmist {
                 }
             }
         }
-        for(Profile p : profiles){
-            Log.e("ProfilesManager ZZZ", p.getName()+", "+p.getIndex());
-        }
-        Log.e("ProfilesManager ZZZ", "------------------");
+        //for(Profile p : profiles){
+        //    Log.e("ProfilesManager ZZZ", p.getName()+", "+p.getIndex());
+        //}
+        //Log.e("ProfilesManager ZZZ", "------------------");
         sortProfiles();
-        for(Profile p : profiles){
-            Log.e("ProfilesManager ZZZ", p.getName()+", "+p.getIndex());
-        }
+        //for(Profile p : profiles){
+        //    Log.e("ProfilesManager ZZZ", p.getName()+", "+p.getIndex());
+        //}
 
         //activateProfile(1);
         Profile activeProfile = getActiveProfile();
@@ -71,7 +68,7 @@ public class ProfilesManager implements Alarmist {
     public void moveProfile(int from, int to){
         Profile p = profiles.remove(from);
         profiles.add(to, p);
-        Log.e("ZZZ", "move");
+        //Log.e("ZZZ", "move");
 
         //kanske save to from räcker?
         saveProfiles();

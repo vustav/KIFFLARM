@@ -21,6 +21,7 @@ public class AlarmManager implements Alarmist {
 
     //AlarmManager does not trigger load itself since it's done in onResume
     public void loadAlarms(FileManager fileManager){
+        alarms = new ArrayList<>();
         //Log.e("AlarmManager ZZZ", "Load, folder: "+folder);
         ArrayList<ArrayList<Param>> paramsArray = fileManager.getParamsArrayFromFolder(folder, kifflarm.getResources().getString(R.string.alarms_extension));
 
