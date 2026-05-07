@@ -68,6 +68,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/btnHeight">
+
                     <!-- LABEL -->
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -83,7 +84,8 @@
                             android:fontFamily="@font/default_font"
                             android:text="PRO"
                             android:background="#000000"
-                            android:textColor="#FFFFFF"/>
+                            android:textColor="#FFFFFF"
+                            android:id="@+id/profilesTV1"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -93,7 +95,8 @@
                             android:fontFamily="@font/default_font"
                             android:text="FIL"
                             android:background="#000000"
-                            android:textColor="#FFFFFF"/>
+                            android:textColor="#FFFFFF"
+                            android:id="@+id/profilesTV2"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -103,7 +106,8 @@
                             android:fontFamily="@font/default_font"
                             android:text="ES"
                             android:background="#000000"
-                            android:textColor="#FFFFFF"/>
+                            android:textColor="#FFFFFF"
+                            android:id="@+id/profilesTV3"/>
                     </LinearLayout>
 
                     <!-- MENU -->
@@ -121,7 +125,7 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/profilesVHDeleteLayout"
+                        android:id="@+id/profilesMenuBtnLayout"
                         android:layout_marginStart="@dimen/marginSmall"
                         android:layout_toEndOf="@id/profilesLabel">
 
@@ -152,7 +156,7 @@
                         android:id="@+id/profilesDivider"
                         android:layout_marginStart="@dimen/marginSmall"
 
-                        android:layout_toEndOf="@id/profilesVHDeleteLayout"/>
+                        android:layout_toEndOf="@id/profilesMenuBtnLayout"/>
 
                     <!-- QUICK RECYCLER -->
                     <androidx.recyclerview.widget.RecyclerView
@@ -165,29 +169,40 @@
                         android:layout_toEndOf="@id/profilesDivider"/>
                 </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <!-- PROFILES ALARMS RECYCLERVIEW -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/profileAlarmsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingTop="40dp"
+                        android:paddingBottom="@dimen/marginSmall"/>
 
                     <!-- LBL -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/profilesLblLayout">
+                        android:id="@+id/profilesLblLayout"
+                        android:paddingStart="@dimen/marginMedium"
+                        android:paddingEnd="@dimen/marginMedium">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/defaultTxtColor"
                             android:textSize="@dimen/defaultTextSize"
                             android:textStyle="italic"
                             android:fontFamily="@font/default_font"
-                            android:paddingStart="15dp"
                             android:paddingTop="1dp"
                             android:id="@+id/profileLblTV"
-                            android:text="DHHDHDHHDHDHDHDHHDHD"
-                            android:layout_centerVertical="true" />
+                            android:layout_marginTop="8dp"
+                            android:singleLine="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@id/profileLblDelBtnLayout"/>
 
                         <!-- DEL BTN -->
                         <RelativeLayout
@@ -195,6 +210,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/marginSmall"
                             android:layout_marginEnd="@dimen/marginSmall"
+                            android:id="@+id/profileLblDelBtnLayout"
 
                             android:layout_centerVertical="true"
                             android:layout_alignParentEnd="true">
@@ -211,21 +227,27 @@
                                     android:background="@drawable/custom_btn"/>
                             </FrameLayout>
 
-                            <FrameLayout
-                                android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
-                                android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"/>
+                            <RelativeLayout
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_centerInParent="true"
+                                android:background="@color/indicatorOff"
+                                android:id="@+id/profileLblDelBtnBg">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/defaultTextSize"
+                                    android:textStyle="italic"
+                                    android:fontFamily="@font/default_font"
+                                    android:text="-"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginTop="-7dp"
+                                    android:id="@+id/profileLblDelBtnTV"/>
+                            </RelativeLayout>
                         </RelativeLayout>
                     </RelativeLayout>
-
-                    <!-- PROFILES ALARMS RECYCLERVIEW -->
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/profileAlarmsRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:clipToPadding="false"
-                        android:paddingTop="@dimen/marginSmall"
-                        android:paddingBottom="@dimen/marginSmall"/>
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
     </FrameLayout>

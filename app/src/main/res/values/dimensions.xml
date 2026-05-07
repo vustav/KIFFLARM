@@ -54,8 +54,8 @@
     <!-- CLOCK -->
     <dimen name="clockMargin">55dp</dimen>
 
-    <dimen name="clockLayoutSize">250dp</dimen>
-    <dimen name="clockPopupHeight">455dp</dimen>
+    <dimen name="clockLayoutSize">300dp</dimen>
+    <dimen name="clockPopupHeight">475dp</dimen>
     <dimen name="clockSize">200dp</dimen>
     <dimen name="clockOffset">40dp</dimen>
 

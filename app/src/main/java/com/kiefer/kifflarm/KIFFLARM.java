@@ -53,7 +53,6 @@ public class KIFFLARM extends AppCompatActivity {
     private QuickProfilesAdapter quickProfilesAdapter;
     private RelativeLayout profileLblLayout;
     private TextView profileLblTV;
-    private Button profileLblDelBtn;
     //private ArrayList<Alarm> alarms;
     private final boolean SHOW_TRIGGER = false;
 
@@ -183,15 +182,29 @@ public class KIFFLARM extends AppCompatActivity {
 
         layout = findViewById(R.id.main);
 
-        RelativeLayout profilesBg = layout.findViewById(R.id.profilesBg);
-        int profilesBgColor1 = Utils.getRandomColor();
-        profilesBg.setBackground(Utils.getGradientDrawable(profilesBgColor1, Utils.getRandomColor(), Utils.HORIZONTAL));
-
         //NICE BG
         TextView bgTVtv = layout.findViewById(R.id.mainBgTV);
         Utils.createNiceBg(layout, bgTVtv, 100);
 
         //PROFILES
+        RelativeLayout profilesBg = layout.findViewById(R.id.profilesBg);
+        int profilesBgColor1 = Utils.getRandomColor();
+        profilesBg.setBackground(Utils.getGradientDrawable(profilesBgColor1, Utils.getRandomColor(), Utils.HORIZONTAL));
+
+        //LABEL
+        /*
+        TextView profilesLbl1 = layout.findViewById(R.id.profilesTV1);
+        TextView profilesLbl2 = layout.findViewById(R.id.profilesTV2);
+        TextView profilesLbl3 = layout.findViewById(R.id.profilesTV3);
+        profilesLbl1.setBackgroundColor(Utils.getContrastColor(profilesBgColor1));
+        profilesLbl2.setBackgroundColor(Utils.getContrastColor(profilesBgColor1));
+        profilesLbl3.setBackgroundColor(Utils.getContrastColor(profilesBgColor1));
+        profilesLbl1.setTextColor(profilesBgColor1);
+        profilesLbl2.setTextColor(profilesBgColor1);
+        profilesLbl3.setTextColor(profilesBgColor1);
+
+         */
+
         layout.findViewById(R.id.profilesMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,18 +233,24 @@ public class KIFFLARM extends AppCompatActivity {
         profileAlarmsAdapter = new AlarmsAdapterProfileMain(this, profilesManager);
         profileAlarmsRecyclerView.setAdapter(profileAlarmsAdapter);
 
-        //PROFILE LBL
+        //ACTIVE PROFILE LBL
         profileLblLayout = layout.findViewById(R.id.profilesLblLayout);
         profileLblTV = layout.findViewById(R.id.profileLblTV);
-        profileLblDelBtn = layout.findViewById(R.id.profileLblDelBtn);
+        profileLblTV.setTextColor(Utils.getContrastColor(profilesBgColor1));
+        Button profileLblDelBtn = layout.findViewById(R.id.profileLblDelBtn);
         profileLblDelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("KIFFLARM ZZZ", "deactivate");
+                //Log.e("KIFFLARM ZZZ", "deactivate");
                 profilesManager.deactivateAllProfiles();
                 updateProfilesUI();
             }
         });
+        RelativeLayout profileLblDelBtnBg = layout.findViewById(R.id.profileLblDelBtnBg);
+        int delColor = Utils.getRandomColor();
+        profileLblDelBtnBg.setBackground(Utils.getGradientDrawable(delColor, Utils.getRandomColor(), Utils.HORIZONTAL));
+        TextView profileLblDelBtnTV = layout.findViewById(R.id.profileLblDelBtnTV);
+        profileLblDelBtnTV.setTextColor(Utils.getContrastColor(delColor));
 
         //updateProfilesUI(); //no use doing this update here since profiles are loaded in onResume, whicj hasn't happened yet
 

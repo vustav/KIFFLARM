@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -53,6 +54,7 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
             viewHolder.bg.setBackground(viewHolder.gradientDrawable);
             viewHolder.tv.setTextColor(Utils.getContrastColor(color));
         }
+        viewHolder.iv.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), profile.getIconId(), null));
         viewHolder.tv.setText(profilesManager.getProfiles().get(viewHolder.getAdapterPosition()).getName());
 
         viewHolder.tvLayout.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +162,7 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
         private GradientDrawable gradientDrawable;
         private RelativeLayout bg, tvLayout;
         private final TextView tv;
+        private final ImageView iv;
         private final Button deleteBtn, quickBtn, editBtn, toggleBtn;
         private final FrameLayout quickIndicator, toggleIndicator;
 
@@ -169,6 +172,7 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
             bg = view.findViewById(R.id.profilesVHBG);
             tvLayout = view.findViewById(R.id.profilesVHTVLayout);
             tv = view.findViewById(R.id.profilesVHTV);
+            iv = view.findViewById(R.id.profilesVHIV);
             deleteBtn = view.findViewById(R.id.profilesVHDeleteBtn);
             quickBtn = view.findViewById(R.id.profilesVHAddBtn);
             editBtn = view.findViewById(R.id.profilesVHEditBtn);

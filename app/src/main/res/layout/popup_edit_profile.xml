@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <!-- SHORT LABEL -->
+                <!-- LABEL -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,8 +81,7 @@
                     android:textStyle="italic"
                     android:fontFamily="@font/default_font"
                     android:paddingStart="@dimen/marginSmall"
-                    android:maxLines="1"
-                    android:inputType="textMultiLine"
+                    android:singleLine="true"
 
                     android:layout_marginStart="@dimen/marginSmall"
 

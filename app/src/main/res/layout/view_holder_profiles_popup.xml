@@ -32,19 +32,26 @@
             android:layout_height="match_parent"
             android:id="@+id/profilesVHTVLayout"
 
-            android:layout_toStartOf="@id/profilesVHDeleteLayout">
+            android:layout_toStartOf="@id/profilesVHEditLayout">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profilesVHIV"
+                android:layout_marginStart="@dimen/marginMedium"
+                android:layout_centerVertical="true"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/profilesVHIV"
                 android:id="@+id/profilesVHTV"
                 android:textSize="@dimen/defaultTextSize"
                 android:textStyle="italic"
                 android:singleLine="true"
                 android:textColor="@color/defaultTxtColor"
                 android:fontFamily="@font/default_font"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/marginMedium"/>
+                android:layout_marginTop="13dp"/>
         </RelativeLayout>
 
         <!-- TOGGLE -->
