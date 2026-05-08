@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -24,6 +25,18 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.billingclient.api.AcknowledgePurchaseParams;
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.PendingPurchasesParams;
+import com.android.billingclient.api.ProductDetails;
+import com.android.billingclient.api.ProductDetailsResponseListener;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesResponseListener;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.QueryProductDetailsParams;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmActivity;
 import com.kiefer.kifflarm.alarm.AlarmCannonNotification;
@@ -38,6 +51,7 @@ import com.kiefer.kifflarm.profiles.EditProfilePopup;
 import com.kiefer.kifflarm.profiles.Profile;
 import com.kiefer.kifflarm.profiles.ProfilesPopup;
 import com.kiefer.kifflarm.profiles.QuickProfilesTouchHelper;
+import com.kiefer.kifflarm.sound.PromptPopup;
 import com.kiefer.kifflarm.sound.VolumePopup;
 import com.kiefer.kifflarm.profiles.ProfilesManager;
 import com.kiefer.kifflarm.profiles.QuickProfilesAdapter;
@@ -45,6 +59,7 @@ import com.kiefer.kifflarm.sound.SoundManager;
 import com.kiefer.kifflarm.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class KIFFLARM extends AppCompatActivity {
     private SoundManager soundManager;
@@ -72,6 +87,8 @@ public class KIFFLARM extends AppCompatActivity {
             return insets;
         });
          */
+        //initBilling();
+
         fileManager = new FileManager(this);
         profilesManager = new ProfilesManager(this);
         alarmManager = new AlarmManager(this, getResources().getString(R.string.custom_alarms_folder));
@@ -93,7 +110,7 @@ public class KIFFLARM extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        Log.e("KIFFLARM ZZZ", "onResume");
+        //Log.e("KIFFLARM ZZZ", "onResume");
 
         /*
         if an alarm goes off when the main Activity is running nothing in it it gets updated .This
@@ -127,7 +144,7 @@ public class KIFFLARM extends AppCompatActivity {
     }
 
     public void askPermission(){
-        Log.e("KIFFLARM ZZZ", "askPermission");
+        //Log.e("KIFFLARM ZZZ", "askPermission");
         // Should we show an explanation?
         //if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
 
@@ -149,6 +166,240 @@ public class KIFFLARM extends AppCompatActivity {
         //}
     }
 
+    /** MONEY **/
+    /*
+    private BillingClient billingClient;
+    private boolean FULL_VERSION = false;
+    private List<ProductDetails> productDetails = new ArrayList<>();
+    private void initBilling(){
+        createBillingClient();
+        startConnection();
+    }
+
+    private void createBillingClient(){
+
+        if(billingClient == null) {
+
+            PurchasesUpdatedListener purchasesUpdatedListener = (billingResult, list) -> {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
+                    for (Purchase purchase : list) {
+                        handlePurchase(purchase);
+                    }
+                }
+            };
+
+            PendingPurchasesParams params = PendingPurchasesParams.newBuilder()
+                    .enableOneTimeProducts()
+                    .build();
+
+            billingClient = BillingClient.newBuilder(this)
+                    .enablePendingPurchases(params)
+                    .setListener(purchasesUpdatedListener)
+                    .build();
+        }
+    }
+
+    private void startConnection(){
+        //Log.e("LOG", "start connection, billingClient==null: "+(billingClient==null));
+        if(billingClient != null) {
+            //try to connect
+            //Log.e("LOG", "glubglub");
+            billingClient.startConnection(new BillingClientStateListener() {
+                @Override
+                public void onBillingSetupFinished(BillingResult billingResult) {
+                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                        // The BillingClient is ready. You can query purchases here.
+                        showProducts();
+                        //Log.e("LOG", "billing setup finished");
+
+                        //this is because sometimes this finishes after the other checks and the app starts without full version even if it has full access
+                        checkFullVersion();
+                    }
+                }
+
+                @Override
+                public void onBillingServiceDisconnected() {
+                    // Try to restart the connection on the next request to
+                    // Google Play by calling the startConnection() method.
+                    Log.e("LOG", "billing setup disconnected");
+                    startConnection();
+                }
+            });
+        }
+        else{
+            initBilling();
+        }
+    }
+
+    private void showProducts(){
+
+        List<QueryProductDetailsParams.Product> productList = List.of(
+                //Product 1
+                QueryProductDetailsParams.Product.newBuilder()
+                        .setProductId("full_version")
+                        .setProductType(BillingClient.ProductType.INAPP)
+                        .build()
+        );
+
+        QueryProductDetailsParams params = QueryProductDetailsParams.newBuilder()
+                .setProductList(productList)
+                .build();
+
+        billingClient.queryProductDetailsAsync(
+                params,
+                new ProductDetailsResponseListener() {
+                    public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> prodDetailsList) {
+                        // Process the result
+                        productDetails.clear();
+                        productDetails.addAll(prodDetailsList);
+                        //Log.e("LOG", "onProductDetailsResponse, size: "+productDetails.size());
+                    }
+                }
+        );
+
+    }
+
+    //ArrayList<Button> buyBtns = new ArrayList<>();
+    public void promptFullVersion(ArrayList<Button> btns){
+        checkFullVersion();
+
+        if(!FULL_VERSION) {
+            String txt = "THIS FEATURE IS ONLY AVAILABLE IN THE FULL VERSION.";
+
+            View.OnClickListener listener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    buyFullVersion();
+                }
+            };
+
+            if(btns != null){
+                buyBtns.addAll(btns);
+            }
+
+            new PromptPopup(this, txt, listener);
+        }
+    }
+
+    private void buyFullVersion(){
+
+        if(billingClient != null) {
+            if (!productDetails.isEmpty()) {
+                List<BillingFlowParams.ProductDetailsParams> productDetailsParamsList =
+                        List.of(
+                                BillingFlowParams.ProductDetailsParams.newBuilder()
+                                        .setProductDetails(productDetails.get(0))
+                                        .build()
+                        );
+
+                BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
+                        .setProductDetailsParamsList(productDetailsParamsList)
+                        .build();
+
+                billingClient.launchBillingFlow(this, billingFlowParams);
+            } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String message = "COULDN'T CONNECT TO PLAY STORE";
+                        Toast toast = Toast.makeText(KIFFLARM.this, message, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
+
+
+                Log.e("KIFFLARM ZZZ", "list empty in KIFFLARM.buyFullVersion");
+            }
+        }
+        else{
+            initBilling();
+            buyFullVersion();
+        }
+    }
+
+    void handlePurchase(Purchase purchases) {
+
+        //got a weird crash here where billingClient was null after purchase. Maybe because of screen rotation when entering the store??
+        if(billingClient == null){
+            createBillingClient();
+            handlePurchase(purchases);
+        }
+
+        if (!purchases.isAcknowledged()) {
+            billingClient.acknowledgePurchase(AcknowledgePurchaseParams
+                    .newBuilder()
+                    .setPurchaseToken(purchases.getPurchaseToken())
+                    .build(), billingResult -> {
+
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    setFullVersion(true);
+
+                    //remove all buttons except the first two. They are topFragments buttons and they should always be here.
+                    if(buyBtns.size() > 2){
+                        for(int i = buyBtns.size()-1; i > 1; i--){
+                            buyBtns.remove(i);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public void setFullVersion(boolean fullVersion){
+        FULL_VERSION = fullVersion;
+        adjustButtonsToVersion();
+    }
+
+    private void checkFullVersion(){
+
+        if(billingClient == null){
+            initBilling();
+            return;
+        }
+
+        //Log.e("LPPDRUMS LOG", "checkFullVersion()");
+        PurchasesResponseListener listener = (billingResult, list) -> {
+            //Log.e("LOG", "checkFull");
+
+            //since we only have one in app-purchase there's no need tp parse the result
+            if(!list.isEmpty()){
+                setFullVersion(true);
+            }
+            else{
+                setFullVersion(false);
+            }
+            //Log.e("LOG", "full: "+FULL_VERSION);
+        };
+
+        billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP, listener);
+    }
+
+    public boolean checkFullVersionPublic(){
+        return FULL_VERSION;
+    }
+
+    private ArrayList<View> buyBtns = new ArrayList();
+    public void addBuyView(View btn){
+        buyBtns.add(btn);
+    }
+
+    public void adjustButtonsToVersion(){
+        adjustButtonsToVersion(buyBtns);
+    }
+
+    public void adjustButtonsToVersion(ArrayList<View> views){
+        for(View b : views) {
+            if (FULL_VERSION) {
+                b.setAlpha(1);
+            } else {
+                b.setAlpha(.5f);
+            }
+        }
+    }
+
+     */
+
+    /** VOLUME **/
     boolean volumeWarned = false; //without this you get two popups. Probably something with getViewTreeObserver
     private void checkVolume(ViewGroup layout){
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);

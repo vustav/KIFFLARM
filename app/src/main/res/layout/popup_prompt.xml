@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/volumePopupBg">
+    android:id="@+id/promptPopupBg">
 
     <!-- BG TV -->
     <TextView
-        android:id="@+id/volumePopupBgTV"
+        android:id="@+id/promptPopupBgTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/timeTxtSize"
@@ -16,31 +16,19 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/volumePopupMainLayout">
-
-        <!-- SEEK CONTAINER -->
-        <FrameLayout
-            android:layout_width="@dimen/volumeSeekWidth"
-            android:layout_height="@dimen/volumeSeekHeight"
-            android:id="@+id/volumePopupSeekContainer"
-
-            android:layout_marginTop="@dimen/marginLarge"
-            android:layout_marginEnd="@dimen/marginLarge"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+        android:id="@+id/promptPopupMainLayout">
 
         <!-- TXT -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/volumePopupTextLayout"
+            android:id="@+id/promptPopupTextLayout"
             android:layout_marginStart="@dimen/marginLarge"
             android:layout_marginEnd="@dimen/marginMedium"
             android:layout_marginTop="@dimen/marginLarge"
             android:padding="@dimen/marginSmall"
             android:background="@color/warningBg"
 
-            android:layout_toStartOf="@id/volumePopupSeekContainer"
             android:layout_centerVertical="true">
 
             <TextView
@@ -51,8 +39,7 @@
                 android:fontFamily="@font/default_font"
                 android:text="@string/volume_warning"
                 android:textColor="@color/warningTxt"
-                android:id="@+id/volumePopupMainTV"/>
-
+                android:id="@+id/promptPopupMainTV"/>
         </FrameLayout>
     </RelativeLayout>
 
@@ -64,7 +51,7 @@
 
         android:layout_marginBottom="@dimen/marginLarge"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/volumePopupMainLayout">
+        android:layout_below="@id/promptPopupMainLayout">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -72,15 +59,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/btnHeight"
-                android:text="CANCEL"
-                android:id="@+id/volumePopupCancelBtn"
+                android:text="OK"
+                android:id="@+id/promptPopupOkBtn"
                 android:textStyle="italic"
                 android:textSize="@dimen/defaultBtnTextSize"
                 android:textColor="@color/defaultBtnTxtColor"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"
 
-                android:layout_marginEnd="@dimen/marginSmall"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
 
@@ -90,14 +76,15 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/btnHeight"
-                android:text="RAISE IT"
-                android:id="@+id/volumePopupOkBtn"
+                android:text="CANCEL"
+                android:id="@+id/promptPopupCancelBtn"
                 android:textStyle="italic"
                 android:textSize="@dimen/defaultBtnTextSize"
                 android:textColor="@color/defaultBtnTxtColor"
                 android:fontFamily="@font/default_font"
                 android:background="@drawable/custom_btn"
 
+                android:layout_marginEnd="@dimen/marginSmall"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
     </LinearLayout>

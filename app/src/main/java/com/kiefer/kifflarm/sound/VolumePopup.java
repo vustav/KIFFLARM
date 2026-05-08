@@ -32,11 +32,6 @@ public class VolumePopup extends Popup {
         boolean focusable = true;
         popupWindow = new PopupWindow(popupView, width, height, focusable);
 
-        //set a margin on the window since we want to max its size
-        //Display display = this.kifflarm.getWindowManager().getDefaultDisplay();
-        //Point size = new Point();
-        //display.getSize(size);
-
         popupWindow.setWidth((int) kifflarm.getResources().getDimension(R.dimen.volumePopupWidth));
         popupWindow.setHeight((int) kifflarm.getResources().getDimension(R.dimen.volumePopupHeight));
 
@@ -89,7 +84,7 @@ public class VolumePopup extends Popup {
             }
         });
 
-        Button raiseBtn = popupView.findViewById(R.id.volumePopupRaiseBtn);
+        Button raiseBtn = popupView.findViewById(R.id.volumePopupOkBtn);
         raiseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

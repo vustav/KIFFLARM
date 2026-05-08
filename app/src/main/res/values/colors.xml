@@ -21,6 +21,6 @@
     <!-- -->
 
     <!-- VOLUME POPUP -->
-    <color name="volumeWarningBg">#FF2B00</color>
-    <color name="volumeWarningTxt">#FFEB3B</color>
+    <color name="warningBg">#FF2B00</color>
+    <color name="warningTxt">#FFEB3B</color>
 </resources>

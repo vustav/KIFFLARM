@@ -41,4 +41,7 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
+    def billing_version = "8.3.0"
+    implementation "com.android.billingclient:billing:$billing_version"
 }
