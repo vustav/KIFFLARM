@@ -20,11 +20,11 @@ import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.views.CSeekBar;
 
 public class PromptPopup extends Popup {
-    public PromptPopup(KIFFLARM kifflarm, String mesage, View.OnClickListener listener){
+    public PromptPopup(KIFFLARM kifflarm, View.OnClickListener listener, String mesage, String actionBtnMessage){
         super(kifflarm);
 
         //inflate the View
-        popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_volume, null);
+        popupView = this.kifflarm.getLayoutInflater().inflate(R.layout.popup_prompt, null);
 
         //create the popupWindow
         int width = RelativeLayout.LayoutParams.WRAP_CONTENT;
@@ -32,12 +32,12 @@ public class PromptPopup extends Popup {
         boolean focusable = true;
         popupWindow = new PopupWindow(popupView, width, height, focusable);
 
-        popupWindow.setWidth((int) kifflarm.getResources().getDimension(R.dimen.volumePopupWidth));
-        popupWindow.setHeight((int) kifflarm.getResources().getDimension(R.dimen.volumePopupHeight));
+        popupWindow.setWidth((int) kifflarm.getResources().getDimension(R.dimen.buyPopupWidth));
+        popupWindow.setHeight((int) kifflarm.getResources().getDimension(R.dimen.buyPopupHeight));
 
         //bg
-        RelativeLayout bg = popupView.findViewById(R.id.volumePopupBg);
-        TextView bgTv = popupView.findViewById(R.id.volumePopupBgTV);
+        RelativeLayout bg = popupView.findViewById(R.id.promptPopupBg);
+        TextView bgTv = popupView.findViewById(R.id.promptPopupBgTV);
         Utils.createNiceBg(bg, bgTv, 50);
 
         //add a nice animation
@@ -48,10 +48,17 @@ public class PromptPopup extends Popup {
         tv.setText(mesage);
 
         //OK
-        Button okBtn = popupView.findViewById(R.id.volumePopupOkBtn);
-        okBtn.setOnClickListener(listener);
+        Button okBtn = popupView.findViewById(R.id.promptPopupOkBtn);
+        okBtn.setText(actionBtnMessage);
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v);
+                dismiss();
+            }
+        });
 
-        Button cancelBtn = popupView.findViewById(R.id.volumePopupCancelBtn);
+        Button cancelBtn = popupView.findViewById(R.id.promptPopupCancelBtn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

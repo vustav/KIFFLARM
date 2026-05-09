@@ -68,6 +68,10 @@
     <dimen name="volumePopupHeight">200dp</dimen>
     <dimen name="volumePopupWidth">190dp</dimen>
 
+    <!-- BUY POPUP -->
+    <dimen name="buyPopupHeight">170dp</dimen>
+    <dimen name="buyPopupWidth">190dp</dimen>
+
     <!-- QUICK -->
     <dimen name="quickIconWidth">30dp</dimen>
     <dimen name="quickIconHeight">30dp</dimen>

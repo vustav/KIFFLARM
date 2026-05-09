@@ -23,11 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/promptPopupTextLayout"
-            android:layout_marginStart="@dimen/marginLarge"
             android:layout_marginEnd="@dimen/marginMedium"
             android:layout_marginTop="@dimen/marginLarge"
             android:padding="@dimen/marginSmall"
             android:background="@color/warningBg"
+            android:layout_centerHorizontal="true"
 
             android:layout_centerVertical="true">
 
@@ -59,7 +59,6 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/btnHeight"
-                android:text="OK"
                 android:id="@+id/promptPopupOkBtn"
                 android:textStyle="italic"
                 android:textSize="@dimen/defaultBtnTextSize"
