@@ -26,4 +26,28 @@
         android:textStyle="italic"
         android:fontFamily="@font/default_font"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/marginSmall"
+        android:layout_marginTop="@dimen/marginSmall">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/notificationBtnHeight"
+            android:id="@+id/notificationSnoozeBtn"
+            android:background="@drawable/custom_btn"
+            android:textSize="@dimen/notificationBtnTxtSize"
+            android:text="SNOOZE"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/notificationBtnHeight"
+            android:id="@+id/notificationCancelBtn"
+            android:background="@drawable/custom_btn"
+            android:textSize="@dimen/notificationBtnTxtSize"
+            android:text="@string/alarm_turn_off"
+            android:layout_marginStart="@dimen/marginSmall"/>
+    </LinearLayout>
 </RelativeLayout>

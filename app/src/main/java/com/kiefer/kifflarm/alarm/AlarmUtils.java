@@ -1,10 +1,15 @@
 package com.kiefer.kifflarm.alarm;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
+
+import com.kiefer.kifflarm.alarm.receivers.AlarmReceiver2;
+import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
+import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 
 public class AlarmUtils {
 
@@ -35,10 +40,20 @@ public class AlarmUtils {
         }
     }
 
-    public static void alarmOff(Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer){
+    public static void alarmOff(Context context, Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer, int startVolume){
         alarm.activate(false);
-        //alarm.saveAndSchedule();
-        vibrator.cancel();
+        //AlarmCannon.resetAlarmVolume(context, startVolume);
+        //AlarmCannon.stopTimer();
+
+        KIFFMediaPlayer.destroy();
+        KIFFVibrator.destroy();
+        AlarmReceiver2.stopTimer(context, startVolume);
+
+        //vibrator.cancel();
+
+        if(alarm.isSnooze()){
+            alarm.deleteAlarm();
+        }
 
         try {
             mediaPlayer.stop();
@@ -46,5 +61,12 @@ public class AlarmUtils {
         catch (IllegalStateException ise){
             Log.e("AlarmUtils ZZZ", "alarmOff, "+ise);
         }
+    }
+
+    public static void setSnooze(Context context, Alarm alarm){
+        Alarm newAlarm = new Alarm(context, alarm.getSound(), alarm.getFolder());
+        newAlarm.setIsSnooze(true);
+        newAlarm.setTime(alarm.getHour(), alarm.getMinute() + alarm.getSnoozeTime());
+        newAlarm.activate(true);
     }
 }

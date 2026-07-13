@@ -7,6 +7,8 @@ import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.util.Log;
 
+import androidx.core.app.NotificationManagerCompat;
+
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.alarm.Alarm;
 import com.kiefer.kifflarm.alarm.AlarmActivity;
@@ -15,24 +17,28 @@ import com.kiefer.kifflarm.alarm.TriggerOnResumeActivity;
 import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 
-public class NotificationDismissedReceiver extends BroadcastReceiver {
+public class NotificationCancelReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.e("NotificationSnoozeReceiver ZZZ", "cancel");
         try {
             Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));
 
             MediaPlayer mediaPlayer = KIFFMediaPlayer.getInstance(context, alarm.getSound().getUri());
-
             Vibrator vibrator = KIFFVibrator.getInstance(context);
 
-            AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
-            KIFFMediaPlayer.destroy();
-            KIFFVibrator.destroy();
+            int startVolume = Integer.parseInt(intent.getStringExtra(AlarmReceiver2.NOTIFICATION_ID_TAG));
+            AlarmUtils.alarmOff(context, alarm, vibrator, mediaPlayer, startVolume);
+            //KIFFMediaPlayer.destroy();
+            //KIFFVibrator.destroy();
 
             //se explanation in TriggerOnResumeActivity
             Intent onResumeIntent = new Intent(context, TriggerOnResumeActivity.class);
             onResumeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(onResumeIntent);
+
+            NotificationManagerCompat.from(context).cancel(Integer.parseInt(intent.getStringExtra(AlarmReceiver2.NOTIFICATION_ID_TAG)));
+            //AlarmCannon.stopTimer();
 
             //explanation in AlarmActivity.onResume
             try {

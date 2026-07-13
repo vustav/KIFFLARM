@@ -122,7 +122,7 @@ public class SetAlarmPopup extends Popup {
         });
         setSoundBtnTxt(alarm.getSound().getName());
 
-        /*
+
         //okBtn
         Button okBtn = popupView.findViewById(R.id.setTimeOKBtn);
         okBtn.setOnClickListener(v -> {
@@ -155,11 +155,11 @@ public class SetAlarmPopup extends Popup {
             dismiss();
         });
 
-         */
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                /*
                 alarm.setTime(Integer.parseInt(String.valueOf(hourTV.getText())), Integer.parseInt(String.valueOf(minuteTV.getText())));
                 alarm.setSnoozeTime(Integer.parseInt(String.valueOf(snoozeTV.getText())));
 
@@ -176,6 +176,8 @@ public class SetAlarmPopup extends Popup {
                 }
 
                 dismiss();
+
+                 */
             }
         });
 

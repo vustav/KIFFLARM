@@ -66,6 +66,8 @@ public class Alarm implements Comparable<Alarm>, Saveable {
         Date date = calendar.getTime();
         hour = date.getHours();
         minute = date.getMinutes() + 10;
+        setTime(date.getHours(), date.getMinutes());
+        /*
         if(minute > 59){
             minute -= 60;
 
@@ -75,6 +77,8 @@ public class Alarm implements Comparable<Alarm>, Saveable {
                 hour -= 24;
             }
         }
+
+         */
 
         id = (int) date.getTime();
     }
@@ -215,18 +219,21 @@ public class Alarm implements Comparable<Alarm>, Saveable {
 
     /** SET **/
     public void setTime(int hour, int minute){
-        setHour(hour);
-        setMinute(minute);
+        if(minute > 59){
+            minute -= 60;
+
+            hour++;
+
+            if(hour > 23){
+                hour -= 24;
+            }
+        }
+        this.hour = hour;
+        this.minute = minute;
     }
 
     public void setSnoozeTime(int snooze){
         snoozeTime = snooze;
-    }
-    public void setHour(int hour){
-        this.hour = hour;
-    }
-    public void setMinute(int minute){
-        this.minute = minute;
     }
 
     public void setSound(Sound sound){

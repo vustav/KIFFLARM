@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
@@ -42,6 +43,8 @@ import com.android.billingclient.api.QueryProductDetailsParams;
 import com.android.billingclient.api.QueryProductDetailsResult;
 import com.android.billingclient.api.QueryPurchasesParams;
 import com.kiefer.kifflarm.alarm.Alarm;
+import com.kiefer.kifflarm.alarm.AlarmActivity;
+import com.kiefer.kifflarm.alarm.receivers.AlarmReceiver2;
 import com.kiefer.kifflarm.alarm.AlarmManager;
 import com.kiefer.kifflarm.alarm.AlarmsAdapter;
 import com.kiefer.kifflarm.alarm.AlarmsTouchHelper;
@@ -74,7 +77,7 @@ public class KIFFLARM extends AppCompatActivity {
     private TextView profileLblTV;
     private FrameLayout profilesLayout;
     //private ArrayList<Alarm> alarms;
-    private final boolean SHOW_TRIGGER = false;
+    private final boolean SHOW_TRIGGER = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -594,15 +597,14 @@ public class KIFFLARM extends AppCompatActivity {
             shortAlarmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*
-                    //TRIGGER ALARM
+
+                    //TRIGGER ALARM 0
+
                     Intent intent = new Intent(KIFFLARM.this, AlarmActivity.class);
                     intent.putExtra(Alarm.ALRM_ID_TAG, Integer.toString(alarmManager.getAlarms().get(0).getId()));
 
                     //new AlarmCannonActivity(KIFFLARM.this, intent);
-                    new AlarmCannonNotification(KIFFLARM.this, intent);
-
-                     */
+                    new AlarmReceiver2(KIFFLARM.this, intent);
 
                     /*
                     //LIST ALL SAVED ALARMS

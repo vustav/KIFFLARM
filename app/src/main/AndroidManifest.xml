@@ -67,8 +67,15 @@
             </intent-filter>
         </receiver>
 
+        <!-- CANCEL -->
         <receiver
-            android:name="com.kiefer.kifflarm.alarm.receivers.NotificationDismissedReceiver"
+            android:name="com.kiefer.kifflarm.alarm.receivers.NotificationCancelReceiver"
+            android:exported="false">
+        </receiver>
+
+        <!-- SNOOZE -->
+        <receiver
+            android:name="com.kiefer.kifflarm.alarm.receivers.NotificationSnoozeReceiver"
             android:exported="false">
         </receiver>
 

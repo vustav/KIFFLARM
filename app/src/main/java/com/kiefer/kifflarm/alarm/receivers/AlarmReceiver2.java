@@ -1,4 +1,4 @@
-package com.kiefer.kifflarm.alarm;
+package com.kiefer.kifflarm.alarm.receivers;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -19,24 +19,27 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.kiefer.kifflarm.KIFFLARM;
+import com.kiefer.kifflarm.alarm.Alarm;
+import com.kiefer.kifflarm.alarm.AlarmActivity;
+import com.kiefer.kifflarm.alarm.AlarmUtils;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.Utils;
 import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
-import com.kiefer.kifflarm.alarm.receivers.NotificationDismissedReceiver;
 import com.kiefer.kifflarm.alarm.singles.KIFFMediaPlayer;
 
-//unnecessary class only used to test alarms
-public class AlarmCannonNotification {
+public class AlarmReceiver2 {
+
+    //having the code here instead of in the receiver makes triggering alarms for testing easier
     private Context context;
     private static CountDownTimer countDownTimer;
     private Alarm alarm;
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
     private float rampVolume = 0; //used to ramp volume during alarm
-    public static String NOTIFICATION_ID_TAG = "nidt";
+    public static String NOTIFICATION_ID_TAG = "nidt", START_VOLUME_TAG = "svt";
 
-    public AlarmCannonNotification(Context context, Intent intent){
+    public AlarmReceiver2(Context context, Intent intent){
         this.context = context;
 
         alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));
@@ -55,19 +58,36 @@ public class AlarmCannonNotification {
 
         createNotificationChannel(channelId, alarm.getTimeAsString());
 
-        //activity
+
+        //create a nice ramping volume
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        //start by saving current volume
+        int startVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+
+        //activityPendingIntent
         Intent activityIntent = new Intent(context, AlarmActivity.class);
         activityIntent.putExtra(Alarm.ALRM_ID_TAG, intent.getStringExtra(Alarm.ALRM_ID_TAG));
         activityIntent.putExtra(NOTIFICATION_ID_TAG, Integer.toString(notificationId));
+        activityIntent.putExtra(START_VOLUME_TAG, Integer.toString(startVolume));
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, notificationId, activityIntent, flag);
 
-        //swipe
-        Intent swipeIntent = new Intent(context, NotificationDismissedReceiver.class);
-        swipeIntent.putExtra(Alarm.ALRM_ID_TAG, intent.getStringExtra(Alarm.ALRM_ID_TAG));
-        PendingIntent swipePendingIntent = PendingIntent.getBroadcast(context, notificationId, swipeIntent, flag);
+        //dismissPendingIntent
+        Intent dismissIntent = new Intent(context, NotificationCancelReceiver.class);
+        dismissIntent.putExtra(Alarm.ALRM_ID_TAG, intent.getStringExtra(Alarm.ALRM_ID_TAG));
+        dismissIntent.putExtra(NOTIFICATION_ID_TAG, Integer.toString(notificationId));
+        dismissIntent.putExtra(START_VOLUME_TAG, Integer.toString(startVolume));
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notificationId, dismissIntent, flag);
 
-        RemoteViews remoteViews = getRemoteViews(alarm);
+        //snoozePendingIntent
+        Intent snoozeIntent = new Intent(context, NotificationSnoozeReceiver.class);
+        snoozeIntent.putExtra(Alarm.ALRM_ID_TAG, intent.getStringExtra(Alarm.ALRM_ID_TAG));
+        snoozeIntent.putExtra(NOTIFICATION_ID_TAG, Integer.toString(notificationId));
+        snoozeIntent.putExtra(START_VOLUME_TAG, Integer.toString(startVolume));
+        PendingIntent snoozePendingIntent = PendingIntent.getBroadcast(context, notificationId, snoozeIntent, flag);
+
+        RemoteViews remoteViews = getRemoteViews(alarm, dismissPendingIntent, snoozePendingIntent);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.custom_btn)
@@ -75,7 +95,7 @@ public class AlarmCannonNotification {
                 .setContentText(alarm.getTimeAsString())
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setFullScreenIntent(fullScreenPendingIntent, true)
-                .setDeleteIntent(swipePendingIntent)
+                .setDeleteIntent(dismissPendingIntent)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(true)
                 .setContentIntent(fullScreenPendingIntent)
@@ -101,10 +121,10 @@ public class AlarmCannonNotification {
         float multiplier = 0;
 
         //create a nice ramping volume
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        //AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
         //start by saving current volume
-        int startVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+        //int startVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
         Log.e("Cannon ZZZ", "startVol: "+startVolume);
 
         //lower the volume to start the ramp
@@ -132,10 +152,8 @@ public class AlarmCannonNotification {
                 }
             }
             public void onFinish() {
-                audioManager.setStreamVolume(AudioManager.STREAM_ALARM, startVolume, 0); //should already be back to start but just in case
-
                 NotificationManagerCompat.from(context).cancel(notificationId);
-                AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
+                AlarmUtils.alarmOff(context, alarm, vibrator, mediaPlayer, startVolume);
 
                 try {
                     //Activity will be started before notification is clicked if the phone was sleeping (no idea why)
@@ -148,6 +166,12 @@ public class AlarmCannonNotification {
                 }
             }
         }.start();
+    }
+
+    public static void resetAlarmVolume(Context context, int startVolume){
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, startVolume, 0); //should already be back to start but just in case
+        Log.e("Cannon ZZZ", "getVol: " + audioManager.getStreamVolume(AudioManager.STREAM_ALARM));
     }
 
     private void createNotificationChannel(String id, String description) {
@@ -166,7 +190,7 @@ public class AlarmCannonNotification {
         }
     }
 
-    private RemoteViews getRemoteViews(Alarm alarm){
+    private RemoteViews getRemoteViews(Alarm alarm, PendingIntent dismissPendingIntent, PendingIntent snoozePendingIntent){
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.notification);
 
         remoteViews.setTextViewText(R.id.notificationTV, alarm.getTimeAsString());
@@ -174,12 +198,17 @@ public class AlarmCannonNotification {
 
         remoteViews.setTextViewText(R.id.notificationTVShadow, alarm.getTimeAsString());
 
+        remoteViews.setOnClickPendingIntent(R.id.notificationCancelBtn, dismissPendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.notificationSnoozeBtn, snoozePendingIntent);
+
         return remoteViews;
     }
 
-    public static void stopTimer(){
+    public static void stopTimer(Context context, int startVolume){
+        resetAlarmVolume(context, startVolume);
+
         if(countDownTimer != null) {
-            countDownTimer.onFinish();
+            //countDownTimer.onFinish();
             countDownTimer.cancel();
             countDownTimer = null;
         }

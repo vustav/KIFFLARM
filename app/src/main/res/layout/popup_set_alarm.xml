@@ -319,7 +319,7 @@
         </RelativeLayout>
 
         <!-- CANCEL/OK -->
-        <!--
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -327,24 +327,6 @@
 
             android:layout_centerHorizontal="true"
             android:layout_below="@id/setAlarmPopupSoundLayout">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/btnHeight"
-                    android:text="CANCEL"
-                    android:id="@+id/setTimeCancelBtn"
-                    android:textStyle="italic"
-                    android:fontFamily="@font/default_font"
-                    android:textColor="@color/defaultBtnTxtColor"
-                    android:background="@drawable/custom_btn"
-                    android:textSize="@dimen/defaultBtnTextSize"
-
-                    android:layout_marginEnd="@dimen/marginSmall"
-                    android:layout_centerHorizontal="true"/>
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -360,9 +342,26 @@
                     android:background="@drawable/custom_btn"
                     android:textSize="@dimen/defaultBtnTextSize"
 
+
+                    android:layout_marginEnd="@dimen/marginSmall"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/btnHeight"
+                    android:text="CANCEL"
+                    android:id="@+id/setTimeCancelBtn"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/default_font"
+                    android:textColor="@color/defaultBtnTxtColor"
+                    android:background="@drawable/custom_btn"
+                    android:textSize="@dimen/defaultBtnTextSize"
                     android:layout_centerHorizontal="true"/>
             </RelativeLayout>
         </LinearLayout>
-            -->
     </RelativeLayout>
 </RelativeLayout>

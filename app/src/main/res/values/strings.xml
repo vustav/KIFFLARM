@@ -14,4 +14,7 @@
 
     <string name="alarms_extension">"kiffa</string>
     <string name="profile_extension">"kiffp</string>
+
+    <!-- ALARM -->
+    <string name="alarm_turn_off">"TURN OFF</string>
 </resources>

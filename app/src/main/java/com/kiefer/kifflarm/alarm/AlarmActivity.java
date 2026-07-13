@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.kiefer.kifflarm.KIFFLARM;
+import com.kiefer.kifflarm.alarm.receivers.AlarmReceiver2;
 import com.kiefer.kifflarm.files.FileManager;
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.utils.Utils;
@@ -29,6 +30,7 @@ public class AlarmActivity extends AppCompatActivity {
     private Vibrator vibrator;
     private ValueAnimator tvBgAnimation, tvTxtAnimation;
     private MediaPlayer mediaPlayer;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class AlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm);
 
         try {
-            Intent intent = getIntent();
+            intent = getIntent();
 
             alarm = FileManager.getAlarm(this, intent.getStringExtra(Alarm.ALRM_ID_TAG));
 
@@ -55,14 +57,13 @@ public class AlarmActivity extends AppCompatActivity {
             timeTv.setText(alarm.getTimeAsString());
             animateTV(timeTv);
 
-            int notificationID = Integer.parseInt(intent.getStringExtra(AlarmCannonNotification.NOTIFICATION_ID_TAG));
+            int notificationID = Integer.parseInt(intent.getStringExtra(AlarmReceiver2.NOTIFICATION_ID_TAG));
             Button offBtn = layout.findViewById(R.id.alarmActivityOffBtn);
             offBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    killAlarm();
-
-                    NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
+                    killAlarm(intent, true);
+                    //NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
                 }
             });
 
@@ -70,14 +71,16 @@ public class AlarmActivity extends AppCompatActivity {
             snoozeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    /*
                     Alarm newAlarm = new Alarm(AlarmActivity.this, alarm.getSound(), alarm.getFolder());
                     newAlarm.setIsSnooze(true);
                     newAlarm.setTime(alarm.getHour(), alarm.getMinute() + alarm.getSnoozeTime());
                     newAlarm.activate(true);
-                    //newAlarm.saveAndSchedule();
-                    killAlarm();
 
-                    NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
+                     */
+                    killAlarm(intent, true);
+                    //NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
+                    AlarmUtils.setSnooze(AlarmActivity.this, alarm);
                 }
             });
         }
@@ -97,7 +100,7 @@ public class AlarmActivity extends AppCompatActivity {
         and we kill the activity here
          */
         if(kill){
-            killAlarm();
+            killAlarm(intent, false);
             //finish();
         }
     }
@@ -124,16 +127,23 @@ public class AlarmActivity extends AppCompatActivity {
         tvTxtAnimation.start();
     }
 
-    private void killAlarm(){
-        AlarmUtils.alarmOff(alarm, vibrator, mediaPlayer);
-        KIFFMediaPlayer.destroy();
-        KIFFVibrator.destroy();
-        AlarmCannonNotification.stopTimer();
+    private void killAlarm(Intent intent, boolean cancelNotification){
+
+        if(cancelNotification){
+            int notificationID = Integer.parseInt(intent.getStringExtra(AlarmReceiver2.NOTIFICATION_ID_TAG));
+            NotificationManagerCompat.from(AlarmActivity.this).cancel(notificationID);
+        }
+
+        int startVolume = Integer.parseInt(intent.getStringExtra(AlarmReceiver2.NOTIFICATION_ID_TAG));
+        AlarmUtils.alarmOff(this, alarm, vibrator, mediaPlayer, startVolume);
+        //KIFFMediaPlayer.destroy();
+        //KIFFVibrator.destroy();
+        //AlarmCannon.stopTimer();
         finish();
 
-        if(alarm.isSnooze()){
-            alarm.deleteAlarm();
-        }
+        //if(alarm.isSnooze()){
+        //    alarm.deleteAlarm();
+       //}
     }
 
     @Override

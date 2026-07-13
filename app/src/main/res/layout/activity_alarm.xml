@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/alarmActivityOffBtn"
-                android:text="TURN OFF"
+                android:text="@string/alarm_turn_off"
                 android:textStyle="italic"
                 android:textSize="@dimen/defaultTextSize"
                 android:fontFamily="@font/default_font"
