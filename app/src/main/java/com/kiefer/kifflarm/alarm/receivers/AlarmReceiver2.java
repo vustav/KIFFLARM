@@ -36,8 +36,15 @@ public class AlarmReceiver2 {
     private Alarm alarm;
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
-    private float rampVolume = 0; //used to ramp volume during alarm
+    private float tempVolume = 0; //used to ramp volume during alarm
     public static String NOTIFICATION_ID_TAG = "nidt", START_VOLUME_TAG = "svt";
+
+    /** RAMP **/
+    private static boolean rampVolume = false;
+    int duration = 50000; //50 secs
+    int rampTime = 10000;
+    int tick = 1000;
+    float multiplier = 0, rampStart = 0;
 
     public AlarmReceiver2(Context context, Intent intent){
         this.context = context;
@@ -115,40 +122,39 @@ public class AlarmReceiver2 {
 
         /** RAMP WORKS BAD AND NEEDS FIXING **/
         //a timer that turns off the alarm after a set time
-        int duration = 50000; //50 secs
-        int rampTime = 10000;
-        int tick = 1000;
-        float multiplier = 0;
 
-        //create a nice ramping volume
-        //AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if(rampVolume) {
+            //create a nice ramping volume
+            //AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        //start by saving current volume
-        //int startVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
-        Log.e("Cannon ZZZ", "startVol: "+startVolume);
+            //start by saving current volume
+            //int startVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+            Log.e("Cannon ZZZ", "startVol: " + startVolume);
 
-        //lower the volume to start the ramp
-        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
-        //set rampStart to whatever the system allows as it's lowest
-        float rampStart = (float)audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
-        rampVolume = rampStart;
-        Log.e("Cannon ZZZ", "rampBottpm: "+rampStart);
+            //lower the volume to start the ramp
+            audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
+            //set rampStart to whatever the system allows as it's lowest
+            rampStart = (float) audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+            tempVolume = rampStart;
+            Log.e("Cannon ZZZ", "rampBottpm: " + rampStart);
+        }
         countDownTimer = new CountDownTimer(duration, tick) {
             public void onTick(long millisUntilFinished) {
-                if(duration - millisUntilFinished < rampTime){
-                    //update rampVolume every tick. We need this as a float and cast it to int when setting,
-                    //otherwise small increments will not register, ex. 1 -> 1.2 will be 1 -> 1 and
-                    //without rampVolume 1 would be used next tick and the same thing would happen again and the volume would be stuck at 1
-                    rampVolume += ((float) startVolume - rampStart) / ((float) rampTime/(float) tick);
-                    //Log.e("Cannon ZZZ", "ramp: " + rampVolume);
-                    if(rampVolume <= startVolume) {
-                        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, (int)rampVolume, 0);
+                if(rampVolume) {
+                    if (duration - millisUntilFinished < rampTime) {
+                        //update rampVolume every tick. We need this as a float and cast it to int when setting,
+                        //otherwise small increments will not register, ex. 1 -> 1.2 will be 1 -> 1 and
+                        //without rampVolume 1 would be used next tick and the same thing would happen again and the volume would be stuck at 1
+                        tempVolume += ((float) startVolume - rampStart) / ((float) rampTime / (float) tick);
+                        //Log.e("Cannon ZZZ", "ramp: " + rampVolume);
+                        if (tempVolume <= startVolume) {
+                            audioManager.setStreamVolume(AudioManager.STREAM_ALARM, (int) tempVolume, 0);
+                            Log.e("Cannon ZZZ", "getVol: " + audioManager.getStreamVolume(AudioManager.STREAM_ALARM));
+                        }
+                    } else {
+                        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, startVolume, 0);
                         Log.e("Cannon ZZZ", "getVol: " + audioManager.getStreamVolume(AudioManager.STREAM_ALARM));
                     }
-                }
-                else{
-                    audioManager.setStreamVolume(AudioManager.STREAM_ALARM, startVolume, 0);
-                    Log.e("Cannon ZZZ", "getVol: " + audioManager.getStreamVolume(AudioManager.STREAM_ALARM));
                 }
             }
             public void onFinish() {
@@ -205,7 +211,9 @@ public class AlarmReceiver2 {
     }
 
     public static void stopTimer(Context context, int startVolume){
-        resetAlarmVolume(context, startVolume);
+        if(rampVolume) {
+            resetAlarmVolume(context, startVolume);
+        }
 
         if(countDownTimer != null) {
             //countDownTimer.onFinish();
