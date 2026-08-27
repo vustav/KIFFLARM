@@ -54,7 +54,7 @@ import com.kiefer.kifflarm.profiles.AlarmsAdapterProfileMain;
 import com.kiefer.kifflarm.profiles.Profile;
 import com.kiefer.kifflarm.profiles.ProfilesPopup;
 import com.kiefer.kifflarm.profiles.QuickProfilesTouchHelper;
-import com.kiefer.kifflarm.sound.PromptPopup;
+import com.kiefer.kifflarm.popups.PromptPopup;
 import com.kiefer.kifflarm.sound.VolumePopup;
 import com.kiefer.kifflarm.profiles.ProfilesManager;
 import com.kiefer.kifflarm.profiles.QuickProfilesAdapter;
@@ -77,7 +77,7 @@ public class KIFFLARM extends AppCompatActivity {
     private TextView profileLblTV;
     private FrameLayout profilesLayout;
     //private ArrayList<Alarm> alarms;
-    private final boolean SHOW_TRIGGER = true;
+    private final boolean SHOW_TRIGGER = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +208,7 @@ public class KIFFLARM extends AppCompatActivity {
                         requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, POST_NOTIFICATIONS_PERMISSION_CODE);
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.icon_warning)
                 .show();
         //}
     }
@@ -393,7 +393,7 @@ public class KIFFLARM extends AppCompatActivity {
         checkFullVersion();
 
         if(!fullVersion) {
-            String txt = "THIS FEATURE IS ONLY AVAILABLE IN THE FULL VERSION.";
+            String txt = "MULTIPLE PROFILES ARE ONLY AVAILABLE IN THE FULL VERSION.";
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -424,7 +424,11 @@ public class KIFFLARM extends AppCompatActivity {
     public void setFullVersion(boolean fullVersion){
         Log.e("KIFFLARM ZZZ", "setFull: "+fullVersion);
         this.fullVersion = fullVersion;
-        enableProfiles(fullVersion);
+        //enableProfiles(fullVersion);
+    }
+
+    public boolean getFullVersion(){
+        return fullVersion;
     }
 
     /** VOLUME **/
@@ -476,29 +480,15 @@ public class KIFFLARM extends AppCompatActivity {
         int profilesBgColor1 = Utils.getRandomColor();
         profilesBg.setBackground(Utils.getGradientDrawable(profilesBgColor1, Utils.getRandomColor(), Utils.HORIZONTAL));
 
-        //LABEL
-        /*
-        TextView profilesLbl1 = layout.findViewById(R.id.profilesTV1);
-        TextView profilesLbl2 = layout.findViewById(R.id.profilesTV2);
-        TextView profilesLbl3 = layout.findViewById(R.id.profilesTV3);
-        profilesLbl1.setBackgroundColor(Utils.getContrastColor(profilesBgColor1));
-        profilesLbl2.setBackgroundColor(Utils.getContrastColor(profilesBgColor1));
-        profilesLbl3.setBackgroundColor(Utils.getContrastColor(profilesBgColor1));
-        profilesLbl1.setTextColor(profilesBgColor1);
-        profilesLbl2.setTextColor(profilesBgColor1);
-        profilesLbl3.setTextColor(profilesBgColor1);
-
-         */
-
         layout.findViewById(R.id.profilesMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(fullVersion) {
+                //if(fullVersion) {
                     new ProfilesPopup(KIFFLARM.this, profilesManager);
-                }
-                else{
-                    promptFullVersion();
-                }
+                //}
+                //else{
+                    //promptFullVersion();
+                //}
             }
         });
 
@@ -542,7 +532,7 @@ public class KIFFLARM extends AppCompatActivity {
         TextView profileLblDelBtnTV = layout.findViewById(R.id.profileLblDelBtnTV);
         profileLblDelBtnTV.setTextColor(Utils.getContrastColor(delColor));
 
-        enableProfiles(fullVersion);
+        //enableProfiles(fullVersion);
 
         //updateProfilesUI(); //no use doing this update here since profiles are loaded in onResume, whicj hasn't happened yet
 
@@ -583,7 +573,7 @@ public class KIFFLARM extends AppCompatActivity {
                     askPermission();
                 }
                 else {
-                    alarmsAdapter.openNewAlarmDialog(alarmsAdapter);
+                    alarmsAdapter.openNewAlarmDialog(alarmsAdapter, false);
                 }
             }
         });
@@ -631,6 +621,7 @@ public class KIFFLARM extends AppCompatActivity {
     }
 
     /** PROFILES **/
+    /*
     private void enableProfiles(boolean enable){
         enableView(profilesLayout, enable);
     }
@@ -652,6 +643,8 @@ public class KIFFLARM extends AppCompatActivity {
             }
         }
     }
+
+     */
     public void updateProfilesUI(){
         Log.e("KIFFLARM ZZZ", "updateUI, profilesManager == null: "+(profilesManager == null));
         quickProfilesAdapter.notifyDataSetChanged();

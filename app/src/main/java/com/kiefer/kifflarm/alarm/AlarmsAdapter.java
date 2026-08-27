@@ -136,8 +136,9 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         new SetAlarmPopup(kifflarm, alarmist, alarmsAdapter, alarmist.getAlarm(index), false);
     }
 
-    public void openNewAlarmDialog(AlarmsAdapter alarmsAdapter){
-        new SetAlarmPopup(kifflarm, alarmist, alarmsAdapter, new Alarm(kifflarm, kifflarm.getSoundManager().getRandomSound(), ((AlarmManager)alarmist).getFolder()), true);
+    //flagging an alarm as belonging to a profile is to be able to activate it right away after turning it off
+    public void openNewAlarmDialog(AlarmsAdapter alarmsAdapter, boolean belongsToProfile){
+        new SetAlarmPopup(kifflarm, alarmist, alarmsAdapter, new Alarm(kifflarm, kifflarm.getSoundManager().getRandomSound(), ((AlarmManager)alarmist).getFolder(), belongsToProfile), true);
     }
 
     /** ADAPTER **/

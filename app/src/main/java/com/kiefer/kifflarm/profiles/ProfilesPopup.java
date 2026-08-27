@@ -68,7 +68,13 @@ public class ProfilesPopup extends Popup {
             @Override
             public void onClick(View v) {
                 Utils.performHapticFeedback(addBtn);
-                new EditProfilePopup(kifflarm, profilesManager, ProfilesPopup.this, new Profile(kifflarm, profilesManager), true);
+
+                if(kifflarm.getFullVersion() || profilesManager.getProfiles().isEmpty()){
+                    new EditProfilePopup(kifflarm, profilesManager, ProfilesPopup.this, new Profile(kifflarm, profilesManager), true);
+                }
+                else{
+                    kifflarm.promptFullVersion();
+                }
             }
         });
 

@@ -148,7 +148,7 @@ public class EditProfilePopup extends Popup {
                     kifflarm.askPermission();
                 }
                 else {
-                    alarmsAdapter.openNewAlarmDialog(alarmsAdapter);
+                    alarmsAdapter.openNewAlarmDialog(alarmsAdapter, true);
                 }
             }
         });

@@ -69,65 +69,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/btnHeight">
 
-                    <!-- LABEL -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/profilesLabel">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/profilesLabelTxtSize"
-                            android:textStyle="italic"
-                            android:fontFamily="@font/default_font"
-                            android:text="PRO"
-                            android:background="#000000"
-                            android:textColor="#FFFFFF"
-                            android:id="@+id/profilesTV1"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/profilesLabelTxtSize"
-                            android:textStyle="italic"
-                            android:fontFamily="@font/default_font"
-                            android:text="FIL"
-                            android:background="#000000"
-                            android:textColor="#FFFFFF"
-                            android:id="@+id/profilesTV2"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/profilesLabelTxtSize"
-                            android:textStyle="italic"
-                            android:fontFamily="@font/default_font"
-                            android:text="ES"
-                            android:background="#000000"
-                            android:textColor="#FFFFFF"
-                            android:id="@+id/profilesTV3"/>
-                    </LinearLayout>
-
-                    <!-- MENU -->
-                    <!--
-                    <FrameLayout
-                        android:layout_width="@dimen/btnheight"
-                        android:layout_height="@dimen/btnheight"
-                        android:id="@+id/profilesMenuBtn"
-                        android:layout_toEndOf="@id/profilesLabel"
-                        android:layout_marginStart="@dimen/marginSmall"/>
-                        -->
-
-                    <!-- MENU BTN -->
-                    <!-- DELETE -->
+                    <!-- PROFILES BTN -->
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/profilesMenuBtnLayout"
-                        android:layout_marginStart="@dimen/marginSmall"
-                        android:layout_toEndOf="@id/profilesLabel">
+                        android:id="@+id/profilesMenuBtnLayout">
 
                         <!-- without this FrameLayout the button always covers the ImageView -->
                         <FrameLayout
@@ -142,12 +88,49 @@
                                 android:background="@drawable/custom_btn"/>
                         </FrameLayout>
 
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="9dp"
-                            android:src="@drawable/icon_note7"/>
+                        <!-- LABEL -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:id="@+id/profilesLabel"
+
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/profilesLabelTxtSize"
+                                android:textStyle="italic"
+                                android:fontFamily="@font/default_font"
+                                android:text="PRO"
+                                android:background="#000000"
+                                android:textColor="#FFFFFF"
+                                android:id="@+id/profilesTV1"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/profilesLabelTxtSize"
+                                android:textStyle="italic"
+                                android:fontFamily="@font/default_font"
+                                android:text="FIL"
+                                android:background="#000000"
+                                android:textColor="#FFFFFF"
+                                android:id="@+id/profilesTV2"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/profilesLabelTxtSize"
+                                android:textStyle="italic"
+                                android:fontFamily="@font/default_font"
+                                android:text="ES"
+                                android:background="#000000"
+                                android:textColor="#FFFFFF"
+                                android:id="@+id/profilesTV3"/>
+                        </LinearLayout>
                     </RelativeLayout>
 
                     <FrameLayout

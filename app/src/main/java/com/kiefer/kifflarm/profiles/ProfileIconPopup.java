@@ -5,6 +5,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 
 import androidx.core.content.res.ResourcesCompat;
 
@@ -13,12 +14,15 @@ import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.popups.Popup;
 import com.kiefer.kifflarm.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class ProfileIconPopup extends Popup {
     public ProfileIconPopup(final KIFFLARM kifflarm, EditProfilePopup editProfilePopup, Profile profile, ImageView imageView){
         super(kifflarm);
 
         //inflate the View
-        popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_palette, null);
+        popupView = kifflarm.getLayoutInflater().inflate(R.layout.popup_scroll, null);
 
         //create the popupWindow
         int width = FrameLayout.LayoutParams.WRAP_CONTENT;
@@ -32,10 +36,50 @@ public class ProfileIconPopup extends Popup {
         LinearLayout rowLayout = new LinearLayout(kifflarm);
         rowLayout.setOrientation(LinearLayout.VERTICAL);
 
-        Integer[] icons = Utils.getIcons();
+        ArrayList<Integer> icons = Utils.getIcons();
+        Collections.shuffle(icons);
 
-        int rows = 4, cols = 3;
+        int rows = 4, cols = 5, index = 0;
 
+
+        while(index < icons.size()){
+            LinearLayout colLayout = new LinearLayout(kifflarm);
+            colLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+
+            for(int col = 0; col < cols; col++){
+
+                if(index < icons.size()) { //since index keeps increasing after the while we add this check
+                    final ImageView iv = new ImageView(kifflarm);
+                    FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams((int) kifflarm.getResources().getDimension(R.dimen.quickIconWidth) * 2, (int) kifflarm.getResources().getDimension(R.dimen.quickIconHeight) * 2);
+                    flp.setMargins(0, 0, 0, 10);
+                    iv.setLayoutParams(flp);
+
+                    //iv.setBackground(ResourcesCompat.getDrawable(noteActivity.getResources(), icons[i], null));
+                    iv.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), icons.get(index), null));
+                    colLayout.addView(iv);
+
+                    int finalI = index;
+                    iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            imageView.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), icons.get(finalI), null));
+                            profile.setIconId(icons.get(finalI));
+                            editProfilePopup.updateUI();
+
+                            popupWindow.dismiss();
+                        }
+                    });
+
+                    index++;
+                }
+            }
+            rowLayout.addView(colLayout);
+        }
+
+
+
+/*
         int i = 0;
         for(int row = 0; row < rows; row++){
             LinearLayout colLayout = new LinearLayout(kifflarm);
@@ -46,15 +90,15 @@ public class ProfileIconPopup extends Popup {
                 flp.setMargins(0, 0, 0, 10);
                 iv.setLayoutParams(flp);
 
-                iv.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), icons[i], null));
+                iv.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), icons.get(i), null));
                 colLayout.addView(iv);
 
                 int finalI = i;
                 iv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        imageView.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), icons[finalI], null));
-                        profile.setIconId(icons[finalI]);
+                        imageView.setBackground(ResourcesCompat.getDrawable(kifflarm.getResources(), icons.get(finalI), null));
+                        profile.setIconId(icons.get(finalI));
                         editProfilePopup.updateUI();
 
                         popupWindow.dismiss();
@@ -66,6 +110,9 @@ public class ProfileIconPopup extends Popup {
             rowLayout.addView(colLayout);
         }
         ((FrameLayout)popupView).addView(rowLayout);
+
+ */
+        ((ScrollView)popupView).addView(rowLayout);
 
         showAtLocation(popupWindow);
     }

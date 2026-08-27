@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 
 import com.kiefer.kifflarm.R;
 import com.kiefer.kifflarm.files.FileManager;
@@ -34,14 +33,17 @@ public class Alarm implements Comparable<Alarm>, Saveable {
     protected int id;
     private Sound sound;
     public static String ALRM_ID_TAG = "alrm_intent_id";
+    private boolean belongsToProfile = false;//flagging an alarm as belonging to a profile is to be able to activate it right away after turning it off
 
     //this is for new alarms. passing sound since alarms has to be created in AlarmActivity and can't have access to other classes (SoundManager in this case)
-    public Alarm(Context context, Sound sound, String folder){
+    //flagging an alarm as belonging to a profile is to be able to activate it right away after turning it off
+    public Alarm(Context context, Sound sound, String folder, boolean belongsToProfile){
         this(context);
         this.sound = sound;
         //activate(true, true);
         active = true;
         this.folder = folder;
+        this.belongsToProfile = belongsToProfile;
     }
 
     //this is for restored alarms
@@ -80,6 +82,7 @@ public class Alarm implements Comparable<Alarm>, Saveable {
 
          */
 
+        //date.getTime() returns a long that will be wrong when cast to int but it doesn't matter since the actual value is pointless, it just needs to be unique
         id = (int) date.getTime();
     }
 
@@ -217,6 +220,10 @@ public class Alarm implements Comparable<Alarm>, Saveable {
         return isSnooze;
     }
 
+    public boolean belongsToProfile() {
+        return belongsToProfile;
+    }
+
     /** SET **/
     public void setTime(int hour, int minute){
         if(minute > 59){
@@ -252,7 +259,7 @@ public class Alarm implements Comparable<Alarm>, Saveable {
     }
     public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",
             MINUTE_TAG = "minute", RINGTONE_NAME_TAG = "ringtone_name", RINGTONE_URI_TAG = "ringtone_uri",
-            IS_SNOOZE_TAG = "snooze_on", SNOOZE_TIME_TAG = "snooze_time", FOLDER_TAG = "folder";
+            IS_SNOOZE_TAG = "snooze_on", SNOOZE_TIME_TAG = "snooze_time", FOLDER_TAG = "folder", BELONGS_TO_PROFILE_TAG = "belongs_to_profile";
 
     protected ArrayList<Param> getParams(){
         ArrayList<Param> params = new ArrayList<>();
@@ -265,6 +272,7 @@ public class Alarm implements Comparable<Alarm>, Saveable {
         params.add(new Param(IS_SNOOZE_TAG, Boolean.toString(isSnooze)));
         params.add(new Param(SNOOZE_TIME_TAG, Integer.toString(snoozeTime)));
         params.add(new Param(FOLDER_TAG, folder));
+        params.add(new Param(BELONGS_TO_PROFILE_TAG, Boolean.toString(belongsToProfile)));
         return params;
     }
 
@@ -292,6 +300,8 @@ public class Alarm implements Comparable<Alarm>, Saveable {
                 snoozeTime = Integer.parseInt(p.value);
             } else if (p.key.equals(FOLDER_TAG)) {
                 folder = p.value;
+            } else if (p.key.equals(BELONGS_TO_PROFILE_TAG)) {
+                belongsToProfile = Boolean.parseBoolean(p.value);
             }
         }
 

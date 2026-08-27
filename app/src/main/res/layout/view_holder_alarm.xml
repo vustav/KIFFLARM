@@ -111,7 +111,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="6dp"
                     android:id="@+id/alarmVHRemoveIV"
-                    android:src="@drawable/icon_trash0"/>
+                    android:src="@drawable/icon_trash1"/>
                 <!--
                 <TextView
                     android:id="@+id/alarmVHRemoveTextView"

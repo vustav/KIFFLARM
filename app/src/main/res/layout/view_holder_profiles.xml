@@ -35,8 +35,8 @@
             android:layout_toStartOf="@id/profilesVHAddQuickLayout">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/soundVHBtnHeight"
+                android:layout_height="@dimen/soundVHBtnHeight"
                 android:id="@+id/profilesVHIV"
                 android:layout_marginStart="@dimen/marginSmall"
                 android:layout_centerVertical="true"/>
@@ -113,7 +113,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="9dp"
                 android:id="@+id/profilesVHDeleteBtnIcon"
-                android:src="@drawable/icon_trash0"/>
+                android:src="@drawable/icon_trash1"/>
         </RelativeLayout>
 
         <!-- ADD QUICK -->
@@ -144,7 +144,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="9dp"
                 android:id="@+id/profilesVHAddQuickBtnIcon"
-                android:src="@drawable/icon_desk0"/>
+                android:src="@drawable/icon_desk1"/>
 
             <FrameLayout
                 android:layout_width="@dimen/profilesVHAddIndicatorSize"
@@ -152,7 +152,7 @@
                 android:id="@+id/profilesVHAddQuickIndicator"
 
                 android:layout_marginStart="@dimen/profilesVHAddIndicatorSize"
-                android:layout_marginTop="13dp"/>
+                android:layout_marginTop="8dp"/>
         </RelativeLayout>
 
         <!-- EDIT -->

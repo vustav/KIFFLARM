@@ -5,7 +5,7 @@
     android:id="@+id/quickProfilesVHBG">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="29dp"
         android:layout_height="29dp"
         android:id="@+id/quickProfilesVHIV"/>
 

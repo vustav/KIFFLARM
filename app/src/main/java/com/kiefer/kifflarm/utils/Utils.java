@@ -237,15 +237,19 @@ public class Utils {
     }
 
     /** ICON **/
+
     public static int getRandomNoteIconId(){
         Random r = new Random();
-        Integer[] list = getIcons();
-        return list[r.nextInt(list.length)];
+        ArrayList<Integer> list = getIcons();
+        return list.get(r.nextInt(list.size()));
     }
 
     //only 12 in the popup
-    public static Integer[] getIcons(){
-        return new Integer[]{
+    public static ArrayList<Integer> getIcons(){
+        ArrayList<Integer> list = new ArrayList<>();
+
+        //return new ArrayList<>()
+                /*
                 R.drawable.icon_note0,
                 R.drawable.icon_note1,
                 R.drawable.icon_note5,
@@ -259,8 +263,128 @@ public class Utils {
                 R.drawable.icon_note16,
                 R.drawable.icon_note17,
                 //R.drawable.icon_note18,
-                R.drawable.icon_note19
-        };
+                R.drawable.icon_note19,
+
+                R.drawable.icon_face_angry,
+                R.drawable.icon_face_devilish,
+                R.drawable.icon_face_embarrassed,
+                R.drawable.icon_face_heart,
+                R.drawable.icon_face_heart_broken,
+                R.drawable.icon_face_laugh,
+                R.drawable.icon_face_sick,
+                R.drawable.icon_face_smirk,
+                R.drawable.icon_face_surprise,
+                R.drawable.icon_face_tired,
+                R.drawable.icon_face_uncertain,
+                R.drawable.icon_face_worried,
+
+                R.drawable.icon_stock_smiley0,
+                R.drawable.icon_stock_smiley1,
+                R.drawable.icon_stock_smiley11,
+                R.drawable.icon_stock_smiley13,
+                R.drawable.icon_stock_smiley15,
+                R.drawable.icon_stock_smiley18,
+                R.drawable.icon_search2,
+                R.drawable.icon_stock_smiley22,
+                R.drawable.icon_stock_smiley3,
+                R.drawable.icon_stock_smiley4,
+                R.drawable.icon_stock_smiley5,
+                R.drawable.icon_stock_smiley6,
+                R.drawable.icon_stock_smiley7,
+                R.drawable.icon_stock_smiley8,
+
+                 */
+
+        //NEW
+
+        list.add(R.drawable.icon_cucumber100);
+        list.add(R.drawable.icon_green100);
+        list.add(R.drawable.icon_man100);
+        //list.add(R.drawable.icon_smile100);
+        list.add(R.drawable.icon_walk100);
+        list.add(R.drawable.icon_bajs100);
+        list.add(R.drawable.icon_orient100);
+
+        list.add(R.drawable.icon_pommes100);
+        list.add(R.drawable.icon_bagrock100);
+        list.add(R.drawable.icon_cold100);
+        list.add(R.drawable.icon_bomb100);
+        list.add(R.drawable.icon_chips100);
+        //list.add(R.drawable.icon_sandwich100);
+
+        list.add(R.drawable.icon_bust100);
+        list.add(R.drawable.icon_dog100);
+        list.add(R.drawable.icon_drink_limon100);
+        list.add(R.drawable.icon_girl100);
+        list.add(R.drawable.icon_girl2100);
+        list.add(R.drawable.icon_girlhat100);
+        list.add(R.drawable.icon_glass_berri100);
+        //list.add(R.drawable.icon_grodagg100);
+        //list.add(R.drawable.icon_grodpump100);
+        //list.add(R.drawable.icon_happystars100);
+        list.add(R.drawable.icon_iceman100);
+        list.add(R.drawable.icon_jorden100);
+        list.add(R.drawable.icon_kokosdrink100);
+        list.add(R.drawable.icon_ladyface100);
+        //list.add(R.drawable.icon_lilamonster100);
+        list.add(R.drawable.icon_oopsface100);
+        list.add(R.drawable.icon_peanutman100);
+        //list.add(R.drawable.icon_slemmonster100);
+        list.add(R.drawable.icon_solstol100);
+        list.add(R.drawable.icon_sunface100);
+        //list.add(R.drawable.icon_tv100);
+        list.add(R.drawable.icon_walkman100);
+        //list.add(R.drawable.icon_toa100);
+        list.add(R.drawable.icon_skola100);
+        list.add(R.drawable.icon_padda100);
+        list.add(R.drawable.icon_lek100);
+        list.add(R.drawable.icon_glass_uon100);
+
+        list.add(R.drawable.icon_bar100);
+        list.add(R.drawable.icon_cd100);
+        list.add(R.drawable.icon_dator100);
+        list.add(R.drawable.icon_dinorex100);
+        list.add(R.drawable.icon_dubbelmonst100);
+        list.add(R.drawable.icon_garage100);
+        list.add(R.drawable.icon_garnboll100);
+        list.add(R.drawable.icon_girlrut100);
+        list.add(R.drawable.icon_godishalsband100);
+        list.add(R.drawable.icon_haj100);
+        list.add(R.drawable.icon_kistor100);
+        list.add(R.drawable.icon_lamps100);
+        list.add(R.drawable.icon_manwave100);
+        list.add(R.drawable.icon_maskin100);
+        //list.add(R.drawable.icon_pinkmonst100);
+        list.add(R.drawable.icon_pizza100);
+        //list.add(R.drawable.icon_ritaddog100);
+        list.add(R.drawable.icon_sax100);
+        list.add(R.drawable.icon_stad100);
+        list.add(R.drawable.icon_stereo100);
+        list.add(R.drawable.icon_streetlight100);
+        list.add(R.drawable.icon_telef100);
+        list.add(R.drawable.icon_video100);
+        //list.add(R.drawable.icon_worm100);
+        list.add(R.drawable.icon_worm2100);
+
+        list.add(R.drawable.icon_v100);
+
+        list.add(R.drawable.icon_bigleg100);
+        list.add(R.drawable.icon_emojicool100);
+        list.add(R.drawable.icon_emojiglasses100);
+        list.add(R.drawable.icon_emojihearteyes100);
+        list.add(R.drawable.icon_emojiooooooo100);
+        list.add(R.drawable.icon_emojisad100);
+        list.add(R.drawable.icon_emojitongue100);
+        list.add(R.drawable.icon_emojizzzzzzzz100);
+        list.add(R.drawable.icon_family100);
+        list.add(R.drawable.icon_girlglasses100);
+        list.add(R.drawable.icon_mirc100);
+        list.add(R.drawable.icon_muscles100);
+        list.add(R.drawable.icon_paper100);
+        list.add(R.drawable.icon_emojibasic100);
+
+        return list;
+        //};
     }
 
     /** COMPARE **/

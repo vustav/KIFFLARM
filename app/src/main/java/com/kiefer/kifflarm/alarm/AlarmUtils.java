@@ -41,7 +41,15 @@ public class AlarmUtils {
     }
 
     public static void alarmOff(Context context, Alarm alarm, Vibrator vibrator, MediaPlayer mediaPlayer, int startVolume){
-        alarm.activate(false);
+        //alarm.activate(false);
+
+        //turn it on again if it belongs to a profile. Day +1 is automatic
+        if(!alarm.belongsToProfile()){
+            alarm.activate(false);
+        }
+        else{
+            alarm.activate(true);
+        }
         //AlarmCannon.resetAlarmVolume(context, startVolume);
         //AlarmCannon.stopTimer();
 
@@ -64,7 +72,7 @@ public class AlarmUtils {
     }
 
     public static void setSnooze(Context context, Alarm alarm){
-        Alarm newAlarm = new Alarm(context, alarm.getSound(), alarm.getFolder());
+        Alarm newAlarm = new Alarm(context, alarm.getSound(), alarm.getFolder(), false);
         newAlarm.setIsSnooze(true);
         newAlarm.setTime(alarm.getHour(), alarm.getMinute() + alarm.getSnoozeTime());
         newAlarm.activate(true);

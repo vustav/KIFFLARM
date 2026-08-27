@@ -146,7 +146,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:id="@+id/profileQuickBtnIcon"
-                            android:src="@drawable/icon_desk0"
+                            android:src="@drawable/icon_desk1"
 
                             android:layout_centerInParent="true"/>
 
@@ -186,9 +186,8 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:id="@+id/profileIconBtnIcon"
-                            android:layout_marginStart="8dp"
 
-                            android:layout_centerVertical="true"/>
+                            android:layout_centerInParent="true"/>
                     </RelativeLayout>
                 </RelativeLayout>
             </LinearLayout>
