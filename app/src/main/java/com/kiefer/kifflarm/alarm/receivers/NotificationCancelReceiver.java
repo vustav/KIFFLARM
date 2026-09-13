@@ -25,10 +25,10 @@ public class NotificationCancelReceiver extends BroadcastReceiver {
             Alarm alarm = FileManager.getAlarm(context, intent.getStringExtra(Alarm.ALRM_ID_TAG));
 
             MediaPlayer mediaPlayer = KIFFMediaPlayer.getInstance(context, alarm.getSound().getUri());
-            Vibrator vibrator = KIFFVibrator.getInstance(context);
+            //Vibrator vibrator = KIFFVibrator.getInstance(context);
 
             int startVolume = Integer.parseInt(intent.getStringExtra(AlarmReceiver2.NOTIFICATION_ID_TAG));
-            AlarmUtils.alarmOff(context, alarm, vibrator, mediaPlayer, startVolume);
+            AlarmUtils.alarmOff(context, alarm, mediaPlayer, startVolume);
 
             //se explanation in TriggerOnResumeActivity
             Intent onResumeIntent = new Intent(context, TriggerOnResumeActivity.class);

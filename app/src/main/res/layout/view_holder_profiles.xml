@@ -77,22 +77,18 @@
             </FrameLayout>
 
             <ImageView
-                android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
-                android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerInParent="true"
                 android:id="@+id/profilesVHToggleButtonIndicatorOn"
-                android:src="@drawable/on_cut"
-
-                android:layout_marginTop="@dimen/marginSmall"
-                android:layout_marginStart="@dimen/marginSmall"/>
+                android:src="@drawable/icon_emojibasic100"/>
 
             <ImageView
-                android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
-                android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerInParent="true"
                 android:id="@+id/profilesVHToggleButtonIndicatorOff"
-                android:src="@drawable/off_cut"
-
-                android:layout_marginTop="@dimen/marginSmall"
-                android:layout_marginStart="@dimen/marginSmall"/>
+                android:src="@drawable/icon_emojizzzzzzzz100"/>
         </RelativeLayout>
 
         <!-- DELETE -->

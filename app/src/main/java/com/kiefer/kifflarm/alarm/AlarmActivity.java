@@ -27,7 +27,7 @@ import com.kiefer.kifflarm.alarm.singles.KIFFVibrator;
 public class AlarmActivity extends AppCompatActivity {
     public static boolean isActive = false, kill = false;
     private Alarm alarm;
-    private Vibrator vibrator;
+    //private Vibrator vibrator;
     private ValueAnimator tvBgAnimation, tvTxtAnimation;
     private MediaPlayer mediaPlayer;
     private Intent intent;
@@ -51,7 +51,7 @@ public class AlarmActivity extends AppCompatActivity {
             TextView bgTVtv = layout.findViewById(R.id.alarmActivityBgTv);
             Utils.createNiceBg(layout, bgTVtv, 100);
 
-            vibrator = KIFFVibrator.getInstance(this);
+            //vibrator = KIFFVibrator.getInstance(this);
 
             TextView timeTv = layout.findViewById(R.id.alarmActivityTimeTV);
             timeTv.setText(alarm.getTimeAsString());
@@ -135,7 +135,7 @@ public class AlarmActivity extends AppCompatActivity {
         }
 
         int startVolume = Integer.parseInt(intent.getStringExtra(AlarmReceiver2.NOTIFICATION_ID_TAG));
-        AlarmUtils.alarmOff(this, alarm, vibrator, mediaPlayer, startVolume);
+        AlarmUtils.alarmOff(this, alarm, mediaPlayer, startVolume);
         //KIFFMediaPlayer.destroy();
         //KIFFVibrator.destroy();
         //AlarmCannon.stopTimer();
@@ -161,7 +161,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         try {
             KIFFMediaPlayer.destroy();
-            KIFFVibrator.destroy();
+            //KIFFVibrator.destroy();
         }catch (IllegalStateException ese){
             ese.printStackTrace();
         } catch (Exception e) {

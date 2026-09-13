@@ -35,7 +35,7 @@ public class AlarmReceiver2 {
     private static CountDownTimer countDownTimer;
     private Alarm alarm;
     private MediaPlayer mediaPlayer;
-    private Vibrator vibrator;
+    //private Vibrator vibrator;
     private float tempVolume = 0; //used to ramp volume during alarm
     public static String NOTIFICATION_ID_TAG = "nidt", START_VOLUME_TAG = "svt";
 
@@ -55,10 +55,11 @@ public class AlarmReceiver2 {
         String channelId = alarm.getIdAsString() + "c";
         int notificationId = alarm.getId();
 
-        mediaPlayer = KIFFMediaPlayer.getInstance(context, alarm.getSound().getUri());
-        vibrator = KIFFVibrator.getInstance(context);
+        //vibrator = KIFFVibrator.getInstance(context);
 
-        AlarmUtils.startVibrating(vibrator);
+        AlarmUtils.startVibrating(context);
+
+        mediaPlayer = KIFFMediaPlayer.getInstance(context, alarm.getSound().getUri());
         AlarmUtils.playRingtone(mediaPlayer);
 
         int flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
@@ -159,7 +160,7 @@ public class AlarmReceiver2 {
             }
             public void onFinish() {
                 NotificationManagerCompat.from(context).cancel(notificationId);
-                AlarmUtils.alarmOff(context, alarm, vibrator, mediaPlayer, startVolume);
+                AlarmUtils.alarmOff(context, alarm, mediaPlayer, startVolume);
 
                 try {
                     //Activity will be started before notification is clicked if the phone was sleeping (no idea why)
