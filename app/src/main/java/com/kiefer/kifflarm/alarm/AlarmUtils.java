@@ -16,6 +16,8 @@ public class AlarmUtils {
     public static void startVibrating(Vibrator vibrator) {
         //exempel: https://developer.android.com/develop/ui/views/haptics/custom-haptic-effects#java_1
 
+        Log.e("AlarmUtils ZZZ", "vibrator==null: "+(vibrator==null));
+
         if (Build.VERSION.SDK_INT >= 26) {
             long[] timings = new long[] { 50, 50, 100, 50, 50 };
             int[] amplitudes = new int[] { 64, 128, 255, 128, 64 };
@@ -50,8 +52,6 @@ public class AlarmUtils {
         else{
             alarm.activate(true);
         }
-        //AlarmCannon.resetAlarmVolume(context, startVolume);
-        //AlarmCannon.stopTimer();
 
         KIFFMediaPlayer.destroy();
         KIFFVibrator.destroy();

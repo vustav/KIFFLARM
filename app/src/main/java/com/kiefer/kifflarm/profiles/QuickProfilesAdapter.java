@@ -13,16 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiefer.kifflarm.KIFFLARM;
 import com.kiefer.kifflarm.R;
+import com.kiefer.kifflarm.utils.Utils;
 
 public class QuickProfilesAdapter extends RecyclerView.Adapter<QuickProfilesAdapter.ViewHolder> {
     private final KIFFLARM kifflarm;
     private final ProfilesManager profilesManager;
-    //private ArrayList<Profile> quickProfiles;
-    private final RecyclerView recyclerView;
 
     public QuickProfilesAdapter(KIFFLARM kifflarm, RecyclerView recyclerView, ProfilesManager profilesManager) {
         this.kifflarm = kifflarm;
-        this.recyclerView = recyclerView;
         this.profilesManager = profilesManager;
 
         //nu hämtas arrayen varhe onBind. Om det är för segt måste det lösas bättre
@@ -42,18 +40,13 @@ public class QuickProfilesAdapter extends RecyclerView.Adapter<QuickProfilesAdap
     @Override
     public void onBindViewHolder(QuickProfilesAdapter.ViewHolder viewHolder, final int position) {
 
-        //int color = Utils.getRandomColor();
-        //viewHolder.bg.setBackground(Utils.getRandomGradientDrawable(color, Utils.getRandomColor()));
-        //viewHolder.textView.setTextColor(Utils.getContrastColor(color));
         Profile profile = profilesManager.getQuickProfiles().get(viewHolder.getAdapterPosition());
 
         viewHolder.bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("QuickProfilesAdapter ZZZ", "kashdkjad");
+                Utils.performHapticFeedback(viewHolder.bg);
                 profilesManager.activateQuickProfile(viewHolder.getAdapterPosition());
-                //kifflarm.getQuickProfilesAdapter().notifyDataSetChanged();
-                //kifflarm.getProfileAlarmsAdapter().notifyDataSetChanged();
                 kifflarm.updateProfilesUI();
             }
         });

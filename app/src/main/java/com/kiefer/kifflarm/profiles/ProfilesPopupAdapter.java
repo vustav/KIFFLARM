@@ -132,7 +132,9 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
     public void activateVH(ProfilesPopupAdapter.ViewHolder viewHolder, boolean on){
 
         if(on) {
-            viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOn, null));
+            viewHolder.toggleOn.setImageAlpha(255);
+            viewHolder.toggleOff.setImageAlpha(0);
+            //viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOn, null));
             //viewHolder.toggleIndicator.setAlpha(1);
             //viewHolder.delBtn.setAlpha(1);
             //viewHolder.delTV.setAlpha(1);
@@ -144,7 +146,10 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
         else{
             float alpha = .5f;
             int alphaInt = (int)(255f * alpha);
-            viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOff, null));
+
+            viewHolder.toggleOn.setImageAlpha(0);
+            viewHolder.toggleOff.setImageAlpha(alphaInt);
+            //viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOff, null));
             //viewHolder.toggleIndicator.setAlpha(alpha);
             //viewHolder.delBtn.setAlpha(alpha);
             //viewHolder.delTV.setAlpha(alpha);
@@ -169,7 +174,8 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
         private final ImageView iv;
         private final Button deleteBtn, quickBtn, toggleBtn;
         //private final Button editBtn;
-        private final FrameLayout quickIndicator, toggleIndicator;
+        private final FrameLayout quickIndicator;
+        private final ImageView toggleOn, toggleOff;
 
         public ViewHolder(View view) {
             super(view);
@@ -183,7 +189,9 @@ public class ProfilesPopupAdapter extends RecyclerView.Adapter<ProfilesPopupAdap
             //editBtn = view.findViewById(R.id.profilesVHEditBtn);
             quickIndicator = view.findViewById(R.id.profilesVHAddQuickIndicator);
             toggleBtn = view.findViewById(R.id.profilesVHToggleButton);
-            toggleIndicator = view.findViewById(R.id.profilesVHToggleButtonIndicator);
+            //toggleIndicator = view.findViewById(R.id.profilesVHToggleButtonIndicator);
+            toggleOn = view.findViewById(R.id.profilesVHToggleButtonIndicatorOn);
+            toggleOff = view.findViewById(R.id.profilesVHToggleButtonIndicatorOff);
         }
 
         /*

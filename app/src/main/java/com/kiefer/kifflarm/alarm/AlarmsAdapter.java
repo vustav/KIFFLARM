@@ -102,8 +102,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         //Log.e("AlarmsAdapter ZZZ", "activate: "+on);
 
         if(on) {
-            viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOn, null));
-            viewHolder.toggleIndicator.setAlpha(1);
+            viewHolder.toggleOn.setImageAlpha(255);
+            viewHolder.toggleOff.setImageAlpha(0);
+
+            //viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOn, null));
+            //viewHolder.toggleIndicator.setAlpha(1);
             viewHolder.delBtn.setAlpha(1);
             //viewHolder.delTV.setAlpha(1);
             viewHolder.delIV.setImageAlpha(255);
@@ -114,8 +117,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         else{
             float alpha = .5f;
             int alphaInt = (int)(255f * alpha);
-            viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOff, null));
-            viewHolder.toggleIndicator.setAlpha(alpha);
+
+            viewHolder.toggleOn.setImageAlpha(0);
+            viewHolder.toggleOff.setImageAlpha(alphaInt);
+
+            //viewHolder.toggleIndicator.setBackgroundColor(ResourcesCompat.getColor(kifflarm.getResources(), R.color.indicatorOff, null));
+            //viewHolder.toggleIndicator.setAlpha(alpha);
             viewHolder.delBtn.setAlpha(alpha);
             //viewHolder.delTV.setAlpha(alpha);
             viewHolder.delIV.setImageAlpha(alphaInt);
@@ -161,7 +168,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         //private final SwitchMaterial toggle;
         private final Button toggleBtn;
         public final RelativeLayout toggleBtnLayout, deleteBtnLayout;
-        private final FrameLayout toggleIndicator;
+        //private final FrameLayout toggleIndicator;
+        private final ImageView toggleOn, toggleOff;
         //private int toggleCheck = 0; //seems to be needed to not trigger the toggle in onBindViewHolder
         private ImageView delIV;
 
@@ -178,7 +186,9 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             toggleBtnLayout = view.findViewById(R.id.alarmsVHToggleBtnLayout);
             //delTV = view.findViewById(R.id.alarmVHRemoveTextView);
             snoozeIndicatorTV = view.findViewById(R.id.alarmVHSnoozeIndicatorTV);
-            toggleIndicator = view.findViewById(R.id.alarmsVHToggleButtonIndicator);
+            //toggleIndicator = view.findViewById(R.id.alarmsVHToggleButtonIndicator);
+            toggleOn = view.findViewById(R.id.alarmsVHToggleButtonIndicatorOn);
+            toggleOff = view.findViewById(R.id.alarmsVHToggleButtonIndicatorOff);
             //checkBox = view.findViewById(R.id.alarmsVHCheck);
             delIV = view.findViewById(R.id.alarmVHRemoveIV);
         }

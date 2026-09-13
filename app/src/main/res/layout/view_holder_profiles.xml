@@ -76,10 +76,20 @@
                     android:background="@drawable/custom_btn"/>
             </FrameLayout>
 
-            <FrameLayout
+            <ImageView
                 android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
                 android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"
-                android:id="@+id/profilesVHToggleButtonIndicator"
+                android:id="@+id/profilesVHToggleButtonIndicatorOn"
+                android:src="@drawable/on_cut"
+
+                android:layout_marginTop="@dimen/marginSmall"
+                android:layout_marginStart="@dimen/marginSmall"/>
+
+            <ImageView
+                android:layout_width="@dimen/alarmsVHToggleBtnIndicatorSize"
+                android:layout_height="@dimen/alarmsVHToggleBtnIndicatorSize"
+                android:id="@+id/profilesVHToggleButtonIndicatorOff"
+                android:src="@drawable/off_cut"
 
                 android:layout_marginTop="@dimen/marginSmall"
                 android:layout_marginStart="@dimen/marginSmall"/>

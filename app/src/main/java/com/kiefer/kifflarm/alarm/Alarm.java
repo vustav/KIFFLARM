@@ -69,18 +69,6 @@ public class Alarm implements Comparable<Alarm>, Saveable {
         hour = date.getHours();
         minute = date.getMinutes() + 10;
         setTime(date.getHours(), date.getMinutes());
-        /*
-        if(minute > 59){
-            minute -= 60;
-
-            hour++;
-
-            if(hour > 23){
-                hour -= 24;
-            }
-        }
-
-         */
 
         //date.getTime() returns a long that will be wrong when cast to int but it doesn't matter since the actual value is pointless, it just needs to be unique
         id = (int) date.getTime();
@@ -182,10 +170,6 @@ public class Alarm implements Comparable<Alarm>, Saveable {
         return folder + "/" + getIdAsString()+"."+context.getResources().getString(R.string.alarms_extension);
     }
 
-    public String getMessage(){
-        return "mememesssssaaaagggeeee";
-    }
-
     public Sound getSound(){
         return sound;
     }
@@ -206,13 +190,11 @@ public class Alarm implements Comparable<Alarm>, Saveable {
         if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
             calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
         }
-        //Log.e("Alarm ZZZ", "timeInMS 1: "+calendar.getTimeInMillis());
 
         return calendar.getTimeInMillis();
     }
 
     public boolean isActive(){
-        //Log.e("Alarm ZZZ", "getActive: "+active);
         return active;
     }
 
@@ -253,8 +235,6 @@ public class Alarm implements Comparable<Alarm>, Saveable {
 
     /** SAVING **/
     public void save(){
-        //String path = folder + "/" + getIdAsString();
-        //Log.e("Alarm ZZZ", "save, path: "+path);
         fileManager.write(getParams(), folder, getIdAsString(), context.getResources().getString(R.string.alarms_extension));
     }
     public static final String ACTIVE_TAG = "active", ALARM_ID_TAG = "alarmId", HOUR_TAG = "hour",

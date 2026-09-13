@@ -383,6 +383,9 @@ public class Utils {
         list.add(R.drawable.icon_paper100);
         list.add(R.drawable.icon_emojibasic100);
 
+        list.add(R.drawable.icon_workout100);
+        list.add(R.drawable.icon_cam100);
+
         return list;
         //};
     }

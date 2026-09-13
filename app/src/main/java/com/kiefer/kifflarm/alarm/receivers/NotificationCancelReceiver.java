@@ -29,8 +29,6 @@ public class NotificationCancelReceiver extends BroadcastReceiver {
 
             int startVolume = Integer.parseInt(intent.getStringExtra(AlarmReceiver2.NOTIFICATION_ID_TAG));
             AlarmUtils.alarmOff(context, alarm, vibrator, mediaPlayer, startVolume);
-            //KIFFMediaPlayer.destroy();
-            //KIFFVibrator.destroy();
 
             //se explanation in TriggerOnResumeActivity
             Intent onResumeIntent = new Intent(context, TriggerOnResumeActivity.class);
